@@ -4,34 +4,202 @@
 % fungsional dan nonfungsional, analisis berbagai alternatif solusi yang dapat ditawarkan, dan
 % metode pemilihan solusi yang diusulkan.
 % ============================================================================================
-\cleardoublepage
+
 \chapter{ANALISIS MASALAH}
 \label{chap:analisis-masalah}
-Bab ini membahas analisis masalah yang ada pada sistem saat ini, analisis kebutuhan yang diperlukan
-untuk menyelesaikan masalah tersebut, serta analisis pemilihan solusi yang diusulkan. Secara garis besar,
-bab ini membahas hal-hal berikut:
-\begin{enumerate}[1.]
-    \item Deskripsi hasil analisis dari persoalan yang sedang ditangani dalam TA;
-    \item Penjelasan tentang solusi yang ditawarkan (dapat berupa algoritma, konsep desain, formula, atau gabungannya) 
-    pada level konsep dan detail yang cukup untuk merealisasikan solusinya; dan
-    \item Penjelasan tentang pendekatan yang dipilih dalam menyelesaikan persoalan TA.
-\end{enumerate}
-Subbab-subbab dalam bab ini dapat disesuaikan dengan kebutuhan topik TA yang dibahas. Berikut adalah contoh pembagian subbab
-yang dapat digunakan sebagai referensi (judul subbab dapat diubah sesuai dengan hal yang hendak dibahas dalam subbab tersebut).
-
 \section{Analisis Kondisi Saat Ini}
-Menurut \textcite{laudon2020}, gambarkan terlebih dahulu model konseptual sistem yang ada saat ini. Model konseptual ini berisi berbagai komponen atau subsitem dan interaksi antarsubsistem tersebut. Setelah itu, berikan penjelasan tentang masalah yang ada pada sistem tersebut. Paragraf berikut berisi contoh penjabaran masalah sistem informasi fasilitas kesehatan untuk pasien \autocite{pressman2019}. 
+\label{sec:kondisi_saat_ini}
+
+% Analisis terhadap lanskap teknologi pembelajaran adaptif saat ini mengungkapkan kesenjangan fundamental antara kemampuan sistem untuk mempersonalisasi materi dan ketidakmampuannya untuk mengelola dinamika sosial pembelajar. Kondisi ini dapat dipetakan ke dalam tiga masalah arsitektural utama.
+
+% \subsection{Dominasi Algoritma Berbasis Isolasi}
+Mayoritas sistem asesmen adaptif yang ada saat ini dibangun di atas asumsi bahwa pembelajaran adalah proses soliter. Algoritma pelacakan pengetahuan (\textit{knowledge tracing}) yang dominan bekerja dengan memproses data interaksi biner (benar/salah) antara siswa dan mesin secara eksklusif \autocite{Minn2022}. 
+
+Implikasi dari desain ini adalah terjadinya \textit{algorithmic blindness} terhadap konteks sosial. Sistem mampu memodelkan kemahiran individu dengan presisi tinggi, namun "buta" terhadap fakta bahwa siswa mungkin terjebak dalam isolasi materi atau \textit{filter bubble} akademik, hanya mengerjakan tipe soal yang dikuasai dan tidak pernah terekspos pada perspektif rekan sejawat \autocite{Halkiopoulos2024}. Akibatnya, sistem berisiko memberikan skor kompetensi tinggi pada siswa yang sebenarnya rapuh secara kolaboratif, menciptakan fenomena "kompetensi semu".
+
+% \subsection{Fragmentasi Antara Asesmen Kognitif dan Aktivitas Sosial}
+Dalam kondisi saat ini, aktivitas sosial seringkali hanya ditempatkan sebagai fitur tambahan (\textit{add-on}) yang berjalan paralel namun terpisah dari mesin asesmen utama. Data berharga dari interaksi sosial seperti kemampuan siswa dalam mengevaluasi pekerjaan orang lain atau memberikan argumen seringkali terbuang dan tidak dikonversi menjadi sinyal kompetensi yang dapat mengubah rekomendasi materi \autocite{Ihichr2024}.
+
+% \subsection{Keterbatasan Mitigasi Berbasis Kendali Pengguna}
+Upaya yang ada untuk mengatasi masalah isolasi pembelajaran sejauh ini cenderung mengandalkan inisiatif pengguna, seperti pendekatan \textit{User Controllable Recommender Systems} (UCRS) \autocite{Wang2022} atau visualisasi sosial (OSSM) \autocite{Brusilovsky2016}. Namun, pendekatan ini memiliki kelemahan fundamental dalam konteks pendidikan: pendekatan ini berasumsi bahwa pengguna menyadari bahwa mereka sedang terisolasi.
+
+Dalam realitas algoritma adaptif, fenomena \textit{overpersonalization} yang terealisasi dengan gejala \textit{filter bubble} atau \textit{echo-chamber} seringkali bersifat tidak terlihat (\textit{invisible}). Sistem secara otomatis menyaring konten yang tidak sesuai dengan profil historis sehingga siswa tidak pernah terekspos pada opsi alternatif dan menganggap bahwa materi yang mereka terima adalah satu-satunya yang tersedia. Oleh karena itu, menyerahkan kendali mitigasi sepenuhnya kepada pengguna berisiko tidak efektif karena pengguna tidak dapat memilih apa yang tidak mereka lihat. Sistem saat ini kekurangan mekanisme intervensi otomatis yang mampu "memaksa" terjadinya diversifikasi interaksi ketika pola isolasi terdeteksi oleh algoritma.
+% \subsection{Implikasi Terhadap Arah Pengembangan Sistem}
+Dari analisis kondisi di atas, disimpulkan bahwa menambahkan fitur kolaborasi konvensional tidak akan menyelesaikan masalah \textit{overpersonalization} selama mesin asesmennya masih bekerja secara terisolasi.
+
+Kebutuhan mendesak saat ini adalah melakukan rekayasa ulang (\textit{re-engineering}) pada arsitektur asesmen. Diperlukan sebuah sistem yang mampu memperlakukan aktivitas sosial setara dengan aktivitas pengerjaan soal. Sistem harus memiliki kapabilitas untuk: (1) mengkuantifikasi aktivitas kolaboratif menjadi data kompetensi yang terukur, dan (2) menggunakan data tersebut untuk melakukan intervensi aktif terhadap rekomendasi yang diberikan kepada siswa. Hanya dengan mengintegrasikan kedua jalur data inilah sistem dapat memitigasi risiko isolasi pembelajaran secara sistematis.
+
 \section{Analisis Kebutuhan}
-\lipsum[4]
-\subsection{Identifikasi Masalah Pengguna}
-\lipsum[5]
+\label{sec:analisis_kebutuhan}
+
+Berdasarkan analisis kondisi saat ini pada Subbab \ref{sec:kondisi_saat_ini}, sistem yang dibutuhkan harus mampu menjembatani keterpisahan antara personalisasi individu dengan lingkungan sosialnya untuk memitigasi risiko \textit{overpersonalization}. Kebutuhan ini dirumuskan tanpa membatasi teknik implementasi spesifik, guna memungkinkan eksplorasi berbagai alternatif solusi (seperti \textit{peer assessment}, \textit{mentoring}, atau rekomendasi jejaring) pada tahap pemilihan solusi.
+
 \subsection{Kebutuhan Fungsional}
-\lipsum[6]
+\label{ssec:kebutuhan_fungsional}
+Daftar kebutuhan fungsional sistem dari sisi pengguna (siswa) dan logika sistem disajikan pada Tabel \ref{tbl:kebutuhan-fungsional}.
+
+\input{tables/tabel_3_FR.tex}
+
 \subsection{Kebutuhan Nonfungsional}
-\lipsum[7]
+\label{ssec:kebutuhan_nonfungsional}
+Kebutuhan nonfungsional disesuaikan untuk mendukung interaksi sosial yang responsif tanpa menentukan metode spesifik.
+Tabel \ref{tbl:kebutuhan-nonfungsional} merinci kebutuhan nonfungsional sistem yang diusulkan.
+
+\input{tables/tabel_3_NFR.tex}
+
+\subsection{Pemetaan Kebutuhan}
+\label{ssec:pemetaan_kebutuhan}
+Tabel \ref{tbl:pemetaan-kebutuhan} memetakan tujuan penanganan masalah ke fungsi spesifik yang telah digeneralisasi.
+
+\input{tables/tabel_3_pemetaan.tex}
 
 \section{Analisis Pemilihan Solusi}
 \subsection{Alternatif Solusi}
-\lipsum[8]
+\label{ssec:alternatif_solusi}
+Untuk menjawab kebutuhan sistem dalam memitigasi \textit{overpersonalization}, diperlukan pemilihan komponen teknologi yang tidak hanya akurat, tetapi juga fleksibel untuk diintegrasikan. Pemilihan solusi dilakukan pada tiga dimensi utama: (1) teknik asesmen kemahiran individu, (2) teknik interaksi dan asesmen sosial, dan (3) teknik spesifik pencegahan \textit{echo chamber}.
+
+\subsubsection{Alternatif Teknik Asesmen Kemahiran Individu (R1)}
+\label{sssec:alternatif_asesmen_individu}
+Komponen ini berfungsi memodelkan kompetensi siswa. Dalam konteks pencegahan \textit{overpersonalization}, kriteria utamanya adalah apakah model tersebut cukup fleksibel untuk "diintervensi" oleh parameter sosial tanpa merusak integritas matematisnya.
+
+\begin{enumerate}
+    \item \textbf{\textit{Item Response Theory} (IRT) dan \textit{Bayesian IRT} (IRT*):}
+    Pendekatan psikometri standar yang memodelkan probabilitas jawaban benar berdasarkan parameter siswa ($\theta$) dan butir soal ($b$) \autocite{Handayani2025}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Model IRT cenderung statis dan mengasumsikan parameter invarian. Sangat sulit untuk menyuntikkan "bobot sosial" ke dalam rumus IRT secara dinamis untuk mengubah rekomendasi soal secara \textit{real-time} saat terdeteksi adanya isolasi pembelajaran \autocite{Vesin2022}.
+
+    \item \textbf{\textit{Factor Analysis} (FA):}
+    Teknik statistik yang digunakan untuk mengidentifikasi struktur faktor laten (seperti pengetahuan awal atau kemampuan kognitif) yang mendasari kinerja siswa \autocite{Ihichr2024}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} FA lebih cocok digunakan untuk validasi struktur tes atau analisis \textit{post-hoc} (setelah data terkumpul) daripada pelacakan dinamis. Teknik ini tidak dirancang untuk pembaruan parameter \textit{real-time} yang diperlukan untuk merespons perubahan perilaku sosial siswa seketika.
+
+    \item \textbf{\textit{Bayesian Knowledge Tracing} (BKT):}
+    Model BKT ini adalah model berbasis \textit{Hidden Markov Models} (HMM) yang melacak transisi biner status pengetahuan dari "belum belajar" ke "sudah belajar" \autocite{Minn2022}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} BKT memiliki struktur probabilitas yang kaku (mengandalkan parameter \textit{guess} dan \textit{slip}). Memasukkan variabel sosial kontinu ke dalam probabilitas transisi BKT sangat kompleks dan berisiko melanggar asumsi dasar model bahwa keterampilan tidak akan "dilupakan" \autocite{Ihichr2024}, padahal isolasi sosial mungkin memerlukan penurunan skor untuk memicu intervensi.
+
+    \item \textbf{\textit{Deep Knowledge Tracing} (DKT):}
+    Menggunakan jaringan saraf tiruan (\textit{Recurrent Neural Networks}) untuk melacak pengetahuan \autocite{Minn2022}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Meskipun akurasinya tinggi, sifatnya yang \textit{black-box} membuat sistem sulit mendeteksi \textit{kenapa} seorang siswa terjebak dalam pola soal tertentu. Intervensi algoritmik untuk memecahkan \textit{bubble} sulit dilakukan secara terukur karena kompleksitas parameternya.
+
+    \item \textbf{Sistem \textit{Elo rating}:}
+    Memodelkan interaksi siswa-konten sebagai kompetisi dengan rumus pembaruan sederhana: $R_{baru} = R_{lama} + K(S - E)$ \autocite{Vesin2022}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Ini adalah kandidat terkuat karena keberadaan faktor $K$ (koefisien bobot). Faktor ini dapat dimodifikasi secara eksplisit menjadi fungsi dari aktivitas sosial (misalnya, siswa yang kurang bersosialisasi mendapat $K$ yang memaksa perubahan peringkat lebih cepat).
+\end{enumerate}
+
+\subsubsection{Alternatif Teknik Interaksi dan Asesmen Sosial (R2 \& R3)}
+\label{sssec:alternatif_asesmen_sosial}
+Komponen ini bertujuan memfasilitasi interaksi yang bermakna. Untuk memecahkan \textit{filter bubble}, aktivitas sosial harus memaksa siswa terpapar pada perspektif atau materi di luar preferensi historis mereka.
+
+\begin{enumerate}
+    \item \textbf{Pembelajaran Berbasis Proyek (\textit{Project-Based Learning} / PBL):}
+    Model pembelajaran ini adalah model yang di dalamnya siswa didukung berkolaborasi untuk menghasilkan artefak proyek nyata \autocite{Zhang2023}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Sangat baik untuk kolaborasi mendalam, namun memiliki kendala besar dalam penilaian otomatis. Sulit bagi sistem untuk memisahkan kontribusi individu dari hasil kelompok (\textit{free-rider problem}) secara akurat tanpa intervensi manual dosen \autocite{Ryoo2021} sehingga sulit dijadikan input data \textit{real-time} untuk algoritma adaptif.
+
+    \item \textbf{Pendampingan Sejawat (\textit{Peer Mentoring}):}
+    Mekanisme bimbingan \textit{one-on-one} antara siswa senior dan junior \autocite{Le2024}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Hubungan ini seringkali bersifat hierarkis dan searah (senior mengajar junior), bukan kolaborasi setara. Hal ini kurang efektif untuk tujuan memecahkan \textit{echo chamber} yang membutuhkan paparan terhadap berbagai perspektif sejawat yang beragam, bukan sekadar transfer pengetahuan vertikal.
+
+    \item \textbf{Formasi Kelompok Berbasis Klastering (\textit{Group Formation}):}
+    Menggunakan algoritma seperti K-Means untuk membentuk kelompok heterogen di awal pembelajaran \autocite{Nalli2022}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Efektif untuk "memaksa" keberagaman di awal (\textit{cold start}). Namun, karena sifatnya statis, teknik ini tidak menghasilkan data kinerja kontinu yang bisa digunakan sistem untuk memantau apakah siswa kembali mengisolasi diri setelah kelompok terbentuk.
+
+    \item \textbf{Sesi Diskusi Terbuka (\textit{Open Discussion}):}
+    Memfasilitasi forum bebas untuk pertukaran ide \autocite{DaifAllah2016}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Dalam forum bebas, siswa cenderung mencari teman yang sepemikiran (\textit{homophily}), yang justru memperkuat \textit{echo chamber} alih-alih memecahkannya. Selain itu, sulit menilai kualitas interaksi secara otomatis tanpa NLP yang kompleks.
+
+    \item \textbf{Penilaian Sejawat (\textit{Peer Assessment}):}
+    Siswa menilai pekerjaan rekan lain berdasarkan rubrik dengan status yang setara \autocite{Ihichr2024}.
+    \textbf{Analisis terhadap \textit{Overpersonalization}:} Teknik ini paling potensial karena sistem memegang kendali penuh atas "siapa menilai siapa". Sistem dapat menugaskan siswa untuk menilai rekan yang memiliki sudut pandang bertentangan atau tingkat kemampuan berbeda (di luar \textit{bubble}-nya). Selain itu, kualitas umpan balik (R3) dapat diukur sebagai metrik keterbukaan siswa terhadap kolaborasi \autocite{Lu2012}.
+\end{enumerate}
+
+\subsubsection{Alternatif Teknik Pencegahan \textit{Echo Chamber} dan \textit{Filter Bubble}}
+\label{sssec:alternatif_pencegahan_bubble}
+Subbab ini mengevaluasi pendekatan spesifik yang telah dikembangkan dalam literatur sistem rekomendasi untuk mengatasi masalah isolasi, guna melihat kesesuaiannya untuk diadopsi ke dalam sistem asesmen pendidikan.
+
+\begin{enumerate}
+    \item \textbf{\textit{User Controllable Recommender Systems} (UCRS):}
+    Pendekatan yang memberikan fitur kendali eksplisit kepada pengguna untuk mengatur tingkat diversifikasi rekomendasi mereka sendiri \autocite{Wang2022}.
+    \textbf{Analisis:} Pendekatan ini sangat bergantung pada kesadaran pengguna. Dalam konteks pendidikan, siswa seringkali tidak menyadari bahwa mereka berada dalam \textit{bubble} kompetensi ("\textit{unconscious incompetence}"). Mengandalkan siswa untuk secara manual meminta materi yang "tidak mereka sukai" berisiko tidak efektif dibandingkan intervensi otomatis.
+
+    \item \textbf{\textit{Group Recommender Systems} (GRS):}
+    Teknik yang merekomendasikan konten berdasarkan preferensi agregat dari sekelompok pengguna untuk meningkatkan keadilan (\textit{fairness}) dan pluralitas \autocite{Dokoupil2022}.
+    \textbf{Analisis:} GRS cenderung memprioritaskan konsensus kelompok atau rata-rata preferensi. Dalam pembelajaran adaptif, hal ini berisiko mengorbankan personalisasi spesifik yang dibutuhkan siswa \textit{outlier} (sangat mahir atau sangat tertinggal), karena rekomendasi akan tertarik ke arah "pusat" kelompok, yang bisa menyebabkan \textit{under-personalization}.
+
+    \item \textbf{Pemodelan Komunitas Implisit (\textit{FRediECH}):}
+    Sebuah teknik rekomendasi teman yang dirancang khusus untuk memecahkan \textit{echo chamber} dengan merekomendasikan koneksi sosial yang beragam namun relevan, berdasarkan pembelajaran representasi interaksi pengguna menggunakan \textit{Graph Neural Networks} \autocite{Tommasel2021}.
+    \textbf{Analisis:} Teknik ini sangat kuat untuk memecah polarisasi opini. Namun, kelemahan utamanya adalah kebutuhan akan data pelatihan yang besar untuk membangun graf interaksi awal (\textit{cold-start problem}) sehingga sulit diterapkan pada fase awal implementasi sistem tanpa dataset historis.
+
+    \item \textbf{\textit{Constraint-based Re-ranking}:}
+    Metode pasca-pemrosesan (\textit{post-processing}) yang menyusun ulang daftar rekomendasi awal agar memenuhi batasan (\textit{constraints}) distribusi tertentu, misalnya menetapkan persentase minimum item yang bersifat "favorable" atau beragam \autocite{DeBiasio2023}.
+    \textbf{Analisis:} Pendekatan ini bersifat agnostik terhadap model dasar dan bekerja berdasarkan aturan logis ($\alpha$ dan $\beta$) pada daftar rekomendasi yang ada. Keunggulan utamanya adalah efisiensi komputasi dan kemampuan untuk langsung berfungsi tanpa memerlukan pelatihan model data yang ekstensif (\textit{training-free}), menjadikannya solusi yang sangat potensial untuk kondisi data terbatas.
+\end{enumerate}
+
 \subsection{Analisis Penentuan Solusi}
-\lipsum[9]
+\label{ssec:analisis_penentuan_solusi}
+Penentuan solusi teknis dilakukan menggunakan metode \textit{Weighted Decision Matrix} (Matriks Keputusan Terbobot). Pendekatan ini digunakan untuk memilih komponen sistem secara objektif berdasarkan kriteria yang diturunkan dari Batasan Masalah (Bab \ref{chap:pendahuluan}) dan Tinjauan Literatur (Bab \ref{chap:studi-literatur}).
+
+Analisis dibagi menjadi tiga keputusan terpisah untuk memilih: (1) Teknik Asesmen Individu, (2) Teknik Interaksi Sosial, dan (3) Teknik Mitigasi \textit{Overpersonalization}.
+
+\subsubsection{Penentuan Teknik Asesmen Individu}
+\label{sssec:keputusan_asesmen_individu}
+Tujuannya adalah memilih algoritma pelacakan pengetahuan. Berdasarkan tinjauan literatur, kandidat utamanya adalah IRT, FA, BKT, DKT, dan Elo rating.
+
+\input{tables/tabel_3_keputusan1.tex}
+
+\textbf{Rasionalisasi Objektif dan Analisis \textit{Trade-off}:}
+\begin{enumerate}
+    \item \textbf{Efisiensi \& Kebutuhan Data (Bobot Tinggi - 60\%):} Kriteria ini diberi bobot tertinggi mengingat batasan masalah pengembangan purwarupa yang mungkin tidak memiliki dataset historis besar. \textbf{Elo rating} unggul mutlak (skor 5) karena algoritma ini dirancang untuk bekerja tanpa pra-kalibrasi yang rumit dan efisien secara komputasi \autocite{Vesin2022}. Sebaliknya, \textbf{IRT} dan \textbf{FA} membutuhkan sampel besar untuk kalibrasi parameter butir soal, dan \textbf{DKT} membutuhkan data pelatihan masif untuk melatih jaringan saraf \autocite{Minn2022}.
+    
+    \item \textbf{Akurasi vs. Kelayakan (\textit{Trade-off}):} \textbf{DKT} memiliki skor akurasi tertinggi (5) karena kemampuannya menangkap pola kompleks \autocite{Minn2022}. Namun, terjadi \textit{trade-off} signifikan pada aspek \textbf{Interpretabilitas} (skor 1) karena sifat \textit{black-box}-nya, yang menyulitkan sistem untuk menjelaskan alasan rekomendasi kepada siswa. \textbf{Elo rating} dipilih bukan karena ia paling akurat, tetapi karena ia adalah solusi paling layak (\textit{feasible}) untuk diimplementasikan dalam skenario data terbatas dengan akurasi yang masih dapat diterima.
+\end{enumerate}
+
+\subsubsection{Penentuan Teknik Interaksi Sosial}
+\label{sssec:keputusan_asesmen_sosial}
+Tujuannya adalah memilih bentuk aktivitas sosial yang dapat memfasilitasi kolaborasi sekaligus menghasilkan data yang dapat diolah sistem.
+
+\input{tables/tabel_3_keputusan2.tex}
+
+\textbf{Rasionalisasi Objektif dan Analisis \textit{Trade-off}:}
+\begin{enumerate}
+    \item \textbf{Keterukuran Data (35\%):} Sistem membutuhkan input kuantitatif untuk algoritma (FR-06). \textbf{Peer Assessment} mendapatkan skor tertinggi (5) karena menghasilkan artefak terstruktur (skor rubrik dan teks umpan balik) yang mudah dikuantifikasi \autocite{Ihichr2024}. Sebaliknya, \textbf{Diskusi Terbuka} dan \textbf{PBL} (Project-Based Learning) sangat sulit dinilai kontribusi individunya secara otomatis tanpa intervensi manual dosen \autocite{Ryoo2021}.
+    
+    \item \textbf{Kesetaraan \& Eksposur (\textit{Trade-off}):} \textbf{Mentoring} mendapat skor rendah pada kesetaraan (2) karena sifatnya hierarkis (senior-junior) \autocite{Le2024}, yang kurang cocok untuk memecah \textit{echo chamber} dibandingkan interaksi setara. \textbf{PBL} sebenarnya sangat baik dalam kesetaraan dan kolaborasi mendalam (skor 5), namun dipilihnya \textbf{Peer Assessment} merupakan \textit{trade-off} logis karena PBL memiliki kompleksitas implementasi yang tinggi dan risiko \textit{free-rider} yang sulit dideteksi sistem \autocite{Zhang2023}. Peer Assessment dipilih karena memungkinkan sistem "mengatur" siapa menilai siapa untuk memaksa eksposur keberagaman.
+\end{enumerate}
+
+\subsubsection{Penentuan Teknik Mitigasi \textit{Overpersonalization}}
+\label{sssec:keputusan_mitigasi_bubble}
+Keputusan ini bertujuan memilih mekanisme teknis untuk memecahkan \textit{echo chamber} yang dapat beroperasi secara otomatis dan layak diimplementasikan segera tanpa data pelatihan (\textit{cold-start}).
+
+\input{tables/tabel_3_keputusan3.tex}
+
+\textbf{Rasionalisasi Objektif dan Analisis \textit{Trade-off}:}
+\begin{enumerate}
+    \item \textbf{Automasi Intervensi (35\%):} \textbf{Alt A (UCRS)} mendapat skor terendah (1) karena bergantung pada inisiatif pengguna yang seringkali bias atau pasif. \textbf{Alt C (FRediECH)} dan \textbf{Alt D (Re-ranking)} unggul (5) karena sistem secara proaktif melakukan intervensi untuk memecah \textit{bubble} tanpa menunggu tindakan pengguna.
+    
+    \item \textbf{Kelayakan \textit{Cold-Start} (35\%):} Kriteria ini krusial untuk purwarupa. \textbf{Alt C (FRediECH)} mendapat penalti besar (1) karena berbasis \textit{Deep Learning} yang membutuhkan data historis masif untuk pelatihan awal. Sebaliknya, \textbf{Alt D (Re-ranking)} mendapat skor sempurna (5) karena algoritma ini bekerja secara \textit{greedy} pada daftar yang ada berdasarkan aturan logis sehingga bisa langsung berjalan sejak hari pertama implementasi \autocite{DeBiasio2023}.
+    
+    \item \textbf{Preservasi Personalisasi (30\%):} \textbf{Alt B (GRS)} cenderung menarik rekomendasi ke rata-rata kelompok, mengorbankan preferensi unik individu (skor 2). \textbf{Alt D (Re-ranking)} dinilai baik (4) karena hanya memodifikasi sebagian kecil daftar rekomendasi (sesuai parameter $\alpha$) untuk menyuntikkan keberagaman, sementara sisa daftar tetap mempertahankan personalisasi berbasis kompetensi individu.
+    
+    \item \textbf{Kesimpulan:} \textbf{Constraint-based Re-ranking}
+    \autocite{DeBiasio2023} dipilih. Metode \textit{re-ranking} ini adalah metode yang
+    menawarkan
+    keseimbangan terbaik karena merupakan metode yang
+    otomatis seperti FRediECH dalam memecahkan
+    isolasi, namun fleksibel seperti UCRS dalam hal implementasi tanpa
+    data (\textit{cold-start}). Sistem akan menggunakan algoritma
+    ini untuk memfilter calon pasangan \textit{peer assessment},
+    guna memastikan setiap siswa terpapar pada rekan dengan tingkat
+    kemahiran yang beragam (heterogen) sesuai batasan statistik yang
+    ditentukan.
+\end{enumerate}
+
+\subsection{Keputusan Akhir Pemilihan Solusi}
+\label{ssec:keputusan_akhir_pemilihan_solusi}
+
+Berdasarkan analisis komparatif yang telah dilakukan melalui matriks keputusan, penelitian ini menetapkan arsitektur solusi yang terdiri dari tiga komponen utama yang saling terintegrasi. Pemilihan ini didasarkan pada prinsip efisiensi komputasi, ketersediaan data pada fase awal (\textit{cold-start}), dan validitas pedagogis untuk memitigasi risiko \textit{overpersonalization}.
+
+Komponen pertama yang menjadi fondasi pelacakan kompetensi adalah \textbf{Sistem \textit{Elo rating}}. Berbeda dengan model probabilitas statis seperti IRT atau model berbasis \textit{Deep Learning} seperti DKT yang membutuhkan dataset historis masif, Elo rating dipilih karena kemampuannya untuk beradaptasi secara dinamis dengan ukuran sampel yang kecil (\textit{small sample size}). Algoritma ini akan berfungsi sebagai mesin utama untuk mengestimasi parameter kemahiran siswa secara \textit{real-time} setelah setiap interaksi, memberikan landasan data yang akurat namun ringan secara komputasi untuk proses adaptasi selanjutnya \autocite{Vesin2022}.
+
+Sebagai mekanisme interaksi sosial, sistem akan mengimplementasikan \textbf{\textit{Peer Assessment}} (penilaian sejawat). Keputusan ini diambil karena aktivitas ini menawarkan keuntungan ganda: secara teknis, ia menghasilkan artefak data kuantitatif (skor penilaian) yang terstruktur dan mudah diolah oleh algoritma; secara pedagogis, ia memberikan manfaat metakognitif tertinggi bagi siswa yang berperan sebagai penilai (\textit{assessor}) \autocite{Lu2012}. Aktivitas ini menjadi wadah strategis bagi sistem untuk menyuntikkan intervensi sosial yang terukur, menggantikan interaksi diskusi bebas yang sulit dikuantifikasi.
+
+Komponen krusial yang mengikat kedua elemen di atas untuk memecahkan isolasi pembelajaran adalah algoritma \textbf{\textit{Constraint-based Re-ranking}}. Diadaptasi dari kerangka kerja \textcite{DeBiasio2023}, teknik ini dipilih sebagai strategi mitigasi utama karena keunggulannya dalam menangani masalah \textit{cold-start} dibandingkan pendekatan berbasis neural network seperti FRediECH. Sistem akan menggunakan algoritma ini untuk memfilter daftar calon pasangan \textit{peer assessment} dengan menerapkan batasan (\textit{constraint}) statistik $\alpha$. Batasan ini memastikan bahwa setiap siswa terpapar pada proporsi minimum rekan yang memiliki tingkat kemahiran berbeda (heterogen), yang dihitung berdasarkan jarak skor Elo mereka. Dengan demikian, sistem menjamin terjadinya diversifikasi perspektif dan pemecahan \textit{echo chamber} kompetensi secara otomatis sejak hari pertama operasional.
+
+Penerapan mekanisme ini secara fundamental mengubah definisi "konten pembelajaran" dalam sistem. Umpan balik (\textit{feedback}) yang dihasilkan dari aktivitas penilaian sejawat diperlakukan sebagai \textbf{artefak pembelajaran dinamis}. Berbeda dengan soal latihan yang direkomendasikan secara personal (homogen) oleh algoritma Elo, umpan balik dari rekan sejawat yang dipilih secara heterogen merepresentasikan \textbf{eksposur terhadap konten yang tidak terpersonalisasi}. Hal ini memaksa siswa untuk menghadapi perspektif, logika penyelesaian masalah, atau kritik yang berada di luar "zona nyaman" yang terpersonalisasi oleh algoritma sehingga secara efektif meminimalkan risiko \textit{overpersonalization} tanpa merusak jalur belajar (\textit{learning path}) invididu.

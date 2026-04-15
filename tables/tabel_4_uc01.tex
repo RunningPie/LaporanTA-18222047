@@ -1,0 +1,28 @@
+% --- Tabel Deskripsi UC-01 ---
+\begin{table}[H]
+    \centering
+    \caption{Deskripsi Use Case Kelola Akun (UC-01)}
+    \label{tbl:desc_uc01}
+    \begin{tabular}{|p{0.25\textwidth}|p{0.70\textwidth}|}
+        \hline
+        \textbf{Nama Use Case} & \textbf{Kelola Akun} \\
+        \hline
+        \textbf{Aktor} & Siswa \\
+        \hline
+        \textbf{FR Terkait} & FR-01 \\
+        \hline
+        \textbf{Deskripsi} & Proses autentikasi pengguna untuk memastikan keamanan akses terhadap data profil kompetensi dan riwayat pembelajaran. \\
+        \hline
+        \textbf{Kondisi sebelum} & Siswa memiliki akun yang terdaftar di dalam basis data sistem. \\
+        \hline
+        \textbf{Kondisi sesudah} & Sesi pengguna aktif; Sistem memuat profil Elo rating siswa. \\
+        \hline
+        \textbf{Main Flow} & \begin{enumerate}[noitemsep,topsep=0pt,leftmargin=*]
+            \item Siswa memasukkan kredensial akun (\textit{username/password}).
+            \item Sistem memvalidasi kesesuaian data.
+            \item Sistem menginisialisasi sesi pembelajaran.
+            \item Sistem menampilkan dasbor utama.
+        \end{enumerate} \\
+        \hline
+    \end{tabular}
+\end{table}

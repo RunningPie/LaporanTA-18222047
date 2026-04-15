@@ -1,0 +1,28 @@
+% --- Tabel Deskripsi UC-03 ---
+\begin{table}[H]
+    \centering
+    \caption{Deskripsi Use Case Melakukan \textit{Peer Assessment} (UC-03)}
+    \label{tbl:desc_uc03}
+    \begin{tabular}{|p{0.25\textwidth}|p{0.70\textwidth}|}
+        \hline
+        \textbf{Nama Use Case} & \textbf{Melakukan \textit{Peer Assessment}} \\
+        \hline
+        \textbf{Aktor} & Siswa \\
+        \hline
+        \textbf{FR Terkait} & FR-03, FR-09 \\
+        \hline
+        \textbf{Deskripsi} & Siswa mengevaluasi pekerjaan rekan sejawat menggunakan rubrik terstruktur. Aktivitas ini dipicu oleh sistem untuk memecahkan isolasi kompetensi. \\
+        \hline
+        \textbf{Kondisi sebelum} & Sistem mendeteksi stagnasi pembelajaran; Algoritma \textit{Re-ranking} telah menemukan pasangan heterogen. \\
+        \hline
+        \textbf{Kondisi sesudah} & Skor Elo \textit{Assessee} diperbarui (berdasarkan nilai tugas); Skor Elo \textit{Assessor} diperbarui (berdasarkan kualitas reviu). \\
+        \hline
+        \textbf{Main Flow} & \begin{enumerate}[noitemsep,topsep=0pt,leftmargin=*]
+            \item Siswa menerima notifikasi tugas reviu.
+            \item Sistem menampilkan jawaban rekan \textbf{tanpa identitas (anonim)} beserta rubrik penilaian.
+            \item Siswa mengisi penilaian kuantitatif dan kualitatif.
+            \item Sistem memproses hasil untuk memperbarui Elo rating kedua belah pihak.
+        \end{enumerate} \\
+        \hline
+    \end{tabular}
+\end{table}

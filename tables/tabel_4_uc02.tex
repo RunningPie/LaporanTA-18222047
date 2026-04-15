@@ -1,0 +1,29 @@
+% --- Tabel Deskripsi UC-02 ---
+\begin{table}[H]
+    \centering
+    \caption{Deskripsi Use Case Mengerjakan Latihan Adaptif (UC-02)}
+    \label{tbl:desc_uc02}
+    \begin{tabular}{|p{0.25\textwidth}|p{0.70\textwidth}|}
+        \hline
+        \textbf{Nama Use Case} & \textbf{Mengerjakan Latihan Adaptif} \\
+        \hline
+        \textbf{Aktor} & Siswa \\
+        \hline
+        \textbf{FR Terkait} & FR-02, FR-08 \\
+        \hline
+        \textbf{Deskripsi} & Siswa mengerjakan soal latihan yang dipilihkan secara dinamis oleh sistem berdasarkan estimasi kemampuan saat ini untuk meningkatkan kompetensi. \\
+        \hline
+        \textbf{Kondisi sebelum} & Siswa telah login; Nilai parameter Elo rating ($\theta$) siswa tersedia. \\
+        \hline
+        \textbf{Kondisi sesudah} & Skor Elo siswa diperbarui; Sistem mengevaluasi tren variabilitas skor (deteksi stagnasi). \\
+        \hline
+        \textbf{Main Flow} & \begin{enumerate}[noitemsep,topsep=0pt,leftmargin=*]
+            \item Sistem memilih latihan soal dengan tingkat kesulitan setara ($D_j \approx R_i$).
+            \item Sistem menampilkan soal kepada siswa.
+            \item Siswa menginputkan jawaban.
+            \item Sistem memvalidasi jawaban dan menghitung skor aktual.
+            \item Sistem memperbarui profil kompetensi siswa.
+        \end{enumerate} \\
+        \hline
+    \end{tabular}
+\end{table}

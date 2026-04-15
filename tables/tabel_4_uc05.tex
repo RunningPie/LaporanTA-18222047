@@ -1,0 +1,28 @@
+% --- Tabel Deskripsi UC-05 ---
+\begin{table}[H]
+    \centering
+    \caption{Deskripsi Use Case Memantau Profil Kompetensi (UC-05)}
+    \label{tbl:desc_uc05}
+    \begin{tabular}{|p{0.25\textwidth}|p{0.70\textwidth}|}
+        \hline
+        \textbf{Nama Use Case} & \textbf{Memantau Profil Kompetensi} \\
+        \hline
+        \textbf{Aktor} & Siswa \\
+        \hline
+        \textbf{FR Terkait} & FR-05, FR-06, FR-07 \\
+        \hline
+        \textbf{Deskripsi} & Siswa melihat visualisasi perkembangan kemahiran individunya, termasuk kontribusi dari aktivitas individu dan sosial. \\
+        \hline
+        \textbf{Kondisi sebelum} & Data riwayat aktivitas pembelajaran siswa tersedia. \\
+        \hline
+        \textbf{Kondisi sesudah} & Informasi profil ditampilkan; Tidak ada perubahan data. \\
+        \hline
+        \textbf{Main Flow} & \begin{enumerate}[noitemsep,topsep=0pt,leftmargin=*]
+            \item Siswa mengakses menu profil.
+            \item Sistem mengambil data histori skor Elo.
+            \item Sistem menampilkan grafik tren kompetensi ($\theta$) terhadap waktu.
+            \item Sistem menampilkan statistik partisipasi sosial.
+        \end{enumerate} \\
+        \hline
+    \end{tabular}
+\end{table}

@@ -1,0 +1,37 @@
+\begin{table}[H]
+\centering
+\caption{Kebutuhan Fungsional (FR) Sistem}\label{tbl:kebutuhan-fungsional}
+% Menambah sedikit jarak antar baris agar tidak terlalu padat
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|p{0.85\textwidth}|}
+\hline
+\textbf{Kode} & \textbf{Deskripsi Kebutuhan Fungsional} \\
+\hline
+
+% Bagian 1
+\multicolumn{2}{|l|}{\textbf{Interaksi Pengguna (Siswa)}} \\
+\hline
+FR-01 & Sistem harus menyediakan mekanisme otentikasi bagi siswa untuk mengakses lingkungan pembelajaran personal mereka. \\
+\hline
+FR-02 & Sistem harus menyajikan materi pembelajaran yang telah disesuaikan tingkat kesulitannya dengan kemahiran siswa saat ini. \\
+\hline
+FR-03 & Sistem harus memfasilitasi \textbf{interaksi pembelajaran antar-pengguna} yang memungkinkan terjadinya pertukaran informasi atau kolaborasi akademik di dalam platform. \\
+\hline
+FR-04 & Sistem harus menyediakan informasi mengenai konteks sosial pembelajaran (misalnya, aktivitas komunitas atau capaian kolektif) untuk membangun kesadaran sosial (\textit{social awareness}). \\
+\hline
+
+% Bagian 2
+\multicolumn{2}{|l|}{\textbf{Logika Adaptasi \& Pemrosesan Data (Sistem)}} \\
+\hline
+FR-05 & Sistem harus memiliki algoritma untuk mengestimasi tingkat kemahiran pengetahuan individu siswa secara dinamis berdasarkan riwayat aktivitasnya. \\
+\hline
+FR-06 & Sistem harus mampu \textbf{mengkuantifikasi data interaksi sosial} (dari FR-03) menjadi parameter numerik yang dapat diproses lebih lanjut (misalnya, skor keterlibatan atau skor kinerja kolaboratif). \\
+\hline
+FR-07 & Sistem harus memiliki mekanisme untuk menggabungkan parameter kemahiran individu (FR-05) dan parameter sosial (FR-06) dalam satu model komputasi terpadu. \\
+\hline
+FR-08 & Sistem harus menggunakan hasil penggabungan model (FR-07) untuk menentukan materi atau aktivitas berikutnya yang paling optimal bagi siswa. \\
+\hline
+FR-09 & Sistem harus mampu merekomendasikan \textbf{intervensi sosial spesifik} (misalnya, merekomendasikan orang untuk berinteraksi atau topik untuk didiskusikan) guna mencegah isolasi pembelajaran. \\
+\hline
+\end{tabular}
+\end{table}

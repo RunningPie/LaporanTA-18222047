@@ -1,0 +1,16 @@
+\begin{table}[H]
+    \centering
+    \caption{Strategi Mitigasi Risiko}
+    \label{tbl:strategi_mitigasi}
+    \begin{tabular}{|p{0.1\textwidth}|p{0.3\textwidth}|p{0.5\textwidth}|}
+        \hline
+        \textbf{Kode} & \textbf{Deskripsi Risiko} & \textbf{Strategi Mitigasi} \\
+        \hline
+        \textbf{R-01} & Kesulitan mengumpulkan 10-15 orang dalam satu waktu. & Menyiapkan \textit{bot/dummy account} dengan profil Elo yang bervariasi (Low/High) untuk menggantikan peran mitra jika jumlah partisipan ganjil atau kurang, memastikan algoritma \textit{matching} tetap memiliki kandidat heterogen. \\
+        \hline
+        \textbf{R-02} & Estimasi kemampuan awal tidak akurat karena minim data. & Menggunakan hasil \textit{Pre-test} sebagai nilai awal ($R_0$) untuk mempercepat konvergensi algoritma Elo sebelum sesi adaptif dimulai, sehingga mengurangi durasi fase kalibrasi. \\
+        \hline
+        \textbf{R-03} & Siswa menilai terlalu murah hati/pelit (bias subjektif). & Risiko ini dimitigasi melalui dua lapis perlindungan: (1) Penerapan \textbf{\textit{Double-Blind System}} untuk mencegah bias relasional (rasa sungkan antar-teman), dan (2) Validasi skor kualitas asesmen oleh \textit{Multi-LLM Voting} yang objektif. \\
+        \hline
+    \end{tabular}
+\end{table}
