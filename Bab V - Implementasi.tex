@@ -4,4 +4,161 @@
 \cleardoublepage
 \chapter{IMPLEMENTASI}
 \label{chap:implementasi}
-asdfasdf
+
+Bab ini menguraikan realisasi dari rancangan sistem yang telah dibahas pada bab sebelumnya. Penjelasan dimulai dari spesifikasi lingkungan pengembangan, persiapan instrumen materi pembelajaran, detail implementasi teknis sisi peladen (\textit{backend}) dan antarmuka (\textit{frontend}), hingga analisis kesesuaian pelaksanaan dibandingkan rencana awal.
+
+\section{Lingkungan Pengembangan Sistem}
+\label{sec:development_environment}
+
+Realisasi sistem Equilibria membutuhkan infrastruktur yang mendukung proses komputasi asinkron dan isolasi eksekusi kode guna menjamin keamanan data operasional. Sistem ini diimplementasikan menggunakan arsitektur \textit{client-server} modern dengan rincian perangkat lunak sebagai berikut:
+
+\begin{enumerate}
+    \item \textbf{Backend:} Menggunakan \textbf{FastAPI (Python 3.12)} sebagai \textit{framework} web asinkron utama. Logika numerik didukung oleh pustaka \textbf{NumPy}, sementara interaksi basis data dikelola melalui \textbf{SQLAlchemy 2.0} sebagai ORM.
+    \item \textbf{Frontend:} Dibangun menggunakan \textbf{React.js 18.x} dengan \textit{build tool} \textbf{Vite 5.x}. Editor kode SQL menggunakan integrasi \textbf{CodeMirror 6.x}.
+    \item \textbf{Basis Data:} Menggunakan \textbf{PostgreSQL 15.x} yang dipisahkan secara logis menjadi dua skema: skema \texttt{public} untuk data operasional sistem dan skema \texttt{sandbox} untuk lingkungan eksekusi \textit{query} SQL siswa.
+\end{enumerate}
+
+\section{Persiapan Materi dan Instrumen Bank Soal}
+\label{sec:persiapan_materi}
+
+Sebelum melakukan implementasi algoritma, dilakukan penyusunan instrumen materi yang menjadi basis pembelajaran adaptif. Bagian ini merinci struktur kurikulum serta logika penetapan parameter instrumen.
+
+\subsection{Struktur Kurikulum dan Distribusi Bank Soal}
+Materi pembelajaran disusun berdasarkan kurikulum mata kuliah \textbf{IF2040 - Pemodelan Basis Data} STEI ITB tahun 2024. Materi dibagi ke dalam tiga modul hierarkis: (1) CH01 (\textit{Basic Selection}), (2) CH02 (\textit{Aggregation}), dan (3) CH03 (\textit{Advanced Querying}).
+
+Setiap modul dilengkapi dengan bank soal berisi \textbf{25 butir soal} dengan tingkat kesulitan yang bervariasi. Penentuan kuantitas ini merujuk pada temuan \textcite{Vesin2022} yang menyatakan bahwa konvergensi optimal kemahiran siswa dalam sistem adaptif tercapai dalam rata-rata \textbf{10 iterasi}. Dengan menyediakan 25 soal per modul, sistem menjamin variasi yang cukup untuk mencegah siswa menghafal jawaban (\textit{answer memorization}) serta memberikan ruang bagi algoritma untuk melakukan kalibrasi ulang terhadap tingkat kesulitan soal secara dinamis.
+
+\subsection{Kalkulasi Ambang Batas Transisi Modul}
+Sistem menerapkan batasan skor Elo untuk mengontrol progres siswa antar modul dengan ambang batas: CH01 (0), CH02 (1300), dan CH03 (1500). Penetapan selisih 200 poin antara CH02 dan CH03 didasarkan pada asumsi 10 iterasi sukses untuk mencapai penguasaan modul. Berdasarkan kalkulasi algoritma Elo yang dimodifikasi, estimasi kenaikan skor rata-rata per soal ($\Delta\theta$) dihitung dengan asumsi siswa menjawab benar pada median waktu pengerjaan ($t_i = 0,5 d_i$) sebagai berikut:
+\begin{enumerate}
+    \item Diketahui parameter diskriminasi waktu $a_i = 10^{-6}$ dan batas waktu $d_i = 300.000$ms, maka komponen waktu $a_i(d_i - t_i) = 10^{-6}(300.000 - 150.000) = 0,15$.
+    \item Nilai keberhasilan dihitung melalui Persamaan \ref{eq:rumus_W_elo} (asumsi pengerjaan benar satu kali upaya): $W = 1 \times (1 + 0,15) = 1,15$.
+    \item Dengan $K=30$ dan $W_e=0,5$ (saat kemampuan setara kesulitan), maka $\Delta\theta = 30(1,15 - 0,5) = 19,5 \approx 20$.
+\end{enumerate}
+Dengan kenaikan $\approx 20$ poin per soal, maka 10 iterasi sukses akan menghasilkan peningkatan kemahiran sebesar 200 poin, yang menjadi dasar logis perpindahan ke modul berikutnya.
+
+\subsection{Rubrik Penilaian Kolaboratif}
+Penilaian pada aktivitas kolaboratif (\textit{Social Elo}) diimplementasikan melalui modul evaluasi teks otomatis yang menguantifikasi kualitas umpan balik dari siswa sebagai \textit{reviewer}. Mengingat kompleksitas pemrosesan bahasa alami pada purwarupa, sistem menggunakan mekanisme \textit{keyword matching} tertimbang yang disusun berdasarkan integrasi dua landasan teoretis:
+
+\begin{enumerate}
+    \item \textbf{Fitur Struktural Umpan Balik \autocite{Kerman2024}:} Sistem membagi skor struktural menjadi tiga komponen utama dengan pembobotan berdasarkan kekuatan prediksinya terhadap kesuksesan revisi tugas. 
+    \begin{itemize}
+        \item \textit{Identification} (Bobot 0,3): Pemindaian kata kunci terkait deteksi kesalahan (misal: \textit{salah, kurang, missing, error}).
+        \item \textit{Justification} (Bobot 0,4): Pemindaian kata kunci kausalitas yang menjelaskan alasan logis (misal: \textit{karena, sebab, therefore, due to}). Komponen ini diberi bobot tertinggi karena merupakan prediktor terkuat keberhasilan belajar menurut temuan Kerman dkk.
+        \item \textit{Constructive} (Bobot 0,3): Pemindaian kata kunci saran perbaikan (misal: \textit{coba, gunakan, fix, should}).
+    \end{itemize}
+    \item \textbf{Bonus Kedalaman Kognitif \autocite{ACM2023}:} Sistem memberikan \textit{depth bonus} (maksimal 0,2) jika teks umpan balik mengandung kata kerja komputasi tingkat tinggi (\textit{higher-order verbs}) seperti \textit{optimize, refactor, debug,} atau \textit{validate}. Keberadaan kata-kata ini mengindikasikan bahwa siswa melakukan analisis mendalam terhadap kode rekan sejawatnya, bukan sekadar memberikan komentar permukaan.
+\end{enumerate}
+
+Logika ini dienkapsulasi dalam fungsi \texttt{calculate\_system\_score} yang menghasilkan nilai normalisasi $[0, 1]$ sebagai input bagi pembaruan \textit{Social Elo} terhadap \textit{expected score} netral (0,5).
+
+\section{Implementasi Teknis \textit{Backend}}
+\label{sec:backend_implementation}
+
+Bagian ini membahas detail implementasi sisi peladen yang bertanggung jawab atas seluruh logika adaptivitas dan keamanan sistem.
+
+\subsection{Arsitektur API dan Standardisasi}
+Implementasi \textit{backend} dibangun menggunakan \textit{framework} \textbf{FastAPI} yang mendukung operasi \textit{asynchronous} I/O secara \textit{non-blocking}, yang krusial untuk menangani permintaan eksekusi \textit{query} SQL dan kalkulasi Elo secara simultan. Arsitektur ini mengadopsi beberapa standar industri:
+
+\begin{enumerate}
+    \item \textbf{Modularitas Router:} Logika API dipecah ke dalam beberapa modul \texttt{APIRouter} (seperti \texttt{auth.py, session.py, collaboration.py}) untuk memisahkan domain tanggung jawab. Setiap \textit{endpoint} dilengkapi dengan skema validasi data menggunakan \textbf{Pydantic V2}, yang menjamin tipe data yang masuk ke sistem selalu konsisten dengan kontrak API.
+    \item \textbf{Standardisasi JSend:} Untuk mempermudah penanganan \textit{error} pada sisi \textit{frontend}, sistem menggunakan format respons JSend yang terdiri dari:
+    \begin{itemize}
+        \item \texttt{status}: Berupa \textit{success} (2xx) artinya permintaan diterima dan server berhasil menemukan sumber daya yang diminta, \textit{fail} (4xx) artinya permintaan gagal karena kesalahan pengguna, atau \textit{error} (5xx) artinya terjadi kesalahan internal server.
+        \item \texttt{code}: Kode status HTTP spesifik untuk semantik logika aplikasi.
+        \item \texttt{data}: \textit{Payload} utama yang dikirimkan kepada pengguna.
+        \item \texttt{message}: Pesan deskriptif jika terjadi kegagalan sistem.
+    \end{itemize}
+    \item \textbf{Keamanan dan Autentikasi:} Setiap permintaan ke \textit{endpoint} sensitif diwajibkan menyertakan \textbf{JSON Web Token (JWT)} pada \textit{header} otorisasi. Sistem menerapkan \textit{dependency injection} pada FastAPI (\texttt{get\_current\_user}) untuk mendekripsi token HS256 dan memvalidasi identitas pengguna sebelum mengeksekusi logika bisnis. Hal ini memastikan bahwa model kompetensi seorang siswa tidak dapat dimanipulasi oleh pengguna lain secara tidak sah.
+\end{enumerate}
+
+\subsection{Mesin Elo dan Deteksi Stagnasi}
+Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelola dua aspek utama:
+\begin{enumerate}
+    \item \textbf{Siklus Pembaruan Skor:} Berbeda dengan implementasi ProTuS asli, pembaruan rating hanya dilakukan satu kali saat siswa berpindah soal (\textit{event next}) untuk mengakomodasi mekanisme \textbf{\textit{multi-attempt}} (maksimal 3 upaya). Rasionalisasi pembatasan tiga upaya ini didasarkan pada kebutuhan untuk menyeimbangkan manfaat pedagogis belajar dari kesalahan dengan kejelasan sinyal kompetensi bagi algoritma. Terlalu banyak upaya berisiko mendistorsi penilaian karena keberhasilan pengerjaan mungkin lebih mencerminkan proses \textit{trial-and-error} daripada penguasaan materi yang sebenarnya. Batasan tiga kali memberikan gradasi skor yang cukup ($1,0$; $0,5$; dan $0,33$) bagi algoritma untuk melakukan kalibrasi tanpa mengorbankan validitas pemodelan kemahiran.
+    \item \textbf{Kalkulasi Numerik Stagnasi:} Deteksi stagnasi dihitung berdasarkan variansi $\Delta\theta$ pada jendela lima aktivitas terakhir. Sistem menggunakan ambang batas $\epsilon = 165$, yang merupakan nilai \textit{median} antara variansi stagnasi parah ($\sigma^2 \leq 10$, misal: $\Delta\theta = [-4, +3, -2, +4, -3]$) dan variansi fluktuasi belajar normal ($\sigma^2 \geq 340$, misal: $\Delta\theta = [+25, -15, +20, -10, +18]$). Pemilihan nilai median ini bertujuan untuk mengakomodasi populasi uji yang kecil pada purwarupa agar deteksi tetap sensitif namun tidak reaktif terhadap fluktuasi sesaat.
+\end{enumerate}
+
+\subsection{Keamanan Eksekusi dan \textit{Sandbox} SQL}
+Keamanan eksekusi merupakan aspek paling krusial karena sistem mengizinkan input kode mentah dari pengguna. Implementasi keamanan dilakukan melalui strategi multi-lapis untuk mencegah serangan \textit{SQL Injection} maupun akses data ilegal:
+\begin{enumerate}
+    \item \textbf{Isolasi Skema dan Data:} Sistem memisahkan skema \texttt{sandbox} yang berisi tabel-tabel simulasi (seperti \texttt{student, course, instructor}) dari skema operasional \texttt{public}. Data pada skema \texttt{sandbox} bersifat statis dan tidak mengandung informasi sensitif pengguna.
+    \item \textbf{\textit{Principle of Least Privilege}:} Eksekusi \textit{query} dilakukan menggunakan akun basis data khusus (\texttt{sandbox\_executor}) yang hak aksesnya dibatasi secara ketat melalui perintah \texttt{REVOKE ALL} pada skema \texttt{public} dan hanya diberikan izin \texttt{SELECT} pada skema \texttt{sandbox}. Hal ini memastikan bahwa meskipun filter keamanan pada aplikasi berhasil ditembus, basis data tetap terlindungi dari operasi destruktif.
+    \item \textbf{Sanitasi \textit{Query} dan \textit{Blocklist}:} Sebelum dikirim ke \textit{database engine}, modul \texttt{sandbox\_executor.py} melakukan pemindaian \textit{case-insensitive} terhadap kata kunci manipulatif. Selain perintah DDL/DML dasar (\texttt{DROP, UPDATE, DELETE, TRUNCATE, ALTER}), sistem juga memblokir kata kunci administratif seperti \texttt{GRANT, REVOKE, PG\_} (untuk mencegah akses ke metadata PostgreSQL), serta karakter komentar SQL (\texttt{--}) yang sering digunakan untuk menyembunyikan serangan.
+    \item \textbf{Kontrol Sumber Daya (\textit{Resource Limiting}):} Untuk mencegah serangan \textit{Denial of Service} (DoS) melalui \textit{query} yang sengaja dibuat berat (\textit{intensive}), sistem menerapkan \texttt{statement\_timeout} sebesar 5000 ms. Selain itu, luaran eksekusi dibatasi hanya pada sejumlah baris tertentu guna menjaga stabilitas memori pada sisi peladen.
+\end{enumerate}
+
+\section{Implementasi Teknis \textit{Frontend}}
+\label{sec:frontend_implementation}
+
+Implementasi sisi klien berfokus pada penyajian antarmuka yang reaktif dan informatif untuk mendukung alur belajar adaptif secara \textit{real-time}. Bagian ini merinci arsitektur perangkat lunak sisi klien, manajemen \textit{state}, serta detail komponen antarmuka yang digunakan dalam sistem.
+
+\subsection{Arsitektur Perangkat Lunak dan Antarmuka}
+\textit{Frontend} dibangun menggunakan \textbf{React 18} dengan \textit{build tool} \textbf{Vite} untuk menjamin performa pengembangan yang optimal. Desain antarmuka mengadopsi pendekatan modern menggunakan \textbf{Tailwind CSS} untuk penataan gaya yang efisien dan komponen dari \textbf{Shadcn UI}. Penggunaan komponen berbasis \textbf{Radix UI} ini memastikan aksesibilitas dan konsistensi visual di seluruh aplikasi. Sistem juga menggunakan \textbf{Lucide React} untuk ikonografi yang konsisten dan \textbf{Framer Motion} untuk memberikan umpan balik visual melalui animasi transisi antar modul pengerjaan.
+
+\subsection{Manajemen \textit{State} Global dengan Zustand}
+Sistem menggunakan \textbf{Zustand} sebagai solusi manajemen \textit{state} global yang modular. Pendekatan ini memisahkan logika aplikasi ke dalam beberapa \textit{store} khusus:
+\begin{enumerate}
+    \item \textbf{\textit{Auth Store}} (\texttt{authStore.ts}): Mengelola status autentikasi pengguna, penyimpanan profil ($\textit{theta\_individu}$, $\textit{theta\_social}$), serta persistensi token JWT.
+    \item \textbf{\textit{Session Store}} (\texttt{sessionStore.ts}): Mengelola siklus hidup sesi aktif, termasuk pelacakan progres soal, jumlah upaya (\textit{attempts}), dan status pengerjaan siswa.
+\end{enumerate}
+
+\subsection{Editor Kode dan Eksekusi Query}
+Antarmuka pengerjaan soal mengintegrasikan \textbf{CodeMirror 6} sebagai komponen editor kode SQL utama. Editor ini dikonfigurasi dengan fitur \textit{syntax highlighting} PostgreSQL dan \textit{autocomplete} untuk membantu siswa dalam menyusun \textit{query}. Siswa berinteraksi dengan editor untuk menulis solusi, yang kemudian dikirim ke \textit{backend} untuk dieksekusi pada skema \textit{sandbox}.
+
+\subsection{Visualisasi Kemahiran dan Umpan Balik Pengerjaan}
+Sistem memberikan umpan balik instan kepada siswa tanpa menggunakan pustaka grafik eksternal, melainkan melalui komponen kustom yang dioptimalkan:
+\begin{enumerate}
+    \item \textbf{Indikator Kemahiran (\textit{Theta Progress})}: Progres kemahiran siswa divisualisasikan menggunakan \textit{progress bar} berbasis CSS yang memetakan nilai \textit{theta} dalam rentang $[1000, 1800]$. Hal ini memberikan indikasi langsung mengenai pertumbuhan kompetensi siswa tanpa beban komputasi grafik yang berat.
+    \item \textbf{Umpan Balik Hasil Query}: Melalui komponen \texttt{QueryResultDisplay}, sistem menampilkan hasil eksekusi SQL siswa secara detail. Jika jawaban benar, sistem menampilkan tabel hasil data; jika salah, sistem menyajikan pesan kesalahan atau perbandingan luaran untuk membantu siswa melakukan perbaikan pada percobaan berikutnya.
+    \item \textbf{Papan Peringkat (\textit{Leaderboard})}: Halaman papan peringkat menyajikan urutan siswa berdasarkan nilai \textit{theta\_display}. Fitur ini dirancang untuk memberikan motivasi belajar melalui perbandingan prestasi antar rekan sejawat dalam lingkungan yang teranonimisasi.
+\end{enumerate}
+
+\subsection{Routing dan Keamanan Sisi Klien}
+Sistem routing dikelola menggunakan \textbf{React Router 6} dengan mekanisme pelindungan rute:
+\begin{itemize}
+    \item \textbf{\textit{ProtectedRoute}}: Membatasi akses ke fitur inti hanya bagi pengguna yang telah terautentikasi.
+    \item \textbf{\textit{PretestGate}}: Memastikan setiap pengguna baru menyelesaikan sesi \textit{pre-test} sebelum dapat mengakses modul pembelajaran utama, guna menjamin akurasi kalibrasi awal sistem.
+\end{itemize}
+
+\section{Integrasi dan \textit{Deployment}}
+\label{sec:integration_deployment}
+
+Seluruh komponen sistem disatukan dalam ekosistem kontainer menggunakan \textbf{Docker Compose} untuk menjamin konsistensi lingkungan. Purwarupa dideploy menggunakan layanan \textbf{Railway} dengan strategi \textit{Continuous Deployment} dari repositori GitHub. Penggunaan paket \textit{Hobby Railway} (5 USD) dipilih untuk menjamin ketersediaan layanan selama jam sibuk pengujian tanpa hambatan batasan waktu \textit{deployment} yang ada pada paket gratis.
+
+\section{Analisis Kesesuaian Pelaksanaan}
+\label{sec:analisis_kesesuaian}
+
+\subsection{Kesesuaian Linimasa Pelaksanaan}
+Realisasi pengembangan sistem secara umum mengalami keterlambatan satu bulan dibandingkan rencana awal. Tahap pengujian (\textit{Controlled Lab Study}) baru dapat dilaksanakan pada minggu pertama Mei 2026. Realisasi jadwal pelaksanaan aktual disajikan pada Gambar \ref{fig:gantt_chart_realisasi}.
+
+\begin{figure}[!ht]
+    \centering
+    \framebox[0.9\textwidth]{\vbox{\vspace{3cm} \centering [Placeholder: Gantt Chart Realisasi Linimasa Implementasi] \vspace{3cm}}}
+    \caption{Gantt Chart Realisasi Pelaksanaan Implementasi dan Pengujian}
+    \label{fig:gantt_chart_realisasi}
+\end{figure}
+
+\subsection{Kesesuaian Anggaran Biaya}
+Realisasi biaya operasional sistem disajikan pada Tabel \ref{tbl:realisasi_rab}. Terjadi efisiensi biaya pada komponen LLM yang tidak digunakan, namun terdapat pengeluaran untuk konsolidasi infrastruktur awan guna menjaga kelancaran pengembangan.
+
+\begin{table}[!ht]
+    \centering
+    \caption{Realisasi Anggaran Biaya Implementasi}
+    \label{tbl:realisasi_rab}
+    \begin{tabular}{|p{0.05\textwidth}|p{0.35\textwidth}|p{0.30\textwidth}|p{0.20\textwidth}|}
+        \hline
+        \textbf{No} & \textbf{Komponen} & \textbf{Spesifikasi/Layanan} & \textbf{Biaya (Rp)} \\
+        \hline
+        1 & \textit{Consolidated Hosting} & Railway (\textit{Hobby Tier}) & Rp 80.000 \\
+        \hline
+        2 & \textit{Domain} & Subdomain Provider & Rp 0 \\
+        \hline
+        3 & Layanan LLM & Tidak digunakan & Rp 0 \\
+        \hline
+        4 & Perangkat \& Internet & Aset Pribadi / \textit{Sunk Cost} & Rp 0 \\
+        \hline
+        \multicolumn{3}{|r|}{\textbf{Total Biaya Aktual}} & \textbf{Rp 80.000} \\
+        \hline
+    \end{tabular}
+\end{table}
