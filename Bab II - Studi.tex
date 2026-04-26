@@ -790,10 +790,23 @@ dalam algoritma asesmen inti (seperti \textit{Elo rating} atau BKT) untuk
 mengubah perhitungan kemahiran individu secara dinamis atau merekomendasikan
 intervensi kolaboratif.
 
+\section{\textit{Overpersonalization} dalam Konteks Pendidikan}
+\label{sec:overpersonalization_dalam_pendidikan}
+
+Implementasi algoritma personalisasi dalam sistem pembelajaran adaptif bertujuan untuk mengoptimalkan efisiensi akuisisi pengetahuan dengan menyesuaikan materi terhadap profil unik setiap siswa. Namun, optimasi yang terlalu agresif terhadap parameter individu tanpa mempertimbangkan aspek eksplorasi dan keberagaman informasi dapat memicu fenomena \textit{overpersonalization} \autocite{Halkiopoulos2024}. Risiko ini muncul ketika sistem menciptakan lingkungan yang terlalu tertutup, sehingga membatasi paparan siswa terhadap konsep-konsep baru yang krusial bagi pengembangan kognitif yang holistik. Subbab berikut akan mengulas manifestasi dari kondisi tersebut serta metrik yang digunakan untuk mengukurnya.
+
+\subsection{Manifestasi \textit{Overpersonalization} dalam Pembelajaran}
+
+Manifestasi dari \textit{overpersonalization} dalam lingkungan pendidikan dapat diamati melalui perubahan perilaku kognitif pembelajar saat berinteraksi dengan sistem yang terlalu terpersonalisasi. Menurut penelitian \textcite{Bahg2025}, pelajar dalam ekosistem kognitif yang membatasi keberagaman informasi cenderung melakukan sampling informasi secara lebih selektif. Hal ini menyebabkan pembentukan representasi kategori (materi pembelajaran) yang tidak tepat karena pembelajar hanya terpapar pada subset data yang sempit dan homogen. Secara fundamental, fenomena ini mengindikasikan bahwa dampak negatif \textit{overpersonalization} tidak hanya terbatas pada isolasi informasi, tetapi juga menyebabkan distorsi pemahaman, bias dalam pengambilan sampel informasi, serta generalisasi pengetahuan yang tidak tepat \autocite{Bahg2025}. Dampak ini diperparah oleh pembentukan \textit{filter bubble} yang, sebagaimana ditunjukkan oleh \textcite{Jiang2025}, menyebabkan penurunan diversifikasi konsumsi informasi secara signifikan, yang pada akhirnya membatasi cakrawala intelektual siswa.
+
+\subsection{Pengukuran \textit{Overpersonalization} dalam Pembelajaran}
+
+Pengukuran terhadap tingkat \textit{overpersonalization} memerlukan metrik yang mampu menangkap aspek keberagaman dalam rekomendasi konten edukasi. Dalam domain sistem rekomendasi secara umum, \textcite{Ren2025} menyatakan bahwa pengukuran tingkat diversitas dapat dilakukan menggunakan metrik variansi atau entropi, seperti \textit{Shannon Entropy}, untuk mengkuantifikasi seberapa luas sebaran entitas dan relasi yang dikonsumsi oleh pengguna dibandingkan dengan total ruang pengetahuan yang tersedia. Dalam konteks spesifik pembelajaran, indikasi \textit{overpersonalization} juga dapat dideteksi melalui kemunculan fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}. Fenomena ini ditandai dengan stagnasi kemajuan belajar siswa yang disebabkan oleh kurangnya variasi terhadap tantangan atau tingkat kesulitan yang dihadapi. Ketika sistem terus-menerus menyajikan materi yang terlalu selaras dengan zona nyaman siswa tanpa memberikan paparan terhadap konsep-konsep baru yang beragam, siswa kehilangan stimulasi kognitif yang diperlukan untuk keluar dari stagnasi tersebut.
+
 \section{Upaya Penyelesaian Masalah \textit{Overpersonalization} yang Ada Saat Ini}
 \label{sec:upaya_penyelesaian}
 
-Masalah \textit{overpersonalization} telah menjadi perhatian utama dalam penelitian sistem rekomendasi modern karena dampaknya dalam menciptakan \textit{filter bubbles} dan \textit{echo chambers}. Untuk mengatasi isolasi pengguna ini tanpa mengorbankan relevansi secara signifikan, peneliti telah mengembangkan berbagai pendekatan teknis yang inovatif. Tiga pendekatan yang paling menonjol dan relevan melibatkan penggunaan rekomendasi berbasis kelompok (\textit{Group Recommender Systems}), pemberian kendali kepada pengguna (\textit{User Controllable Systems}), dan pemodelan komunitas secara implisit (\textit{Implicit Community Modeling}).
+Setelah memahami manifestasi kognitif dan metrik pengukuran dari \textit{overpersonalization} sebagaimana dibahas pada bagian sebelumnya, diperlukan tinjauan terhadap solusi teknis yang telah dikembangkan untuk memitigasi dampak tersebut. Masalah \textit{overpersonalization} telah menjadi perhatian utama dalam penelitian sistem rekomendasi modern karena dampaknya dalam menciptakan \textit{filter bubbles} dan \textit{echo chambers} yang menghambat pertumbuhan pengetahuan. Untuk mengatasi isolasi pengguna ini tanpa mengorbankan relevansi secara signifikan, peneliti telah mengeksplorasi berbagai pendekatan yang berusaha menyeimbangkan antara akurasi personalisasi dengan kebutuhan akan keberagaman informasi. Tiga pendekatan yang paling menonjol dan relevan melibatkan penggunaan rekomendasi berbasis kelompok (\textit{Group Recommender Systems}), pemberian kendali kepada pengguna (\textit{User Controllable Systems}), dan pemodelan komunitas secara implisit (\textit{Implicit Community Modeling}).
 
 \subsection{Sistem Rekomendasi yang Dapat Dikontrol Pengguna (\textit{User Controllable Recommender Systems})}
 \label{subsec:ucrs}
@@ -1017,7 +1030,7 @@ tahap \textit{post-processing}, sebagaimana dijelaskan secara teknis oleh
 kondisi data terbatas (\textit{cold-start}) dibandingkan metode berbasis
 \textit{Deep Learning} yang membutuhkan pelatihan ekstensif.
 
-\subsection{Evaluasi Efektivitas Pembelajaran dengan \textit{Normalized Learning Gain}}
+\section{Evaluasi Efektivitas Pembelajaran dengan \textit{Normalized Learning Gain}}
 
 Dalam ranah penelitian pendidikan fisika and teknologi pembelajaran, pengukuran
 efektivitas intervensi instruksional sering kali menghadapi tantangan bias yang

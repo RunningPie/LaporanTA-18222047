@@ -86,7 +86,7 @@ Diagram di atas menunjukkan interaksi yang diawali oleh Aktor \textbf{Siswa} dan
     \end{enumerate}
     
     \item \textbf{Entity Objects (\texttt{currentTask} \& \texttt{currentUser}):} 
-    Objek yang merepresentasikan konsep data persisten yang berumur panjang. Objek ini menyimpan \textbf{state} penting seperti parameter tingkat kesulitan soal ($D_j$) dan skor kemahiran siswa ($\theta$) yang menjadi basis perhitungan bagi objek \textit{Control}.
+    Objek yang merepresentasikan konsep data persisten yang berumur panjang. Objek ini menyimpan \textbf{state} penting seperti parameter tingkat kesulitan soal ($D_j$) serta skor kemahiran siswa yang mencakup dimensi kemampuan individu dan kontribusi sosialnya dalam sistem. Data ini menjadi basis perhitungan utama bagi objek \textit{Control}.
 \end{enumerate}
 
 Alur pesan (\textit{Message Flow}) pada diagram menunjukkan bahwa interaksi tidak hanya terjadi antar-modul, melainkan melibatkan manipulasi langsung terhadap objek data (\textit{Entities}). Misalnya, pesan \texttt{updateElo()} dikirimkan ke objek \texttt{currentUser}, dan pesan \texttt{getDifficulty()} diambil dari objek \texttt{currentTask}.
@@ -99,11 +99,11 @@ Alur pertukaran pesan pada Gambar \ref{fig:communication_diagram} dirancang untu
     
     \item \textbf{Deteksi Stagnasi (Pesan 5):}
     Segera setelah pembaruan skor, kontroller mengirim pesan \texttt{checkStagnation()} ke objek \texttt{currentUser}. 
-    Langkah ini krusial untuk mengubah sifat sistem dari pasif menjadi aktif. Sistem tidak menunggu pengguna mengeluh bosan atau kemajuan belajarnya terhambat, melainkan secara proaktif memeriksa variabilitas skor (volatilitas) untuk mendeteksi tanda-tanda \textit{overpersonalization} atau \textit{competency bubble} secara \textit{real-time}.
+    Langkah ini dirancang untuk mendeteksi fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}, yaitu kondisi stagnasi kognitif akibat personalisasi berlebih. Deteksi dilakukan secara algoritmik dengan menghitung nilai variansi dari perubahan skor (\textit{variance of} $\Delta\theta$) pada beberapa aktivitas terakhir. Jika nilai variansi berada di bawah ambang batas ($\epsilon$) tertentu, hal tersebut diinterpretasikan sebagai konvergensi prematur yaitu kondisi yang mengindikasikan tantangan sistem sudah terlalu selaras dengan kemampuan siswa saat ini sehingga tidak lagi mendorong pertumbuhan kognitif.
     
     \item \textbf{Delegasi Mitigasi (Pesan 6-7):}
-    Jika status stagnasi bernilai \textit{true}, kontroller tidak menangani pencarian mitra sendiri, melainkan mendelegasikannya ke objek \texttt{:ReRankingService} melalui pesan \texttt{findHeterogeneousPeer()}.
-    Pemisahan ini dilakukan untuk mengisolasi logika algoritma \textit{Constraint-based Re-ranking} \autocite{DeBiasio2023} yang kompleks. Layanan ini bertanggung jawab menerapkan batasan statistik (seperti jarak $>1\sigma$) untuk menyaring daftar kandidat mitra, memastikan bahwa rekan yang terpilih benar-benar dapat memecahkan isolasi kompetensi siswa.
+    Jika status stagnasi bernilai \textit{true}, kontroller tidak menangani pencarian rekan sendiri, melainkan mendelegasikannya ke objek \texttt{:ReRankingService} melalui pesan \texttt{findHeterogeneousPeer()}.
+    Pemisahan ini dilakukan untuk mengisolasi logika algoritma \textit{Constraint-based Re-ranking} \autocite{DeBiasio2023} yang kompleks. Layanan ini bertanggung jawab menerapkan batasan statistik berdasarkan indeks \textit{Effect Size} (seperti \textit{Cohen's d} $\geq 0.5$) untuk menyaring daftar kandidat rekan, memastikan bahwa rekan yang terpilih memiliki perbedaan tingkat kemampuan yang cukup signifikan untuk memecahkan isolasi kompetensi siswa.
     
     \item \textbf{Eksekusi Intervensi (Pesan 8):}
     Setelah mendapatkan umpan balik yang valid, \texttt{:AssessmentController} akan mengirimkan pesan \texttt{showPeerTask()} ke \texttt{:LearningInterface}.
@@ -133,13 +133,13 @@ Berdasarkan pemodelan konteks, interaksi, struktur, dan perilaku yang telah diur
         \textbf{\textit{Pembaruan satu sumber:}} \newline
         Model pengetahuan siswa hanya diperbarui oleh satu sumber data: hasil pengerjaan tugas individu. Aktivitas sosial tidak dikuantifikasi menjadi metrik kompetensi. & 
         \textbf{\textit{Siklus pembaruan dua sumber:}} \newline
-        Model pengetahuan diperbarui dari dua jalur: (1) skor tugas individu, dan (2) kualitas reviu sejawat. Aktivitas sosial dikonversi menjadi data kompetensi yang setara dengan tugas akademik. \\
+        Model profil siswa diperbarui dari dua jalur: (1) skor tugas individu (dominan), dan (2) kualitas reviu sejawat. Aktivitas sosial dikonversi menjadi dimensi kontribusi sosial yang menjadi komponen komplementer dalam pemodelan profil siswa yang komprehensif. \\
         \hline
         \textbf{Logika Rekomendasi} & 
         \textbf{\textit{Heterogenitas opsional:}} \newline
         Algoritma cenderung merekomendasikan konten yang "nyaman" (sesuai tingkat kemampuan), berisiko menciptakan \textit{competency bubble} dan kompetensi semu. & 
         \textbf{\textit{Heterogenitas secara Desain:}} \newline
-        Algoritma \textit{Re-ranking} secara eksplisit memaksakan batasan statistik ($\alpha$) untuk menyuntikkan mitra belajar yang berbeda level ($>1\sigma$), memecahkan isolasi melalui eksposur diversitas. \\
+        Algoritma \textit{Re-ranking} secara eksplisit memaksakan batasan statistik ($\alpha$) untuk menyuntikkan mitra belajar dengan perbedaan tingkat kemampuan yang signifikan berdasarkan indeks \textit{Effect Size} (seperti \textit{Cohen's d}), memecahkan isolasi melalui eksposur diversitas. \\
         \hline
         \textbf{Mekanisme Mitigasi Isolasi} & 
         \textbf{\textit{Kesadaran manual:}} \newline
