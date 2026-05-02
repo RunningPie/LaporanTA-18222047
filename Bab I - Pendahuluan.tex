@@ -7,29 +7,18 @@
 
 Pergeseran paradigma pendidikan tinggi global saat ini bergerak signifikan dari
 pendekatan pedagogis yang berpusat pada pengajar menuju pendekatan yang berpusat
-pada siswa \autocite{Ryoo2021}. Transformasi ini didorong oleh perkembangan
-\textit{Personalized Learning} (PL), sebuah metode pendidikan yang menyesuaikan
-materi, urutan, dan kecepatan belajar berdasarkan keterampilan serta preferensi
-unik setiap individu. Kunci utama dalam merealisasikan personalisasi ini adalah
-pemanfaatan kecerdasan artifisial (AI) melalui sistem \textit{Adaptive
-Assessment} (AA), yang mampu secara dinamis menyesuaikan tingkat kesulitan konten
-berdasarkan kinerja dan pengetahuan yang ditunjukkan oleh peserta didik secara
-\textit{real-time} \autocite{Halkiopoulos2024}.
-
-Menyadari potensi transformatif ini, pemerintah Indonesia telah menetapkan
-pendidikan dan riset sebagai salah satu dari lima bidang prioritas dalam Strategi
-Nasional Kecerdasan Artifisial (Stranas KA) 2020--2045 \autocite{BPPT2020}.
-Dokumen strategis ini secara eksplisit menyerukan ditinggalkannya pendekatan
-kaku ``\textit{one size fits all}'' dan mendorong eksplorasi pengembangan sistem
-penilaian cerdas yang adaptif. Secara teknis, berbagai algoritma telah
-dikembangkan untuk mendukung visi ini, mulai dari \textit{Bayesian Knowledge
-Tracing} (BKT) yang memodelkan transisi penguasaan keterampilan, hingga
-\textit{Deep Knowledge Tracing} (DKT) yang memanfaatkan \textit{Recurrent Neural
-Network} (RNN) untuk pelacakan pengetahuan yang lebih presisi \autocite{Minn2022}.
-Metode yang lebih praktis dan dapat diinterpretasikan seperti sistem
-\textit{Elo rating} juga telah terbukti efisien secara komputasi untuk
-mengestimasi kemampuan siswa dan kesulitan soal secara dinamis
-\autocite{Vesin2022}.
+pada siswa melalui \textit{Personalized Learning} \autocite{Ryoo2021}. Transformasi
+ini didorong oleh sistem \textit{Adaptive Assessment} (AA) berbasis kecerdasan
+artifisial yang secara dinamis menyesuaikan tingkat kesulitan konten berdasarkan
+kinerja peserta didik secara \textit{real-time} \autocite{Halkiopoulos2024}. Sejalan
+dengan visi tersebut, pemerintah Indonesia melalui Strategi Nasional Kecerdasan
+Artifisial (Stranas KA) 2020--2045 secara eksplisit mendorong pengembangan sistem
+penilaian cerdas yang adaptif \autocite{BPPT2020}. Secara teknis, berbagai algoritma
+mulai dari \textit{Bayesian Knowledge Tracing} (BKT), \textit{Deep Knowledge Tracing}
+(DKT), hingga sistem \textit{Elo rating} telah dikembangkan untuk mengestimasi
+kemampuan siswa secara presisi \autocite{Minn2022, Vesin2022}. Implementasi teknik
+tersebut krusial untuk meninggalkan pendekatan kaku ``\textit{one size fits all}''
+demi mengoptimalkan jalur belajar individu di era digital.
 
 Meskipun teknik-teknik tersebut unggul dalam mengoptimalkan jalur
 belajar individu, penerapan yang naif terhadap algoritma yang hanya berfokus
@@ -47,45 +36,39 @@ prinsip homofili (kemiripan) cenderung menciptakan \textit{echo chambers}
 akademik \autocite{Tommasel2021}, menghalangi interaksi sosial yang krusial bagi
 pengembangan keterampilan kolaboratif.
 
-Tinjauan literatur terkini mengonfirmasi adanya kesenjangan teknologi dalam
-mengatasi dilema ini. Mayoritas sistem asesmen adaptif yang ada saat ini masih
-berfokus eksklusif pada pelacakan pengetahuan individu tanpa mengintegrasikan
-mekanisme penilaian sosial \autocite{Ihichr2024}. Model-model yang berfokus
-tunggal seperti DKT atau sistem Elo standar secara inheren sulit menyeimbangkan
-antara memberikan materi yang paling sesuai kemampuan individu dengan materi
-yang memicu pertumbuhan melalui interaksi kelompok \autocite{Dokoupil2022}.
-
-Kondisi ini menghadirkan tantangan sekaligus peluang strategis bagi implementasi
-Stranas KA di Indonesia. Jika pengembangan sistem pendidikan nasional hanya
-mengadopsi teknologi adaptif konvensional, Indonesia berisiko mewarisi kelemahan
-fundamental berupa isolasi pembelajaran tersebut. Oleh karena itu, pengembangan
-sistem asesmen di Indonesia tidak seharusnya sekadar meniru, melainkan perlu
-melakukan lompatan teknologi dengan merancang sistem yang sejak awal memitigasi
-risiko \textit{overpersonalization}. Dibutuhkan sebuah pendekatan baru yang
-mampu mengelola keseimbangan antara adaptivitas personal dan dinamika kolaboratif,
-memastikan bahwa intervensi teknologi memperkuat, bukan melemahkan, ekosistem
-pembelajaran sosial.
+Tinjauan literatur terkini mengonfirmasi bahwa ketergantungan eksklusif pada
+algoritma personalisasi yang hanya mengoptimalkan parameter individu tanpa ruang
+eksplorasi membawa dampak kognitif yang merugikan bagi pembelajar. Bukti
+eksperimental menunjukkan bahwa lingkungan yang terpersonalisasi secara agresif
+memicu pengambilan sampel informasi yang sangat selektif sehingga membentuk
+representasi kognitif yang terdistorsi \autocite{Bahg2025}. Masalah ini semakin
+kritis karena siswa sering menunjukkan rasa percaya diri berlebih pada generalisasi
+pengetahuan yang keliru dan rentan terjebak dalam \textit{learning plateau}
+\autocite{Bahg2025, Halkiopoulos2024}. Dalam konteks nasional, ancaman \textit{filter
+bubbles} akademik ini berisiko melahirkan generasi pembelajar yang terisolasi
+kognisinya jika implementasi Stranas KA hanya mengadopsi teknologi adaptif konvensional.
+Oleh karena itu, risiko isolasi kognitif ini harus dipahami secara mendalam agar
+intervensi teknologi tidak justru mengasingkan pembelajar dari manfaat esensial
+pembelajaran komunitas.
 
 % --- Rumusan Masalah ---
 \section{Rumusan Masalah}
 \label{sec:rumusan_masalah}
-Berdasarkan latar belakang tersebut, teridentifikasi adanya kebutuhan mendesak
-untuk mengembangkan sistem asesmen yang selaras dengan Stranas KA, namun tahan
-terhadap risiko isolasi pembelajaran yang kerap muncul pada sistem adaptif
-konvensional. Ketiadaan sistem di domain pendidikan saat ini 
-yang mampu meminimalkan efek dari isolasi pembelajaran ini menjadi
-masalah kesenjangan teknologi utama.
+Berdasarkan latar belakang tersebut, teridentifikasi adanya kebutuhan untuk
+mengeksplorasi pengembangan sistem asesmen yang selaras dengan Stranas KA, namun 
+juga mempertimbangkan risiko isolasi pembelajaran pada sistem adaptif
+konvensional. Kesenjangan teknologi saat ini terletak pada terbatasnya
+penelitian yang menguji apakah integrasi fitur kolaboratif dalam sistem asesmen
+adaptif dapat meminimalkan efek \textit{overpersonalization}.
 
 Maka dari itu, permasalahan utama yang ingin diselesaikan adalah:
 \begin{enumerate}
-  \item Implementasi purwarupa sistem
-  asesmen adaptif seperti apa yang mampu meminimalkan efek
-  \textit{overpersonalization} dengan mengintegrasikan metrik penilaian
-  individual ke dalam mekanisme pembelajaran kolaboratif?
-  \item Seberapa efektif purwarupa sistem dalam mempertahankan
-  fungsionalitas adaptif (personalisasi) sekaligus memfasilitasi
-  interaksi
-  sosial yang relevan saat diujicobakan pada pengguna?
+  \item Bagaimana rancang bangun dan implementasi purwarupa sistem asesmen
+  adaptif yang mengintegrasikan fitur kolaboratif sebagai upaya untuk
+  meminimalkan efek \textit{overpersonalization}?
+  \item Bagaimana efektivitas integrasi fitur kolaboratif tersebut dalam
+  meminimalkan efek \textit{overpersonalization} sekaligus mempertahankan
+  fungsionalitas personalisasi pada sistem asesmen adaptif?
 \end{enumerate}
 
 
@@ -93,18 +76,17 @@ Maka dari itu, permasalahan utama yang ingin diselesaikan adalah:
 \section{Tujuan}
 \label{sec:tujuan}
 Tujuan utama dari tugas akhir ini adalah \textbf{membangun purwarupa sistem
-asesmen adaptif kolaboratif yang dirancang untuk meminimalkan efek
-\textit{overpersonalization} dalam lingkungan pembelajaran}.
+asesmen adaptif kolaboratif untuk menguji apakah integrasi fitur kolaboratif
+dapat meminimalkan efek \textit{overpersonalization} dalam lingkungan pembelajaran}.
 
  Secara spesifik, tujuan penelitian ini adalah:
 \begin{enumerate}
-  \item Mengimplementasi sistem terintegrasi antara algoritma asesmen adaptif
-  dengan fitur kolaboratif sehingga
-  dapat merekomendasikan interaksi sosial yang relevan untuk
-  mengatasi \textit{overpersonalization} dalam pembelajaran.
-  \item Mengevaluasi purwarupa sistem melalui uji coba pengguna untuk mengukur
-  efektivitas sistem dalam memberikan pengalaman belajar yang adaptif tanpa
-  mengorbankan aspek kolaborasi.
+  \item Mengimplementasikan purwarupa sistem asesmen adaptif yang mengintegrasikan
+  fitur kolaboratif untuk mengeksplorasi potensi minimasi efek
+  \textit{overpersonalization}.
+  \item Mengevaluasi efektivitas sistem melalui uji coba pengguna untuk menguji
+  sejauh mana integrasi fitur kolaboratif mampu meminimalkan efek
+  \textit{overpersonalization} tanpa mengorbankan fungsionalitas adaptif sistem.
 \end{enumerate}
 
 % --- Batasan Masalah ---
