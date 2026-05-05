@@ -1743,11 +1743,11 @@ Frontend menampilkan konfirmasi kepada user. Jika user konfirmasi, frontend mema
 ### 12.1 Controlled Lab Study Design
 
 - **Method:** Two-Group Pretest-Posttest dengan Stratified Assignment (Ablation Study)
-- **Participants:** 20 mahasiswa STEI-K ITB yang telah menyelesaikan mata kuliah
+- **Participants:** 10 mahasiswa STEI-K ITB yang telah menyelesaikan mata kuliah
   Pemodelan Basis Data. Dipilih karena familiar dengan konsep SQL, namun diasumsikan
   mengalami sebagian forgetting sehingga sistem adaptif tetap relevan.
 - **Group Assignment:** Stratified berdasarkan nilai mata kuliah (A/AB/B/BC/C) untuk
-  memastikan distribusi kemampuan yang seimbang antar grup. Keseimbangan diverifikasi
+  memastikan distribusi kemampuan yang seimbang antar grup (5 partisipan per grup). Keseimbangan diverifikasi
   menggunakan theta_initial dari pretest (Mann-Whitney U test, target p > 0.05).
   Assignment dilakukan manual oleh instruktur sebelum lab study dimulai via field
   `group_assignment` di tabel `users`.
