@@ -1053,15 +1053,14 @@ antara populasi siswa yang memiliki latar belakang kemampuan yang heterogen
 \autocite{Nissen2018}.
 
 Secara matematis, perhitungan \textit{normalized gain} untuk rata-rata kelas
-atau individu dinyatakan dalam persamaan berikut, dengan asumsi skor dinyatakan
-dalam persentase:
+atau individu pada umumnya dinyatakan dalam persamaan berikut:
 
 \begin{align}
-    g &= \frac{\%\text{post} - \%\text{pre}}{100 - \%\text{pre}} \label{eq:normalized_gain_formula}
+    g &= \frac{\text{post} - \text{pre}}{\text{maksimum} - \text{pre}} \label{eq:normalized_gain_formula}
 \end{align}
 
-dengan $\%\text{pre}$ merepresentasikan persentase skor pada tes awal sebelum
-instruksi diberikan, and $\%\text{post}$ adalah persentase skor pada tes akhir.
+dengan $\text{pre}$ merepresentasikan skor pada tes awal sebelum
+instruksi diberikan, $\text{post}$ adalah skor pada tes akhir, dan $\text{maksimum}$ adalah batas atas skor yang dapat dicapai. Pada sistem yang menggunakan pengukuran skala kontinu seperti \textit{Elo rating}, nilai maksimum ini disesuaikan dengan ambang batas \textit{Elo} tertinggi (baik secara teoretis maupun empiris).
 \textcite{Coletta2020} menegaskan bahwa metrik ini memiliki keunggulan teoretis
 dibandingkan perhitungan selisih skor mentah atau \textit{effect size} standar
 (seperti Cohen's $d$), terutama dalam menangani distribusi data yang mengalami
@@ -1086,3 +1085,8 @@ Dalam pengujian purwarupa sistem yang bersifat eksploratif, metodologi yang digu
 
 Berdasarkan tinjauan yang dilakukan oleh \textcite{Sukserm2024}, para peneliti merekomendasikan rentang sampel antara 10 hingga 30 partisipan untuk studi pilot. Secara khusus, Johanson dan Brooks (2010) (sebagaimana dikutip dalam \textcite{Sukserm2024}) menyatakan bahwa jumlah minimal 10 partisipan sudah cukup memadai untuk mengidentifikasi masalah utama dalam desain dan memvalidasi instrumen sebelum melangkah ke studi skala besar. Dengan demikian, penggunaan angka 10 sebagai batas minimum jumlah partisipan per kelompok dalam penelitian ini dianggap sah secara metodologis untuk mengevaluasi fungsionalitas purwarupa.
 
+\section{Evaluasi Kebenaran Kueri SQL}
+\label{sec:evaluasi_kueri_sql}
+Dalam perancangan sistem pembelajaran yang menggunakan kueri SQL sebagai subjek penugasan, terdapat tantangan teknis dalam memvalidasi kebenaran jawaban siswa secara algoritmik. SQL (\textit{Structured Query Language}) adalah bahasa deklaratif; kueri yang disusun menyatakan informasi apa yang ingin diambil, bukan bagaimana sistem harus secara algoritmik mengambilnya \autocite{Silberschatz2019}. Akibatnya, ada banyak cara sintaksis yang berbeda untuk menghasilkan hasil yang sama secara semantik.
+
+Menurut \textcite{Silberschatz2019}, mengevaluasi dua kueri relasional untuk menentukan apakah keduanya setara secara semantik (\textit{semantic equivalence}) adalah permasalahan komputasi yang sangat kompleks, bahkan termasuk dalam kategori NP-Hard dalam ilmu teori komputasi. Oleh karena itu, membangun sistem penilaian otomatis yang membandingkan Pohon Sintaksis Abstrak (\textit{Abstract Syntax Tree}) atau representasi aljabar relasional dari kueri siswa dengan kueri kunci jawaban menjadi sangat sulit dan rawan kesalahan. Kesulitan inilah yang menjadikan pendekatan perbandingan himpunan hasil (\textit{result set comparison}) dengan eksekusi pada basis data tiruan (\textit{sandbox}) menjadi standar de-facto yang paling pragmatis dan sering digunakan dalam mengukur kebenaran kueri secara utuh.

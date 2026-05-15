@@ -37,20 +37,14 @@ Sistem menerapkan batasan skor Elo untuk mengontrol progres siswa antar modul de
 \end{enumerate}
 Dengan kenaikan $\approx 20$ poin per soal, maka 10 iterasi sukses akan menghasilkan peningkatan kemahiran sebesar 200 poin, yang menjadi dasar logis perpindahan ke modul berikutnya.
 
-\subsection{Rubrik Penilaian Kolaboratif}
-Penilaian pada aktivitas kolaboratif (\textit{Social Elo}) diimplementasikan melalui modul evaluasi teks otomatis yang menguantifikasi kualitas umpan balik dari siswa sebagai \textit{reviewer}. Mengingat kompleksitas pemrosesan bahasa alami pada purwarupa, sistem menggunakan mekanisme \textit{keyword matching} tertimbang yang disusun berdasarkan integrasi dua landasan teoretis:
+\subsection{Evaluasi Kualitas Umpan Balik Berbasis NLP}
+Penilaian pada aktivitas kolaboratif (\textit{Social Elo}) diimplementasikan melalui modul evaluasi teks otomatis yang menguantifikasi kualitas umpan balik dari siswa sebagai \textit{reviewer}. Sistem menggunakan model \textit{embedding} bahasa alami untuk menilai kedalaman semantik dan relevansi komentar siswa:
 
 \begin{enumerate}
-    \item \textbf{Fitur Struktural Umpan Balik \autocite{Kerman2024}:} Sistem membagi skor struktural menjadi tiga komponen utama dengan pembobotan berdasarkan kekuatan prediksinya terhadap kesuksesan revisi tugas. 
-    \begin{itemize}
-        \item \textit{Identification} (Bobot 0,3): Pemindaian kata kunci terkait deteksi kesalahan (misal: \textit{salah, kurang, missing, error}).
-        \item \textit{Justification} (Bobot 0,4): Pemindaian kata kunci kausalitas yang menjelaskan alasan logis (misal: \textit{karena, sebab, therefore, due to}). Komponen ini diberi bobot tertinggi karena merupakan prediktor terkuat keberhasilan belajar menurut temuan Kerman dkk.
-        \item \textit{Constructive} (Bobot 0,3): Pemindaian kata kunci saran perbaikan (misal: \textit{coba, gunakan, fix, should}).
-    \end{itemize}
-    \item \textbf{Bonus Kedalaman Kognitif \autocite{ACM2023}:} Sistem memberikan \textit{depth bonus} (maksimal 0,2) jika teks umpan balik mengandung kata kerja komputasi tingkat tinggi (\textit{higher-order verbs}) seperti \textit{optimize, refactor, debug,} atau \textit{validate}. Keberadaan kata-kata ini mengindikasikan bahwa siswa melakukan analisis mendalam terhadap kode rekan sejawatnya, bukan sekadar memberikan komentar permukaan.
+    \item \textbf{Model Bahasa Multilingual MiniLM:} Sistem memanfaatkan model \textbf{\textit{paraphrase-multilingual-MiniLM-L12-v2}} untuk merepresentasikan teks umpan balik ke dalam vektor dimensi tinggi (\textit{Word-Level Semantic Max}). Penggunaan model ini merupakan titik keseimbangan (\textit{sweet spot}) desain arsitektur yang ideal; pendekatan pencocokan kata kunci (\textit{keyword matching}) terbukti terlalu kaku untuk mengidentifikasi frasa dengan makna yang mirip, sementara pengerahan model \textit{Deep Learning} skala besar (seperti LLM penuh) akan sangat memboroskan sumber daya komputasi peladen untuk sebuah modul yang bukan merupakan fungsionalitas utama sistem.
+    \item \textbf{Inferensi Efisien dengan FastEmbed:} Untuk merealisasikan komputasi yang ringan, proses \textit{embedding} dijalankan menggunakan pustaka \textbf{FastEmbed}. Hal ini memungkinkan kalkulasi kemiripan semantik terhadap jangkar domain (\textit{domain relevance anchor}) dilakukan langsung secara lokal di sisi peladen (\textit{CPU-optimized inference}) tanpa membebani memori dan tanpa ketergantungan pada API eksternal berbayar.
+    \item \textbf{Kalkulasi Skor dan Social Elo:} Luaran dari analisis semantik dikonversi menjadi nilai probabilitas $[0, 1]$ yang merepresentasikan tingkat kualitas umpan balik. Nilai ini kemudian digunakan sebagai input bagi algoritma \textit{Social Elo} untuk memperbarui rating kontribusi sosial siswa terhadap standar netral (0,5), sesuai dengan kerangka teoretis yang diusulkan dalam spesifikasi teknis v4.3.
 \end{enumerate}
-
-Logika ini dienkapsulasi dalam fungsi \texttt{calculate\_system\_score} yang menghasilkan nilai normalisasi $[0, 1]$ sebagai input bagi pembaruan \textit{Social Elo} terhadap \textit{expected score} netral (0,5).
 
 \section{Implementasi Teknis \textit{Backend}}
 \label{sec:backend_implementation}
@@ -75,10 +69,98 @@ Implementasi \textit{backend} dibangun menggunakan \textit{framework} \textbf{Fa
 \subsection{Mesin Elo dan Deteksi Stagnasi}
 Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelola dua aspek utama:
 \begin{enumerate}
-    \item \textbf{Siklus Pembaruan Skor:} Berbeda dengan implementasi ProTuS asli, pembaruan rating hanya dilakukan satu kali saat siswa berpindah soal (\textit{event next}) untuk mengakomodasi mekanisme \textbf{\textit{multi-attempt}} (maksimal 3 upaya). Rasionalisasi pembatasan tiga upaya ini didasarkan pada kebutuhan untuk menyeimbangkan manfaat pedagogis belajar dari kesalahan dengan kejelasan sinyal kompetensi bagi algoritma. Terlalu banyak upaya berisiko mendistorsi penilaian karena keberhasilan pengerjaan mungkin lebih mencerminkan proses \textit{trial-and-error} daripada penguasaan materi yang sebenarnya. Batasan tiga kali memberikan gradasi skor yang cukup ($1,0$; $0,5$; dan $0,33$) bagi algoritma untuk melakukan kalibrasi tanpa mengorbankan validitas pemodelan kemahiran.
-    \item \textbf{Kalkulasi Numerik Stagnasi:} Deteksi stagnasi dihitung berdasarkan variansi $\Delta\theta$ pada jendela lima aktivitas terakhir. Sistem menggunakan ambang batas $\epsilon = 165$, yang merupakan nilai \textit{median} antara variansi stagnasi parah ($\sigma^2 \leq 10$, misal: $\Delta\theta = [-4, +3, -2, +4, -3]$) dan variansi fluktuasi belajar normal ($\sigma^2 \geq 340$, misal: $\Delta\theta = [+25, -15, +20, -10, +18]$). Pemilihan nilai median ini bertujuan untuk mengakomodasi populasi uji yang kecil pada purwarupa (lihat Subbab \ref{ssec:ukuran_sampel}) agar deteksi tetap sensitif namun tidak reaktif terhadap fluktuasi sesaat.
-    \item \textbf{Integrasi Skor Kemahiran (\textit{Theta Display})}: Sistem menghitung skor akhir yang digunakan untuk pemeringkatan secara \textit{on-the-fly}. Sesuai dengan spesifikasi teknis v4, skor ini merupakan rata-rata tertimbang dari dua dimensi Elo: $(0,8 \times \theta_{individu}) + (0,2 \times \theta_{sosial})$. Skema pembobotan ini mengadopsi rasio 80:20 yang bertujuan untuk menjaga dominasi kompetensi individual sekaligus memberikan pengakuan terhadap kontribusi sosial (lihat Subbab \ref{ssec:pembobotan_terintegrasi}).
+    \item \textbf{Siklus Pembaruan Skor dan Evaluasi Parsial:} Pembaruan rating dilakukan satu kali setiap kali siswa menyelesaikan atau beralih dari suatu soal (\textit{event next}). Mekanisme \textbf{\textit{multi-attempt}} (maksimal 3 upaya) ini diimplementasikan secara spesifik untuk memfasilitasi rumus keberhasilan (\textit{success rate}) usulan \textcite{Vesin2022}, yang menghitung rasio upaya yang berhasil terhadap total upaya ($A_s / A_o$). Pembatasan maksimal tiga upaya diterapkan untuk mencegah proses tebak-tebakan (\textit{trial-and-error}) berlebihan yang dapat mendistorsi pemodelan kemahiran siswa.
+
+    Selain itu, terdapat penyesuaian pada parameter pengujian (\textit{test ratio}). Pada sistem ProTuS asli yang berfokus pada bahasa pemrograman prosedural (seperti Java), keberhasilan dapat diukur secara parsial melalui persentase \textit{unit test} yang lolos ($T_c / T_p$). Namun, sebagaimana diuraikan pada Subbab \ref{sec:evaluasi_kueri_sql}, dalam konteks \textit{query} SQL penilaian parsial secara praktis jauh lebih sulit untuk diimplementasikan. Mengevaluasi ekuivalensi semantik \textit{query} hanya karena strukturnya hampir benar (misal: klausa \texttt{SELECT} benar namun \texttt{WHERE} salah) membutuhkan analisis Pohon Sintaksis Abstrak (\textit{Abstract Syntax Tree}) yang amat kompleks dan secara komputasional tergolong permasalahan NP-Hard \autocite{Silberschatz2019}. Oleh karena itu, sistem Equilibria mengadaptasi dan menyederhanakan rasio $T_c / T_p$ menjadi evaluasi biner (0 jika himpunan luaran berbeda, 1 jika luaran tabel identik sepenuhnya dengan \textit{sandbox}). Ketiadaan gradasi nilai dari \textit{unit test} ini kemudian dikompensasi secara proporsional oleh penggunaan rasio multi-upaya ($A_s / A_o$) tadi, sehingga kalibrasi Elo tetap memiliki gradasi skor ($1,0$; $0,5$; atau $0,33$) yang akurat dan berkeadilan.
+    
+    \item \textbf{Kalkulasi Numerik Stagnasi:} Deteksi stagnasi dihitung berdasarkan variansi populasi dari perubahan skor ($\Delta\theta$) pada jendela lima aktivitas terakhir. Berdasarkan kalibrasi empiris pada spesifikasi sistem, ambang batas variansi yang digunakan adalah $\epsilon = 165$. Nilai ini dipilih sebagai titik tengah antara dua skenario perhitungan $\Delta\theta = K \times (W - W_e)$ dengan $K=30$:
+    \begin{itemize}
+        \item \textbf{Batas Bawah (Stagnasi Konvergen):} Saat kemampuan siswa konvergen atau terjebak dalam *plateau* (probabilitas ekspektasi $W_e \approx 0,5$ dan pengerjaan berfluktuasi tipis), nilai $\Delta\theta$ bergerak pada rentang kecil (sekitar $\pm 6$). Rangkaian simulasi konvergensi prematur seperti $\Delta\theta = [-6, +6, -4, +5, -3]$ menghasilkan variansi $\sigma^2 \approx 25$.
+        \item \textbf{Batas Atas (Fluktuasi Normal):} Saat siswa masih dalam fase pertumbuhan dan pembelajaran (skor berfluktuasi signifikan, misal $\Delta\theta$ mencapai $+27$ jika cepat dan benar, atau $-18$ jika salah semua), rangkaian simulasi fluktuasi normal seperti $\Delta\theta = [+27, -18, +15, -12, +20]$ menghasilkan variansi $\sigma^2 \approx 310$.
+    \end{itemize}
+    Dengan menetapkan ambang batas median di angka 165, deteksi dapat dilakukan secara cukup sensitif tanpa salah menafsirkan fluktuasi normal sebagai stagnasi. Selain itu, diterapkan pula mekanisme \textit{fallback} (cadangan) berupa rasio jawaban salah $>50\%$ dari $N=8$ soal terakhir untuk mencegah pengguna Grup A terjebak tanpa intervensi. Pseudocode untuk kedua fungsi ini disajikan pada Kode \ref{alg:stagnation_detection}.
+    
+\begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Deteksi Stagnasi dan Fallback}, label={alg:stagnation_detection}]
+function DetectStagnation (UserID : string, ModuleID : string, DB : Database) -> boolean
+{ Mengirimkan true jika stagnasi terdeteksi (variansi < 165), false jika tidak }
+
+KAMUS LOKAL
+Last5Logs : List of AssessmentLog
+Deltas : List of float
+Variance : float
+
+ALGORITMA
+if (ModuleID = "CH03") then { Konvergensi di modul akhir bukan stagnasi }
+    -> false
+else
+    Last5Logs <- GetLastFinalAttempts(DB, UserID, 5)
+    if (NBElmtlist(Last5Logs) < 5) then
+        -> false
+    else
+        Deltas <- CalculateThetaDeltas(Last5Logs)
+        Variance <- CalculatePopulationVariance(Deltas)
+        -> (Variance < 165)
+
+
+function CheckFallbackTrigger (GroupID : char, ModuleID : string, IsNextUnlocked : boolean, RecentLogs : List of AssessmentLog) -> boolean
+{ Mengirimkan true jika > 4 jawaban salah dari 8 attempt terakhir }
+
+KAMUS LOKAL
+WrongCount : integer
+Log : AssessmentLog
+
+ALGORITMA
+if (GroupID != 'A' or ModuleID = "CH03" or IsNextUnlocked = true) then
+    -> false
+else
+    if (NBElmtlist(RecentLogs) < 8) then
+        -> false
+    else
+        WrongCount <- 0
+        Log <- FirstElmt(RecentLogs)
+        while (Log != Nil) do
+            if (not IsCorrect(Log)) then
+                WrongCount <- WrongCount + 1
+            Log <- Next(Log)
+        -> (WrongCount > 4)
+\end{lstlisting}
+
+    \item \textbf{Integrasi Skor Kemahiran (\textit{Theta Display})}: Sistem menghitung skor akhir yang digunakan untuk pemeringkatan secara \textit{on-the-fly}. Skema pembobotan ini mengadopsi rasio 80:20 yang bertujuan untuk menjaga dominasi kompetensi individual sekaligus memberikan pengakuan terhadap kontribusi sosial (lihat Subbab \ref{ssec:pembobotan_terintegrasi}).
 \end{enumerate}
+
+\subsection{Mekanisme Perekaman Data Trajektori (\textit{Data Logging})}
+Analisis pergerakan momentum kemahiran siswa (\textit{slope} $\Delta\theta$) sangat bergantung pada data \textit{time-series} yang direkam secara presisi. Oleh karena itu, sistem diimplementasikan untuk melakukan \textit{logging} secara komprehensif pada modul \texttt{session.py} setiap kali titik akhir (\textit{endpoint}) API \texttt{/next} dipanggil. Kode \ref{alg:data_logging} mengilustrasikan logika perekaman data tersebut, yang menyimpan status kemahiran sebelum dan sesudah pengerjaan beserta status deteksi stagnasi.
+
+\begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Perekaman Data Trajektori}, label={alg:data_logging}]
+procedure LogTrajectory (input SessionID : string, input UserID : string, input QuestionID : string, input IsCorrect : boolean, input DB : Database)
+{ I.S. Sesi aktif dan pengguna meminta soal berikutnya melalui endpoint /next }
+{ F.S. Data perubahan Elo dan status stagnasi tersimpan di basis data }
+
+KAMUS LOKAL
+ThetaBefore, ThetaAfter : float
+StagnationDetected : boolean
+NewLog : AssessmentLog
+
+ALGORITMA
+ThetaBefore <- GetCurrentTheta(DB, UserID)
+
+{ Perbarui skor Elo berdasarkan jawaban }
+ThetaAfter <- UpdateEloRating(ThetaBefore, QuestionID, IsCorrect)
+
+{ Deteksi stagnasi setelah skor diperbarui }
+StagnationDetected <- DetectStagnation(UserID, CurrentModule, DB)
+
+{ Rekam ke basis data }
+NewLog.SessionID <- SessionID
+NewLog.UserID <- UserID
+NewLog.QuestionID <- QuestionID
+NewLog.IsFinalAttempt <- true
+NewLog.ThetaBefore <- ThetaBefore
+NewLog.ThetaAfter <- ThetaAfter
+NewLog.StagnationDetected <- StagnationDetected
+
+InsertToDB(DB, NewLog)
+\end{lstlisting}
 
 \subsection{Keamanan Eksekusi dan \textit{Sandbox} SQL}
 Keamanan eksekusi merupakan aspek paling krusial karena sistem mengizinkan input kode mentah dari pengguna. Implementasi keamanan dilakukan melalui strategi multi-lapis untuk mencegah serangan \textit{SQL Injection} maupun akses data ilegal:
@@ -126,5 +208,3 @@ Sistem routing dikelola menggunakan \textbf{React Router 6} dengan mekanisme pel
 \label{sec:integration_deployment}
 
 Seluruh komponen sistem disatukan dalam ekosistem kontainer menggunakan \textbf{Docker Compose} untuk menjamin konsistensi lingkungan. Purwarupa dideploy menggunakan layanan \textbf{Railway} dengan strategi \textit{Continuous Deployment} dari repositori GitHub. Penggunaan paket \textit{Hobby Railway} (5 USD) dipilih untuk menjamin ketersediaan layanan selama jam sibuk pengujian tanpa hambatan batasan waktu \textit{deployment} yang ada pada paket gratis.
-
-
