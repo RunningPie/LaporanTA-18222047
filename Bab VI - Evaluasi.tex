@@ -11,19 +11,19 @@ Bab ini menyajikan hasil dari pengujian sistem Equilibria melalui studi laborato
 \label{sec:analisis_kesesuaian}
 
 Bagian ini mengevaluasi pelaksanaan proyek dari perspektif manajemen waktu dan anggaran, membandingkan antara rencana awal dengan realisasi aktual selama proses pengembangan sistem.
-/q
 \subsection{Kesesuaian Linimasa Pelaksanaan}
-Realisasi pengembangan sistem secara umum mengalami keterlambatan satu bulan dibandingkan rencana awal. Tahap pengujian (\textit{Controlled Lab Study}) baru dapat dilaksanakan pada minggu pertama Mei 2026. Realisasi jadwal pelaksanaan aktual disajikan pada Gambar \ref{fig:gantt_chart_realisasi}.
+Realisasi pengembangan sistem secara umum mengalami keterlambatan satu bulan dibandingkan rencana awal. Tahap pengujian (\textit{Controlled Lab Study}) baru dapat dilaksanakan pada minggu pertama Mei 2026. Realisasi jadwal pelaksanaan aktual disajikan pada Gambar \ref{fig:gantt_chart_realisasi} dengan sel berwarna abu-abu menunjukkan alokasi waktu awal dan sel berwarna merah, kuning, dan biru menunjukkan realisasi aktual waktu pengerjaan setiap fase.
 
 \begin{figure}[!ht]
     \centering
-    \framebox[0.9\textwidth]{\vbox{\vspace{3cm} \centering [Placeholder: Gantt Chart Realisasi Linimasa Implementasi] \vspace{3cm}}}
+    \includegraphics[width=0.85\textwidth]{images/gantt_chart_realization.png}
+    % \framebox[0.9\textwidth]{\vbox{\vspace{3cm} \centering [Placeholder: Gantt Chart Realisasi Linimasa Implementasi] \vspace{3cm}}}
     \caption{Gantt Chart Realisasi Pelaksanaan Implementasi dan Pengujian}
     \label{fig:gantt_chart_realisasi}
 \end{figure}
 
 \subsection{Kesesuaian Anggaran Biaya}
-Realisasi biaya operasional sistem disajikan pada Tabel \ref{tbl:realisasi_rab}. Terjadi efisiensi biaya pada komponen LLM yang tidak digunakan, namun terdapat pengeluaran untuk konsolidasi infrastruktur awan guna menjaga kelancaran pengembangan.
+Realisasi biaya operasional sistem disajikan pada Tabel \ref{tbl:realisasi_rab}. Terjadi efisiensi biaya pada komponen LLM yang tidak digunakan, namun terdapat pengeluaran untuk konsolidasi infrastruktur \textit{cloud} guna menjaga kelancaran pengembangan.
 
 \begin{table}[!ht]
     \centering
@@ -49,7 +49,7 @@ Realisasi biaya operasional sistem disajikan pada Tabel \ref{tbl:realisasi_rab}.
 \section{Prosedur Pengujian Laboratorium (\textit{Lab Study})}
 \label{sec:prosedur_pengujian}
 
-Pengujian dilakukan menggunakan metode \textit{Ablation Study Two-Group Pretest Posttest} yang dimodifikasi, dengan pembagian peserta ke dalam Grup A (dengan intervensi kolaboratif) dan Grup B (tanpa intervensi/kontrol). Partisipan terdiri dari 10 mahasiswa yang telah menyelesaikan mata kuliah basis data, yang kemudian dibagi menjadi dua kelompok. Sesi pengujian berlangsung selama kurang lebih 105 menit yang mencakup tahap \textit{pre-test} untuk kalibrasi awal, interaksi sistem (75 menit), dan tahap akhir untuk pengumpulan umpan balik kualitatif. Berbeda dengan metode klasik, pengujian ini tidak melaksanakan ujian \textit{post-test} secara terpisah, melainkan metrik \textit{post-test} diwakili (diproksi) oleh nilai kemahiran akhir (\textit{final individual theta}) yang dicapai pengguna pada sistem di penghujung sesi interaksi.
+Pengujian dilakukan menggunakan metode \textit{Ablation Study Two-Group Pretest Posttest} yang dimodifikasi, dengan pembagian peserta ke dalam Grup A (dengan intervensi kolaboratif) dan Grup B (tanpa intervensi/kontrol). Partisipan terdiri dari 10 mahasiswa yang telah menyelesaikan mata kuliah pemodelan basis data program studi Sistem dan Teknologi Informasi ITB (IF2040), yang kemudian dibagi menjadi dua kelompok. Sesi pengujian berlangsung selama kurang lebih 105 menit yang mencakup tahap \textit{pre-test} untuk kalibrasi awal, interaksi sistem (75 menit), dan tahap akhir untuk pengumpulan umpan balik kualitatif. Berbeda dengan metode klasik, pengujian ini tidak melaksanakan ujian \textit{post-test} secara terpisah, melainkan metrik \textit{post-test} diwakili (diproksi) oleh nilai kemahiran akhir (\textit{final individual theta}) yang dicapai pengguna pada sistem di penghujung sesi interaksi.
 
 \section{Hasil dan Analisis Peningkatan Hasil Belajar}
 \label{sec:hasil_belajar}
@@ -57,7 +57,7 @@ Pengujian dilakukan menggunakan metode \textit{Ablation Study Two-Group Pretest 
 Efektivitas pembelajaran diukur menggunakan metrik \textit{Normalized Learning Gain} (NLG) untuk membandingkan peningkatan pengetahuan antara Grup A dan Grup B secara objektif.
 
 \subsection{Uji Kesetaraan Awal (\textit{Baseline Equivalence})}
-Sebelum mengukur peningkatan hasil belajar, perlu dipastikan bahwa kedua kelompok partisipan memulai pengujian dari titik kemampuan yang setara. Hal ini penting untuk menjamin validitas eksperimen \textit{Two-Group}. Analisis kesetaraan awal dilakukan menggunakan \textit{Mann-Whitney U Test} terhadap "Nilai Praktikum" (sebagai representasi kemampuan historis) dan "Skor \textit{Pre-test}" (sebagai representasi kemampuan awal pada sistem).
+Sebelum mengukur peningkatan hasil belajar, perlu dipastikan bahwa kedua kelompok partisipan memulai pengujian dari titik kemampuan yang setara. Hal ini penting untuk menjamin validitas eksperimen \textit{Two-Group}. Analisis kesetaraan awal dilakukan menggunakan \textit{Mann-Whitney U Test} terhadap nilai praktikum (sebagai representasi kemampuan historis) dan skor \textit{pre-test} (sebagai representasi kemampuan awal pada sistem).
 
 Berdasarkan pengolahan data menggunakan uji statistik non-parametrik \textit{Mann-Whi-\\tney U Test}, diperoleh hasil yang menunjukkan tidak adanya perbedaan yang signifikan antara kedua kelompok sebelum intervensi diberikan. Pada metrik nilai praktikum historis, rata-rata Grup A adalah 47,67 dan Grup B adalah 45,96, dengan nilai $p\text{-value} = 0,7619$ ($p > 0,05$). Serupa dengan hal tersebut, pada skor \textit{pre-test} di dalam sistem, rata-rata kemahiran awal Grup A berada pada angka 1313,33 dan Grup B pada angka 1300,00, dengan nilai $p\text{-value} = 0,9062$ ($p > 0,05$). Hasil ini membuktikan bahwa Grup A dan Grup B memulai pengujian dari titik kemahiran yang setara secara statistik, sehingga asumsi ekuivalensi dasar pada metode \textit{Two-Group} terpenuhi. Hal ini menjamin bahwa perbedaan peningkatan performa (\textit{gain}) di akhir sesi dapat diatribusikan secara valid pada efek keberadaan intervensi kolaboratif.
 
@@ -80,15 +80,15 @@ Tabel \ref{tbl:perbandingan_skor} menyajikan rekapitulasi skor rata-rata berdasa
         \textbf{Kelompok} & \textbf{Rata-rata Pre-test} & \textbf{Rata-rata Post-test} & \textbf{NLG Teoretis} & \textbf{NLG Empiris} \\
         \hline
         \hline
-        Grup A (Intervensi) & 1313,33 & 1445,08 & 0,80 & 0,66 \\
+        Grup A (Intervensi) & 1313,33 & 1445,08 & 0,69 & 0,57 \\
         \hline
-        Grup B (Kontrol) & 1300,00 & 1236,59 & -0,26 & -0,23 \\
+        Grup B (Kontrol) & 1300,00 & 1236,59 & -0,21 & -0,19 \\
         \hline
     \end{tabular}
 \end{table}
 
 \subsection{Analisis Signifikansi Peningkatan (NLG)}
-Berdasarkan Tabel \ref{tbl:perbandingan_skor}, terlihat bahwa Grup A mengalami peningkatan hasil belajar yang sangat positif, dengan nilai NLG Teoretis sebesar $0,80$ dan NLG Empiris sebesar $0,66$. Merujuk pada kriteria interpretasi Hake, nilai ini tergolong ke dalam kategori peningkatan sedang hingga tinggi (\textit{medium to high gain}). Sebaliknya, Grup B justru mengalami penurunan performa dengan nilai NLG Teoretis $-0,26$ dan Empiris $-0,23$. Penurunan skor pada grup kontrol ini secara empiris mengindikasikan terjadinya kelelahan kognitif (\textit{cognitive fatigue}) atau demotivasi akibat terjebak berulang kali dalam soal-soal sulit (\textit{stagnasi}) tanpa adanya bantuan eksternal.
+Berdasarkan Tabel \ref{tbl:perbandingan_skor}, terlihat bahwa Grup A mengalami peningkatan hasil belajar yang sangat positif, dengan nilai NLG Teoretis sebesar $0,69$ dan NLG Empiris sebesar $0,57$. Merujuk pada kriteria interpretasi Hake, nilai ini tergolong ke dalam kategori peningkatan sedang hingga tinggi (\textit{medium to high gain}). Sebaliknya, Grup B justru mengalami penurunan performa dengan nilai NLG Teoretis $-0,21$ dan Empiris $-0,19$. Penurunan skor pada grup kontrol ini secara empiris mengindikasikan terjadinya kelelahan kognitif (\textit{cognitive fatigue}) atau demotivasi akibat terjebak berulang kali dalam soal-soal sulit (\textit{stagnasi}) tanpa adanya bantuan eksternal.
 
 Untuk menguji signifikansi perbedaan metrik tersebut, dilakukan analisis statistik menggunakan \textit{Mann-Whitney U Test}. Hasil pengujian menunjukkan bahwa nilai $p\text{-value}$ untuk distribusi skor NLG adalah $0,0095$. Karena nilai $p < 0,05$, maka Hipotesis Nol ($H_0$) ditolak. Dapat disimpulkan secara meyakinkan bahwa keberadaan intervensi kolaboratif memberikan dampak yang positif dan signifikan secara statistik terhadap peningkatan hasil belajar siswa dibandingkan dengan kelompok yang hanya belajar mandiri.
 
@@ -107,12 +107,12 @@ Evaluasi dilakukan dengan membandingkan gradien (\textit{slope}) perubahan skor 
     \label{fig:slope_comparison}
 \end{figure}
 
-Berdasarkan visualisasi pada Gambar \ref{fig:slope_comparison}, terlihat adanya perubahan tren pergerakan kemahiran (\textit{trajectory}) antara fase sebelum (\textit{pre}) dan sesudah (\textit{post}) titik stagnasi. Temuan ini dikonfirmasi oleh fakta statistik bahwa rerata gradien tren kemahiran (\textit{slope post-intervention}) pengguna Grup A secara konsisten kembali naik dengan rata-rata perbedaan gradien positif sebesar $+1,05$ setelah mereka menerima bantuan umpan balik. Di sisi lain, meskipun secara matematis Grup B mencatatkan rata-rata perbedaan gradien akhir yang juga positif ($+1,21$), nilai tersebut bersifat semu karena memiliki simpangan baku yang sangat besar ($SD = 2,18$). Pemeriksaan data individual menunjukkan bahwa angka ini terdistorsi oleh satu partisipan pencilan (\textit{outlier}) yang mengalami lonjakan ekstrem, sedangkan mayoritas partisipan Grup B lainnya mencatatkan pertumbuhan yang nyaris datar (mendekati nol). Distribusi peningkatan Grup A yang jauh lebih merata ($SD = 0,58$) secara meyakinkan membuktikan efektivitas intervensi dalam mengembalikan momentum belajar yang persisten bagi seluruh populasi kelompok yang sebelumnya mengalami kemandekan.
+Berdasarkan visualisasi pada Gambar \ref{fig:slope_comparison}, terlihat adanya perubahan tren pergerakan kemahiran (\textit{trajectory}) antara fase sebelum (\textit{pre}) dan sesudah (\textit{post}) titik stagnasi. Temuan ini dikonfirmasi oleh fakta statistik bahwa rerata gradien tren kemahiran (\textit{slope post-intervention}) pengguna Grup A secara konsisten kembali naik dengan rata-rata perbedaan gradien positif sebesar $+0,67$ setelah titik stagnasi. Di sisi lain, meskipun secara matematis Grup B mencatatkan rata-rata perbedaan gradien akhir yang juga positif ($+1,01$), nilai tersebut bersifat semu karena memiliki simpangan baku yang sangat besar ($SD = 2,47$). Pemeriksaan data individual menunjukkan bahwa angka ini terdistorsi oleh satu partisipan pencilan (\textit{outlier}) yang mengalami lonjakan ekstrem, sedangkan mayoritas partisipan Grup B lainnya mencatatkan pertumbuhan yang nyaris datar (mendekati nol). Distribusi peningkatan Grup A yang jauh lebih merata ($SD = 0,68$), menunjukkan indikasi positif terkait efektivitas intervensi dalam mengembalikan momentum belajar yang konsisten dan lebih merata bagi seluruh populasi kelompok yang sebelumnya mengalami stagnasi.
 
 \subsection{Validitas Pemicuan Stagnasi (\textit{Trigger Rate})}
 Mekanisme deteksi stagnasi yang menggunakan ambang batas variansi $\epsilon = 165$ pada awalnya dirancang untuk mendeteksi pola \textit{learning plateau}. Berdasarkan data log pengujian, tingkat keberhasilan pemicuan mencapai 100\%, artinya seluruh pengguna di Grup A berhasil memicu mekanisme kolaboratif ini (dengan rata-rata 15 kejadian stagnasi per pengguna). Hal ini secara nominal melampaui target awal pelaksanaan pengujian yang mengharapkan setidaknya 50\% pengguna mendapatkan kesempatan intervensi. Namun, tingginya angka pemicuan ini mengekspos sebuah kelemahan desain sistem yaitu, parameter variansi yang ditetapkan ternyata terlalu sensitif (\textit{hypersensitive}). Sebagai gambaran ekstrem, rata-rata 30 kejadian stagnasi (seperti yang dicatat oleh data internal sistem untuk pengguna Grup B) dalam rentang pengujian yang hanya berisi sekitar 60 aktivitas pengerjaan soal mengimplikasikan bahwa sistem mendeteksi stagnasi belajar hampir di setiap dua soal. Secara pedagogis, frekuensi interupsi seketat ini kurang masuk akal karena fluktuasi kognitif minor atau jeda berpikir normal pengguna rentan tertafsirkan sebagai stagnasi akut.
 
-Meskipun algoritma utamanya terbukti terlalu sensitif, kombinasi dengan pemicu cadangan (\textit{fallback trigger} pada $N=8$ aktivitas terakhir) tetap memberikan jaring pengaman (\textit{safety net}) komprehensif. Secara konseptual, keberadaan \textit{fallback trigger} memastikan bahwa pengguna dengan profil skor yang sangat fluktuatif ke arah bawah akibat perilaku menebak asal, yang secara matematis luput dari deteksi \textit{variance} konvergen, tetap terjamin mendapatkan intervensi. Terlepas dari kelemahan sensitivitas \textit{trigger}-nya yang berlebih, intervensi proaktif dari mekanisme gabungan ini secara aktual terbukti berhasil memecah isolasi pembelajaran tanpa ada satu pun siswa Grup A yang luput dari pantauan sistem.
+Meskipun algoritma utamanya terbukti terlalu sensitif, kombinasi dengan pemicu cadangan (\textit{fallback trigger} pada $N=9$ aktivitas terakhir) tetap memberikan jaring pengaman (\textit{safety net}) komprehensif. Secara konseptual, keberadaan \textit{fallback trigger} memastikan bahwa pengguna dengan profil skor yang sangat fluktuatif ke arah bawah akibat perilaku menebak asal, yang secara matematis luput dari deteksi \textit{variance} konvergen, tetap terjamin mendapatkan intervensi. Berdasarkan analisis \textit{syslogs} sistem, pemicu cadangan ini sebenarnya tidak pernah aktif selama sesi pengujian karena seluruh kejadian stagnasi telah tercakup oleh algoritma variansi yang hipersensitif. Namun demikian, keberadaan mekanisme gabungan ini secara aktual terbukti berhasil memecah isolasi pembelajaran tanpa ada satu pun siswa Grup A yang luput dari pantauan sistem.
 
 \section{Hasil dan Analisis Komponen Kolaboratif}
 \label{sec:hasil_kolaborasi}

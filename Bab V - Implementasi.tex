@@ -26,14 +26,14 @@ Sebelum melakukan implementasi algoritma, dilakukan penyusunan instrumen materi 
 \subsection{Struktur Kurikulum dan Distribusi Bank Soal}
 Materi pembelajaran disusun berdasarkan kurikulum mata kuliah \textbf{IF2040 - Pemodelan Basis Data} STEI ITB tahun 2024. Materi dibagi ke dalam tiga modul hierarkis: (1) CH01 (\textit{Basic Selection}), (2) CH02 (\textit{Aggregation}), dan (3) CH03 (\textit{Advanced Querying}).
 
-Setiap modul dilengkapi dengan bank soal berisi \textbf{25 butir soal} dengan tingkat kesulitan yang bervariasi. Penentuan kuantitas ini merujuk pada temuan \textcite{Vesin2022} yang menyatakan bahwa konvergensi optimal kemahiran siswa dalam sistem adaptif tercapai dalam rata-rata \textbf{10 iterasi}. Dengan menyediakan 25 soal per modul, sistem menjamin variasi yang cukup untuk mencegah siswa menghafal jawaban (\textit{answer memorization}) serta memberikan ruang bagi algoritma untuk melakukan kalibrasi ulang terhadap tingkat kesulitan soal secara dinamis.
+Setiap modul dilengkapi dengan bank soal berisi \textbf{20 butir soal} dengan tingkat kesulitan yang bervariasi, sehingga total keseluruhan materi mencakup \textbf{60 butir soal}. Penentuan kuantitas ini merujuk pada temuan \textcite{Vesin2022} yang menyatakan bahwa konvergensi optimal kemahiran siswa dalam sistem adaptif tercapai dalam rata-rata \textbf{10 iterasi}. Dengan menyediakan 20 soal per modul, sistem menjamin variasi yang cukup untuk mencegah siswa menghafal jawaban (\textit{answer memorization}) serta memberikan ruang bagi algoritma untuk melakukan kalibrasi ulang terhadap tingkat kesulitan soal secara dinamis. Selain itu, penggunaan total 60 butir soal ini juga sejalan dengan penelitian \textcite{Hadi2022} yang membuktikan bahwa bank soal dengan ukuran tersebut sudah memadai dan andal untuk implementasi sistem asesmen adaptif skala kelas.
 
 \subsection{Kalkulasi Ambang Batas Transisi Modul}
-Sistem menerapkan batasan skor Elo untuk mengontrol progres siswa antar modul dengan ambang batas: CH01 (0), CH02 (1300), dan CH03 (1500). Penetapan selisih 200 poin antara CH02 dan CH03 didasarkan pada asumsi 10 iterasi sukses untuk mencapai penguasaan modul. Berdasarkan kalkulasi algoritma Elo yang dimodifikasi, estimasi kenaikan skor rata-rata per soal ($\Delta\theta$) dihitung dengan asumsi siswa menjawab benar pada median waktu pengerjaan ($t_i = 0,5 d_i$) sebagai berikut:
+Sistem menerapkan batasan skor Elo untuk mengontrol progres siswa antar modul dengan ambang batas: CH01 (0), CH02 (1300), dan CH03 (1500), basis nilai tengah 1300  diadaptasi dari \textcite{Vesin2022}. Penetapan selisih 200 poin antara CH02 dan CH03 didasarkan pada asumsi 10 iterasi sukses untuk mencapai penguasaan modul. Berdasarkan kalkulasi algoritma Elo yang dimodifikasi, estimasi kenaikan skor rata-rata per soal ($\Delta\theta$) dihitung dengan asumsi siswa menjawab benar pada median waktu pengerjaan ($t_i = 0,5 d_i$) sebagai berikut:
 \begin{enumerate}
-    \item Diketahui parameter diskriminasi waktu $a_i = 10^{-6}$ dan batas waktu $d_i = 300.000$ms, maka komponen waktu $a_i(d_i - t_i) = 10^{-6}(300.000 - 150.000) = 0,15$.
-    \item Nilai keberhasilan dihitung melalui Persamaan \ref{eq:rumus_W_elo} (asumsi pengerjaan benar satu kali upaya): $W = 1 \times (1 + 0,15) = 1,15$.
-    \item Dengan $K=30$ dan $W_e=0,5$ (saat kemampuan setara kesulitan), maka $\Delta\theta = 30(1,15 - 0,5) = 19,5 \approx 20$.
+    \item Diketahui parameter diskriminasi waktu $a_i = 10^{-6}$ (diadopsi dari \textcite{Vesin2022}) dan batas waktu $d_i = 300.000$ms (dari penelitian \textcite{Vesin2022} juga), maka komponen waktu $a_i(d_i - t_i) = 10^{-6}(300.000 - 150.000) = 0,15$.
+    \item Nilai keberhasilan dihitung melalui Persamaan \ref{eq:rumus_W_elo} (asumsi pengerjaan benar dalam satu kali percobaan): $W = 1 \times (1 + 0,15) = 1,15$.
+    \item Dengan $K=30$ (diambil dari \textcite{Vesin2022} juga) dan $W_e=0,5$ (saat kemampuan setara kesulitan), maka $\Delta\theta = 30(1,15 - 0,5) = 19,5 \approx 20$.
 \end{enumerate}
 Dengan kenaikan $\approx 20$ poin per soal, maka 10 iterasi sukses akan menghasilkan peningkatan kemahiran sebesar 200 poin, yang menjadi dasar logis perpindahan ke modul berikutnya.
 
@@ -78,7 +78,7 @@ Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelol
         \item \textbf{Batas Bawah (Stagnasi Konvergen):} Saat kemampuan siswa konvergen atau terjebak dalam *plateau* (probabilitas ekspektasi $W_e \approx 0,5$ dan pengerjaan berfluktuasi tipis), nilai $\Delta\theta$ bergerak pada rentang kecil (sekitar $\pm 6$). Rangkaian simulasi konvergensi prematur seperti $\Delta\theta = [-6, +6, -4, +5, -3]$ menghasilkan variansi $\sigma^2 \approx 25$.
         \item \textbf{Batas Atas (Fluktuasi Normal):} Saat siswa masih dalam fase pertumbuhan dan pembelajaran (skor berfluktuasi signifikan, misal $\Delta\theta$ mencapai $+27$ jika cepat dan benar, atau $-18$ jika salah semua), rangkaian simulasi fluktuasi normal seperti $\Delta\theta = [+27, -18, +15, -12, +20]$ menghasilkan variansi $\sigma^2 \approx 310$.
     \end{itemize}
-    Dengan menetapkan ambang batas median di angka 165, deteksi dapat dilakukan secara cukup sensitif tanpa salah menafsirkan fluktuasi normal sebagai stagnasi. Selain itu, diterapkan pula mekanisme \textit{fallback} (cadangan) berupa rasio jawaban salah $>50\%$ dari $N=8$ soal terakhir untuk mencegah pengguna Grup A terjebak tanpa intervensi. Pseudocode untuk kedua fungsi ini disajikan pada Kode \ref{alg:stagnation_detection}.
+    Dengan menetapkan ambang batas median di angka 165, deteksi dapat dilakukan secara cukup sensitif tanpa salah menafsirkan fluktuasi normal sebagai stagnasi. Selain itu, diterapkan pula mekanisme \textit{fallback} (cadangan) berupa rasio jawaban salah $>50\%$ dari $N=9$ soal terakhir untuk mencegah pengguna Grup A terjebak tanpa intervensi. Pemilihan angka 9 didasarkan pada temuan \textcite{Vesin2022} bahwa konvergensi terjadi pada rentang 7--10 iterasi, dengan titik tengah 8,5 yang dibulatkan menjadi 9. Pertimbangan rasio $>50\%$ adalah karena ketika siswa sudah seharusnya konvergen namun masih mayoritas salah, hal tersebut mengindikasikan terjadinya \textit{overpersonalization}. Pseudocode untuk kedua fungsi ini disajikan pada Kode \ref{alg:stagnation_detection}.
     
 \begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Deteksi Stagnasi dan Fallback}, label={alg:stagnation_detection}]
 function DetectStagnation (UserID : string, ModuleID : string, DB : Database) -> boolean
@@ -103,7 +103,7 @@ else
 
 
 function CheckFallbackTrigger (GroupID : char, ModuleID : string, IsNextUnlocked : boolean, RecentLogs : List of AssessmentLog) -> boolean
-{ Mengirimkan true jika > 4 jawaban salah dari 8 attempt terakhir }
+{ Mengirimkan true jika > 4 jawaban salah dari 9 attempt terakhir }
 
 KAMUS LOKAL
 WrongCount : integer
@@ -113,7 +113,7 @@ ALGORITMA
 if (GroupID != 'A' or ModuleID = "CH03" or IsNextUnlocked = true) then
     -> false
 else
-    if (NBElmtlist(RecentLogs) < 8) then
+    if (NBElmtlist(RecentLogs) < 9) then
         -> false
     else
         WrongCount <- 0
@@ -125,7 +125,7 @@ else
         -> (WrongCount > 4)
 \end{lstlisting}
 
-    \item \textbf{Integrasi Skor Kemahiran (\textit{Theta Display})}: Sistem menghitung skor akhir yang digunakan untuk pemeringkatan secara \textit{on-the-fly}. Skema pembobotan ini mengadopsi rasio 80:20 yang bertujuan untuk menjaga dominasi kompetensi individual sekaligus memberikan pengakuan terhadap kontribusi sosial (lihat Subbab \ref{ssec:pembobotan_terintegrasi}).
+    \item \textbf{Integrasi Skor Kemahiran (\textit{Theta Display})}: Sistem menghitung skor akhir yang digunakan untuk pemeringkatan secara \textit{on-the-fly}. Skema pembobotan ini mengadopsi rasio 80:20 \autocite{Demetroulis2024} yang bertujuan untuk menjaga dominasi kompetensi individual sekaligus memberikan pengakuan terhadap kontribusi sosial (lihat Subbab \ref{ssec:pembobotan_terintegrasi}).
 \end{enumerate}
 
 \subsection{Mekanisme Perekaman Data Trajektori (\textit{Data Logging})}
@@ -194,7 +194,7 @@ Sistem memberikan umpan balik instan kepada siswa tanpa menggunakan pustaka graf
 \begin{enumerate}
     \item \textbf{Indikator Kemahiran (\textit{Theta Progress})}: Progres kemahiran siswa divisualisasikan menggunakan \textit{progress bar} berbasis CSS yang memetakan nilai \textit{theta} dalam rentang $[1000, 1800]$. Hal ini memberikan indikasi langsung mengenai pertumbuhan kompetensi siswa tanpa beban komputasi grafik yang berat.
     \item \textbf{Umpan Balik Hasil Query}: Melalui komponen \texttt{QueryResultDisplay}, sistem menampilkan hasil eksekusi SQL siswa secara detail. Jika jawaban benar, sistem menampilkan tabel hasil data; jika salah, sistem menyajikan pesan kesalahan atau perbandingan luaran untuk membantu siswa melakukan perbaikan pada percobaan berikutnya.
-    \item \textbf{Papan Peringkat (\textit{Leaderboard})}: Halaman papan peringkat menyajikan urutan siswa berdasarkan nilai \textit{theta\_display}. Nilai ini dihitung secara \textit{on-the-fly} menggunakan skema pembobotan terintegrasi: $(0,8 \times \theta_{individu}) + (0,2 \times \theta_{sosial})$. Pembobotan ini merujuk pada justifikasi teoretis bahwa kontribusi individu harus tetap dominan dalam penilaian agar tetap mencerminkan kemahiran personal (lihat Subbab \ref{ssec:pembobotan_terintegrasi}). Fitur ini dirancang untuk memberikan motivasi belajar melalui perbandingan prestasi antar rekan sejawat dalam lingkungan yang teranonimisasi.
+    \item \textbf{Papan Peringkat (\textit{Leaderboard})}: Halaman papan peringkat menyajikan urutan siswa berdasarkan nilai \textit{theta\_display}. Nilai ini dihitung secara \textit{on-the-fly} menggunakan skema pembobotan terintegrasi: $(0,8 \times \theta_{individu}) + (0,2 \times \theta_{sosial})$. Pembobotan ini merujuk pada justifikasi teoretis bahwa kontribusi individu harus tetap dominan dalam penilaian agar tetap mencerminkan kemahiran personal \autocite{Demetroulis2024} (lihat Subbab \ref{ssec:pembobotan_terintegrasi}). Fitur ini dirancang untuk memberikan motivasi belajar melalui perbandingan prestasi antar rekan sejawat dalam lingkungan yang teranonimisasi.
 \end{enumerate}
 
 \subsection{Routing dan Keamanan Sisi Klien}
