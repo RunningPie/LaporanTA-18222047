@@ -1,0 +1,26 @@
+\begin{algorithm}[t]
+\caption{Algoritma Re-ranking (diadaptasi dari \textcite{DeBiasio2023})}
+\label{alg:reranking_debiasio}
+\begin{algorithmic}[1]
+\Require User $u$, Sensitive Set $S$, Predicted Scores $\hat{r}$, Thresholds $\alpha, \beta$, Size $k$
+\Ensure Top-$k$ items $Y^*$
+\If{$u \notin S$}
+    \State \Return \Call{Argsort}{$\hat{r}$}[$0:k$]
+\Else
+    \State $Y^* \gets \emptyset$
+    \State $SortedItems \gets$ \Call{Sort}{$\hat{r}$, 'descending'}
+    \For{each item $j \in SortedItems$}
+        \If{\Call{Size}{$Y^*$} $< k$}
+            \State $CondAlpha \gets ((f_j + \sum_{i \in Y^*} f_i) / k) \geq \alpha$
+            \State $CondBeta \gets ((c_j + \sum_{i \in Y^*} c_i) / k) \leq \beta$
+            \If{$CondAlpha$ \textbf{and} $CondBeta$}
+                \State $Y^* \gets Y^* \cup \{j\}$
+            \EndIf
+        \Else
+            \State \textbf{break}
+        \EndIf
+    \EndFor
+    \State \Return $Y^*$
+\EndIf
+\end{algorithmic}
+\end{algorithm}

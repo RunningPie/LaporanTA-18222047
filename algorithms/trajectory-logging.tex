@@ -1,0 +1,29 @@
+\begin{algorithm}[t]
+\caption{Algoritma Perekaman Data Trajektori}
+\label{alg:data_logging}
+\begin{algorithmic}[1]
+\Procedure{LogTrajectory}{SessionID, UserID, QuestionID, IsCorrect, DB}
+    \State \Comment{I.S. Sesi aktif dan pengguna meminta soal berikutnya melalui endpoint /next}
+    \State \Comment{F.S. Data perubahan Elo rating dan status stagnasi tersimpan di basis data}
+    
+    \State $ThetaBefore \gets$ \Call{GetCurrentTheta}{DB, UserID}
+    
+    \State \Comment{Perbarui skor Elo rating berdasarkan jawaban}
+    \State $ThetaAfter \gets$ \Call{UpdateEloRating}{ThetaBefore, QuestionID, IsCorrect}
+    
+    \State \Comment{Deteksi stagnasi setelah skor diperbarui}
+    \State $StagnationDetected \gets$ \Call{DetectStagnation}{UserID, CurrentModule, DB}
+    
+    \State \Comment{Rekam ke basis data}
+    \State $NewLog.SessionID \gets SessionID$
+    \State $NewLog.UserID \gets UserID$
+    \State $NewLog.QuestionID \gets QuestionID$
+    \State $NewLog.IsFinalAttempt \gets \textbf{true}$
+    \State $NewLog.ThetaBefore \gets ThetaBefore$
+    \State $NewLog.ThetaAfter \gets ThetaAfter$
+    \State $NewLog.StagnationDetected \gets StagnationDetected$
+    
+    \State \Call{InsertToDB}{DB, NewLog}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}

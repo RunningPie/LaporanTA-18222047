@@ -80,50 +80,52 @@ Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelol
     \end{itemize}
     Dengan menetapkan ambang batas median di angka 165, deteksi dapat dilakukan secara cukup sensitif tanpa salah menafsirkan fluktuasi normal sebagai stagnasi. Selain itu, diterapkan pula mekanisme \textit{fallback} (cadangan) berupa rasio jawaban salah $>50\%$ dari $N=9$ soal terakhir untuk mencegah pengguna Grup A terjebak tanpa intervensi. Pemilihan angka 9 didasarkan pada temuan \textcite{Vesin2022} bahwa konvergensi terjadi pada rentang 7--10 iterasi, dengan titik tengah 8,5 yang dibulatkan menjadi 9. Pertimbangan rasio $>50\%$ adalah karena ketika siswa sudah seharusnya konvergen namun masih mayoritas salah, hal tersebut mengindikasikan terjadinya \textit{overpersonalization}. Pseudocode untuk kedua fungsi ini disajikan pada Kode \ref{alg:stagnation_detection}.
     
-\begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Deteksi Stagnasi dan Fallback}, label={alg:stagnation_detection}]
-function DetectStagnation (UserID : string, ModuleID : string, DB : Database) -> boolean
-{ Mengirimkan true jika stagnasi terdeteksi (variansi < 165), false jika tidak }
+% \begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Deteksi Stagnasi dan Fallback}, label={alg:stagnation_detection}]
+% function DetectStagnation (UserID : string, ModuleID : string, DB : Database) -> boolean
+% { Mengirimkan true jika stagnasi terdeteksi (variansi < 165), false jika tidak }
 
-KAMUS LOKAL
-Last5Logs : List of AssessmentLog
-Deltas : List of float
-Variance : float
+% KAMUS LOKAL
+% Last5Logs : List of AssessmentLog
+% Deltas : List of float
+% Variance : float
 
-ALGORITMA
-if (ModuleID = "CH03") then { Konvergensi di modul akhir bukan stagnasi }
-    -> false
-else
-    Last5Logs <- GetLastFinalAttempts(DB, UserID, 5)
-    if (NBElmtlist(Last5Logs) < 5) then
-        -> false
-    else
-        Deltas <- CalculateThetaDeltas(Last5Logs)
-        Variance <- CalculatePopulationVariance(Deltas)
-        -> (Variance < 165)
+% ALGORITMA
+% if (ModuleID = "CH03") then { Konvergensi di modul akhir bukan stagnasi }
+%     -> false
+% else
+%     Last5Logs <- GetLastFinalAttempts(DB, UserID, 5)
+%     if (NBElmtlist(Last5Logs) < 5) then
+%         -> false
+%     else
+%         Deltas <- CalculateThetaDeltas(Last5Logs)
+%         Variance <- CalculatePopulationVariance(Deltas)
+%         -> (Variance < 165)
 
 
-function CheckFallbackTrigger (GroupID : char, ModuleID : string, IsNextUnlocked : boolean, RecentLogs : List of AssessmentLog) -> boolean
-{ Mengirimkan true jika > 4 jawaban salah dari 9 attempt terakhir }
+% function CheckFallbackTrigger (GroupID : char, ModuleID : string, IsNextUnlocked : boolean, RecentLogs : List of AssessmentLog) -> boolean
+% { Mengirimkan true jika > 4 jawaban salah dari 9 attempt terakhir }
 
-KAMUS LOKAL
-WrongCount : integer
-Log : AssessmentLog
+% KAMUS LOKAL
+% WrongCount : integer
+% Log : AssessmentLog
 
-ALGORITMA
-if (GroupID != 'A' or ModuleID = "CH03" or IsNextUnlocked = true) then
-    -> false
-else
-    if (NBElmtlist(RecentLogs) < 9) then
-        -> false
-    else
-        WrongCount <- 0
-        Log <- FirstElmt(RecentLogs)
-        while (Log != Nil) do
-            if (not IsCorrect(Log)) then
-                WrongCount <- WrongCount + 1
-            Log <- Next(Log)
-        -> (WrongCount > 4)
-\end{lstlisting}
+% ALGORITMA
+% if (GroupID != 'A' or ModuleID = "CH03" or IsNextUnlocked = true) then
+%     -> false
+% else
+%     if (NBElmtlist(RecentLogs) < 9) then
+%         -> false
+%     else
+%         WrongCount <- 0
+%         Log <- FirstElmt(RecentLogs)
+%         while (Log != Nil) do
+%             if (not IsCorrect(Log)) then
+%                 WrongCount <- WrongCount + 1
+%             Log <- Next(Log)
+%         -> (WrongCount > 4)
+% \end{lstlisting}
+
+\input{algorithms/stagnation-detection.tex}
 
     \item \textbf{Integrasi Skor Kemahiran (skor $\theta$)}: Sistem menghitung skor akhir yang digunakan untuk pemeringkatan secara \textit{on-the-fly}. Skema pembobotan ini mengadopsi rasio 80:20 \autocite{Demetroulis2024} yang bertujuan untuk menjaga dominasi kompetensi individual sekaligus memberikan pengakuan terhadap kontribusi sosial (lihat Subbab \ref{ssec:pembobotan_terintegrasi}).
 \end{enumerate}
@@ -131,36 +133,7 @@ else
 \subsection{Mekanisme Perekaman Data Trajektori (\textit{Data Logging})}
 Analisis pergerakan momentum kemahiran siswa (\textit{slope} $\Delta\theta$) sangat bergantung pada data \textit{time-series} yang direkam secara presisi. Oleh karena itu, sistem diimplementasikan untuk melakukan \textit{logging} secara komprehensif pada modul \texttt{session.py} setiap kali titik akhir (\textit{endpoint}) API \texttt{/next} dipanggil. Kode \ref{alg:data_logging} mengilustrasikan logika perekaman data tersebut, yang menyimpan status kemahiran sebelum dan sesudah pengerjaan beserta status deteksi stagnasi.
 
-\begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Perekaman Data Trajektori}, label={alg:data_logging}]
-procedure LogTrajectory (input SessionID : string, input UserID : string, input QuestionID : string, input IsCorrect : boolean, input DB : Database)
-{ I.S. Sesi aktif dan pengguna meminta soal berikutnya melalui endpoint /next }
-{ F.S. Data perubahan \textit{Elo rating} dan status stagnasi tersimpan di basis data }
-
-KAMUS LOKAL
-ThetaBefore, ThetaAfter : float
-StagnationDetected : boolean
-NewLog : AssessmentLog
-
-ALGORITMA
-ThetaBefore <- GetCurrentTheta(DB, UserID)
-
-{ Perbarui skor \textit{Elo rating} berdasarkan jawaban }
-ThetaAfter <- UpdateEloRating(ThetaBefore, QuestionID, IsCorrect)
-
-{ Deteksi stagnasi setelah skor diperbarui }
-StagnationDetected <- DetectStagnation(UserID, CurrentModule, DB)
-
-{ Rekam ke basis data }
-NewLog.SessionID <- SessionID
-NewLog.UserID <- UserID
-NewLog.QuestionID <- QuestionID
-NewLog.IsFinalAttempt <- true
-NewLog.ThetaBefore <- ThetaBefore
-NewLog.ThetaAfter <- ThetaAfter
-NewLog.StagnationDetected <- StagnationDetected
-
-InsertToDB(DB, NewLog)
-\end{lstlisting}
+\input{algorithms/trajectory-logging.tex}
 
 \subsection{Keamanan Eksekusi dan \textit{Sandbox} SQL}
 Keamanan eksekusi merupakan aspek paling krusial karena sistem mengizinkan input kode mentah dari pengguna. Implementasi keamanan dilakukan melalui strategi multi-lapis untuk mencegah serangan \textit{SQL Injection} maupun akses data ilegal:

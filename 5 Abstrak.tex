@@ -2,46 +2,46 @@
 \addcontentsline{toc}{chapter}{ABSTRAK}
 
 \begin{center}
-
     \textbf{IMPLEMENTASI PURWARUPA SISTEM ASESMEN ADAPTIF KOLABORATIF BERBASIS \textit{ELO RATING} DENGAN MITIGASI \textit{OVERPERSONALIZATION}} \\
     \vspace{0.4cm}
     oleh \\
     \vspace{0.4cm}
     Dama Dhananjaya Daliman\\
     18222047\\
-    \end{center}
+\end{center}
 
+\begin{spacing}{1.0}
+Perkembangan sistem asesmen adaptif bertujuan untuk mengoptimalkan jalur belajar individu melalui personalisasi konten. Namun, ketergantungan pada algoritma personalisasi yang agresif berisiko memicu fenomena \textit{overpersonalization}, yang menciptakan \textit{filter bubbles} akademik dan mengisolasi pembelajar dari keragaman perspektif. Kondisi ini dapat menyebabkan pengambilan sampel informasi yang selektif serta stagnasi kognitif (\textit{learning plateau}). Penelitian ini bertujuan untuk merancang dan mengimplementasikan purwarupa sistem asesmen adaptif kolaboratif bernama Equilibria yang mengintegrasikan fitur sosial sebagai upaya mitigasi terhadap efek \textit{overpersonalization}. 
 
-    \begin{spacing}{1.0}
-    Perkembangan sistem asesmen adaptif bertujuan untuk mengoptimalkan jalur belajar
-    individu melalui personalisasi konten. Namun, ketergantungan pada algoritma
-    personalisasi yang agresif berisiko memicu fenomena \textit{overpersonalization},
-    yang menciptakan \textit{filter bubbles} akademik dan mengisolasi pembelajar dari
-    keragaman perspektif. Kondisi ini dapat menyebabkan pengambilan sampel informasi
-    yang selektif serta stagnasi kognitif atau \textit{learning plateau}. Penelitian
-    ini bertujuan untuk merancang dan mengimplementasikan purwarupa sistem asesmen
-    adaptif kolaboratif yang mengintegrasikan fitur sosial sebagai upaya eksploratif
-    untuk meminimalkan efek \textit{overpersonalization}. Solusi yang diusulkan
-    menggabungkan algoritma \textit{Elo rating} untuk pelacakan kemampuan kognitif
-    dengan mekanisme interaksi kolaboratif guna menjaga keseimbangan antara
-    adaptivitas personal dan dinamika sosial. Implementasi purwarupa dilakukan dengan
-    membangun platform berbasis web yang mengintegrasikan metrik kinerja individu dan
-    fitur interaksi antar-rekan. Sistem dirancang untuk merekomendasikan kolaborasi
-    berdasarkan tingkat kompetensi siswa, sehingga diharapkan dapat memberikan
-    paparan terhadap perspektif komunitas tanpa mengorbankan fungsionalitas adaptif
-    sistem.
+Sistem diimplementasikan menggunakan arsitektur \textit{client-server} dengan algoritma \textit{Modified Elo Rating} untuk pelacakan kemampuan kognitif. Mekanisme mitigasi diwujudkan melalui deteksi stagnasi berbasis variansi perubahan skor ($\Delta\theta$) dan algoritma \textit{Constraint-Based Re-ranking} untuk memasangkan siswa dengan sejawat yang memiliki tingkat kompetensi heterogen ($d \geq 0,5$). Evaluasi dilakukan melalui \textit{Controlled Lab Study} yang melibatkan 10 partisipan dalam kelompok intervensi dan kontrol pada domain pembelajaran SQL.
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-    culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde
-    omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-    rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-    beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-    aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-    ratione voluptatem sequi nesciunt.
+Hasil pengujian menunjukkan bahwa kelompok intervensi mencapai peningkatan hasil belajar yang signifikan dengan nilai \textit{Normalized Learning Gain} (NLG) antara 0,57 hingga 0,69 (kategori sedang ke tinggi), sementara kelompok kontrol mengalami penurunan performa (NLG -0,21). Analisis trajektori kemahiran membuktikan bahwa intervensi kolaboratif berhasil mengembalikan momentum pertumbuhan belajar dengan rata-rata perbedaan gradien positif sebesar +0,67 setelah titik stagnasi terdeteksi. Algoritma \textit{re-ranking} juga terbukti efektif menciptakan pasangan heterogen dengan rata-rata \textit{Cohen's d} sebesar 1,186. Penelitian ini menyimpulkan bahwa integrasi intervensi sosial yang proaktif dan terautomasi merupakan strategi efektif untuk memecah isolasi akademik dalam lingkungan pembelajaran adaptif.
 
-    Kata kunci: Asesmen Adaptif, Pembelajaran Kolaboratif, \textit{Elo rating}, \textit{overpersonalization}, Filter Bubble.
-    \end{spacing}
+\vspace{0.4cm}
+\noindent \textbf{Kata kunci:} Asesmen Adaptif, Pembelajaran Kolaboratif, \textit{Elo rating}, \textit{overpersonalization}, Filter Bubble.
+\end{spacing}
+
+\newpage
+
+% \chapter*{ABSTRACT}
+% \addcontentsline{toc}{chapter}{ABSTRACT}
+
+% \begin{center}
+%     \textbf{IMPLEMENTATION OF A COLLABORATIVE ADAPTIVE ASSESSMENT SYSTEM PROTOTYPE BASED ON ELO RATING WITH OVERPERSONALIZATION MITIGATION} \\
+%     \vspace{0.4cm}
+%     by \\
+%     \vspace{0.4cm}
+%     Dama Dhananjaya Daliman\\
+%     18222047\\
+% \end{center}
+
+% \begin{spacing}{1.0}
+% The development of adaptive assessment systems aims to optimize individual learning paths through content personalization. However, reliance on aggressive personalization algorithms risks triggering the overpersonalization phenomenon, which creates academic filter bubbles and isolates learners from diverse perspectives. This condition can lead to selective information sampling and cognitive stagnation (learning plateau). This research aims to design and implement a collaborative adaptive assessment system prototype named Equilibria, which integrates social features as a mitigation effort against overpersonalization effects.
+
+% The system is implemented using a client-server architecture with a Modified Elo Rating algorithm for cognitive ability tracking. The mitigation mechanism is realized through stagnation detection based on the variance of score changes ($\Delta\theta$) and a Constraint-Based Re-ranking algorithm to pair students with peers of heterogeneous competency levels ($d \geq 0.5$). Evaluation was conducted through a Controlled Lab Study involving 10 participants in intervention and control groups within the SQL learning domain.
+
+% The test results show that the intervention group achieved significant learning gains with Normalized Learning Gain (NLG) values between 0.57 and 0.69 (medium to high category), while the control group experienced a performance decline (NLG -0.21). Proficiency trajectory analysis proves that collaborative intervention successfully restored learning growth momentum with an average positive gradient difference of +0.67 after the stagnation point was detected. The re-ranking algorithm also proved effective in creating heterogeneous pairs with an average Cohen's d of 1.186. This study concludes that the integration of proactive and automated social intervention is an effective strategy to break academic isolation in adaptive learning environments.
+
+% \vspace{0.4cm}
+% \noindent \textbf{Keywords:} Adaptive Assessment, Collaborative Learning, Elo rating, overpersonalization, Filter Bubble.
+% \end{spacing}

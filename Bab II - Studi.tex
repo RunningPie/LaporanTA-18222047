@@ -242,6 +242,7 @@ bisa diekspresikan dengan rumus matematika seperti berikut ini.
 P_{ij} &= \sigma(\theta_i - \beta_j) \notag \\
      &= \frac{1}{1 + e^{\theta_i - \beta_j}} \label{eq:rumus_irt}
 \end{align}
+\eqcaption{Probabilitas Keberhasilan Model IRT}
 
 Model IRT bisa dirancang dengan berbagai variasi parameter logistik.
 Model IRT dengan 1-Parameter Logistik 
@@ -421,9 +422,11 @@ Peringkat siswa dan kesulitan latihan kemudian diperbarui menurut rumus berikut.
 \begin{align}
 R_i &= R_{i-1} + K (W - W_e)\label{eq:rumus_elo_student}
 \end{align}
+\eqcaption{Perubahan Peringkat Siswa (Ri)}
 \begin{align}
 D_j &= D_{j-1} + K (W_e - W)\label{eq:rumus_elo_latihan}
 \end{align}
+\eqcaption{Perubahan Tingkat Kesulitan Soal (Dj)}
 
 dengan $R_i$ adalah peringkat siswa setelah menyelesaikan latihan ke-i,
 $R_{i-1}$ adalah peringkat siswa sebelum menyelesaikan latihan ke-i,
@@ -437,6 +440,7 @@ yang dihitung berdasarkan formula berikut.
 \begin{align}
 W = \left(\frac{(A_s + A_o)T_c}{2A_oT_p}\right)(a_id_i - a_it_i). \label{eq:rumus_W_elo}
 \end{align}
+\eqcaption{Pembobotan Skor W}
 
 Rumus \ref{eq:rumus_W_elo} di atas adalah kunci modifikasi algoritma \textit{Elo rating} dari riset oleh \textcite{Vesin2022},
 variabel-variabelnya dijelaskan dalam laporan hasil risetnya dengan definisi di bawah ini:
@@ -455,6 +459,7 @@ seorang siswa mampu menyelesaikan latihan tertentu, yang dihitung berdasarkan ru
 \begin{align}
 W_e = \frac{1}{1+10^{\frac{R_{i-1} - D_{j-1}}{400}}}. \label{eq:rumus_W_e_elo}
 \end{align}
+\eqcaption{Ekspektasi Keberhasilan (We)}
 
 \subsection{Posisi Teknik dan Algoritma dalam Sistem Asesmen Adaptif Individual}
 \label{ssec:arsitektur_sistem_aa_individual}
@@ -577,6 +582,7 @@ ini dinyatakan sebagai:
     d &= \frac{| \bar{x}_A - \bar{x}_B |}{\sigma_{pooled}} \label{eq:cohen_d_basic} \\
     \sigma_{pooled} &= \sqrt{\frac{(n_A-1)s_A^2 + (n_B-1)s_B^2}{n_A + n_B - 2}} \label{eq:sigma_pooled}
 \end{align}
+\eqcaption{Persamaan Cohen's d}
 
 dengan $\bar{x}_A$ dan $\bar{x}_B$ adalah nilai rata-rata (atau skor kemampuan
 individu) dari dua entitas yang dibandingkan, $s_A^2$ dan $s_B^2$ adalah varians
@@ -958,49 +964,9 @@ Pendekatan ini sangat relevan untuk konteks pembelajaran adaptif karena "penggun
 % \subsubsection{Algoritma \textit{Re-ranking} Berbasis Batasan}
 Untuk memitigasi dampak negatif rekomendasi pada pengguna sensitif tanpa memerlukan pelatihan model ulang, \textcite{DeBiasio2023} mengusulkan algoritma \textit{greedy re-ranking}. Algoritma ini bekerja pada tahap pasca-pemrosesan dengan menyusun ulang daftar skor prediksi awal ($\hat{r}_u$) agar memenuhi batasan proporsi item tertentu.
 
-Pada kode \ref{alg:reranking_debiasio_original} diperlihatkan pseudocode dari algoritma \textit{re-ranking} tersebut sebagaimana didefinisikan dalam penelitian aslinya.
+Pada Algoritma \ref{alg:reranking_debiasio} diperlihatkan pseudocode dari algoritma \textit{re-ranking} tersebut sebagaimana didefinisikan dalam penelitian aslinya.
 
-\begin{minipage}{\textwidth} 
-\begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Re-ranking}, label={alg:reranking_debiasio_original}]
-ALGORITHM Re-ranking
-    INPUT:
-        u      : User identifier
-        S      : Set of sensitive users
-        r_hat  : Scores predicted by backbone model for user u
-        alpha  : Minimum percentage of favorable items allowed
-        beta   : Maximum percentage of controversial items allowed
-        k      : Number of items to be recommended
-    OUTPUT:
-        Y_star : Top-k items to recommend to user u
-    BEGIN
-        IF u NOT IN S THEN
-            RETURN Argsort(r_hat, order='descending')[0:k]
-        
-        ELSE
-            Y_star <- EmptySet
-            SortedItems <- Sort(r_hat, order='descending')
-            
-            FOR EACH item j IN SortedItems DO
-                IF Size(Y_star) < k THEN
-                    
-                    CondAlpha <- ((f_j + Sum(f_i for i in Y_star)) / k) >= alpha
-                    
-                    CondBeta  <- ((c_j + Sum(c_i for i in Y_star)) / k) <= beta
-                    
-                    IF CondAlpha AND CondBeta THEN
-                        Add j to Y_star
-                    END IF
-                ELSE
-                    BREAK
-                END IF
-            END FOR
-            
-            RETURN Y_star
-        END IF
-    END
-END ALGORITHM
-\end{lstlisting}
-\end{minipage}
+\input{algorithms/reranking-debiasio.tex}
 
 Secara matematis, algoritma memastikan bahwa probabilitas terpilihnya
 suatu item $y_i$ dalam rekomendasi untuk pengguna sensitif ($s_u=1$) memenuhi
@@ -1010,6 +976,7 @@ pertidaksamaan berikut,
     \mathbb{P}(y_i=1 \mid s_u=1, f_i=1) &\geq \alpha \label{eq:constraint_favorable} \\
     \mathbb{P}(y_i=1 \mid s_u=1, c_i=1) &\leq \beta \label{eq:constraint_controversial}
 \end{align}
+\eqcaption{Batasan Probabilitas Rekomendasi Re-ranking}
 
 dengan:
 \begin{itemize}
@@ -1066,6 +1033,7 @@ atau individu pada umumnya dinyatakan dalam persamaan berikut:
 \begin{align}
     g &= \frac{\text{post} - \text{pre}}{\text{maksimum} - \text{pre}} \label{eq:normalized_gain_formula}
 \end{align}
+\eqcaption{Persamaan Normalized Learning Gain}
 
 dengan $\text{pre}$ merepresentasikan skor pada tes awal sebelum
 instruksi diberikan, $\text{post}$ adalah skor pada tes akhir, dan $\text{maksimum}$ adalah batas atas skor yang dapat dicapai. Pada sistem yang menggunakan pengukuran skala kontinu seperti \textit{Elo rating}, nilai maksimum ini disesuaikan dengan ambang batas \textit{Elo} tertinggi (baik secara teoretis maupun empiris).
@@ -1098,3 +1066,5 @@ Berdasarkan tinjauan yang dilakukan oleh \textcite{Sukserm2024}, para peneliti m
 Dalam perancangan sistem pembelajaran yang menggunakan kueri SQL sebagai subjek penugasan, terdapat tantangan teknis dalam memvalidasi kebenaran jawaban siswa secara algoritmik. SQL (\textit{Structured Query Language}) adalah bahasa deklaratif; kueri yang disusun menyatakan informasi apa yang ingin diambil, bukan bagaimana sistem harus secara algoritmik mengambilnya \autocite{Silberschatz2019}. Akibatnya, ada banyak cara sintaksis yang berbeda untuk menghasilkan hasil yang sama secara semantik.
 
 Menurut \textcite{Silberschatz2019}, mengevaluasi dua kueri relasional untuk menentukan apakah keduanya setara secara semantik (\textit{semantic equivalence}) adalah permasalahan komputasi yang sangat kompleks, bahkan termasuk dalam kategori NP-Hard dalam ilmu teori komputasi. Oleh karena itu, membangun sistem penilaian otomatis yang membandingkan Pohon Sintaksis Abstrak (\textit{Abstract Syntax Tree}) atau representasi aljabar relasional dari kueri siswa dengan kueri kunci jawaban menjadi sangat sulit dan rawan kesalahan. Kesulitan inilah yang menjadikan pendekatan perbandingan himpunan hasil (\textit{result set comparison}) dengan eksekusi pada basis data tiruan (\textit{sandbox}) menjadi standar de-facto yang paling pragmatis dan sering digunakan dalam mengukur kebenaran kueri secara utuh.
+ra utuh.
+

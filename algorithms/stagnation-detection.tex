@@ -1,0 +1,42 @@
+\begin{algorithm}[t]
+\caption{Algoritma Deteksi Stagnasi dan Fallback}
+\label{alg:stagnation_detection}
+\begin{algorithmic}[1]
+\Function{DetectStagnation}{UserID, ModuleID, DB}
+    \State \Comment{Mengirimkan true jika stagnasi terdeteksi (variansi < 165), false jika tidak}
+    \If{ModuleID = "CH03"} \Comment{Konvergensi di modul akhir bukan stagnasi}
+        \State \Return \textbf{false}
+    \Else
+        \State Last5Logs $\gets$ \Call{GetLastFinalAttempts}{DB, UserID, 5}
+        \If{\Call{NBElmtlist}{Last5Logs} < 5}
+            \State \Return \textbf{false}
+        \Else
+            \State Deltas $\gets$ \Call{CalculateThetaDeltas}{Last5Logs}
+            \State Variance $\gets$ \Call{CalculatePopulationVariance}{Deltas}
+            \State \Return (Variance < 165)
+        \EndIf
+    \EndIf
+\EndFunction
+
+\Function{CheckFallbackTrigger}{GroupID, ModuleID, IsNextUnlocked, RecentLogs}
+    \State \Comment{Mengirimkan true jika > 4 jawaban salah dari 9 attempt terakhir}
+    \If{GroupID $\neq$ 'A' \textbf{or} ModuleID = "CH03" \textbf{or} IsNextUnlocked = \textbf{true}}
+        \State \Return \textbf{false}
+    \Else
+        \If{\Call{NBElmtlist}{RecentLogs} < 9}
+            \State \Return \textbf{false}
+        \Else
+            \State $WrongCount \gets 0$
+            \State $Log \gets$ \Call{FirstElmt}{RecentLogs}
+            \While{$Log \neq \text{Nil}$}
+                \If{\textbf{not} \Call{IsCorrect}{Log}}
+                    \State $WrongCount \gets WrongCount + 1$
+                \EndIf
+                \State $Log \gets$ \Call{Next}{Log}
+            \EndWhile
+            \State \Return ($WrongCount > 4$)
+        \EndIf
+    \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

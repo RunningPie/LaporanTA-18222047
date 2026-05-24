@@ -1,0 +1,34 @@
+\begin{table}[!ht]
+    \centering
+    \caption{Perbandingan Desain Sistem \textit{As-Is} vs \textit{To-Be}}
+    \label{tbl:perbandingan_sistem}
+    \begin{tabular}{|p{0.20\textwidth}|p{0.37\textwidth}|p{0.37\textwidth}|}
+        \hline
+        \textbf{Dimensi Komparasi} & \textbf{Sistem Saat Ini (As-Is)} & \textbf{Sistem Usulan (To-Be)} \\
+        \hline
+        \textbf{Paradigma Interaksi} & 
+        \textbf{\textit{Sistem pasif:}} \newline
+        Sistem menunggu inisiatif siswa untuk berkolaborasi. Fitur sosial (forum/diskusi) bersifat opsional dan terpisah dari alur belajar utama. & 
+        \textbf{\textit{Sistem proaktif:}} \newline
+        Sistem secara aktif menginterupsi alur belajar mandiri dengan tugas kolaboratif (\textit{mandated intervention}) ketika mendeteksi stagnasi, mengubah peran siswa menjadi responden aktif. \\
+        \hline
+        \textbf{Arsitektur Data \& Asesmen} & 
+        \textbf{\textit{Pembaruan satu sumber:}} \newline
+        Model pengetahuan siswa hanya diperbarui oleh satu sumber data: hasil pengerjaan tugas individu. Aktivitas sosial tidak dikuantifikasi menjadi metrik kompetensi. & 
+        \textbf{\textit{Siklus pembaruan dua sumber:}} \newline
+        Model profil siswa diperbarui dari dua jalur: (1) skor tugas individu (dominan), dan (2) kualitas reviu sejawat. Aktivitas sosial dikonversi menjadi dimensi kontribusi sosial yang menjadi komponen komplementer dalam pemodelan profil siswa yang komprehensif. \\
+        \hline
+        \textbf{Logika Rekomendasi} & 
+        \textbf{\textit{Heterogenitas opsional:}} \newline
+        Algoritma cenderung merekomendasikan konten yang "nyaman" (sesuai tingkat kemampuan), berisiko menciptakan \textit{competency bubble} dan kompetensi semu. & 
+        \textbf{\textit{Heterogenitas secara Desain:}} \newline
+        Algoritma \textit{Re-ranking} secara eksplisit memaksakan batasan statistik ($\alpha$) untuk menyuntikkan mitra belajar dengan perbedaan tingkat kemampuan yang signifikan berdasarkan indeks \textit{Effect Size} (seperti \textit{Cohen's d}), memecahkan isolasi melalui eksposur diversitas. \\
+        \hline
+        \textbf{Mekanisme Mitigasi Isolasi} & 
+        \textbf{\textit{Kesadaran manual:}} \newline
+        Mengandalkan kesadaran metakognitif siswa (misal: lewat grafik OSSM) untuk menyadari bahwa mereka perlu berinteraksi dengan orang lain. & 
+        \textbf{\textit{Batasan terautomasi:}} \newline
+        Menggunakan batasan algoritmik otomatis. Sistem tidak menunggu siswa "sadar", melainkan langsung mengubah antarmuka menjadi mode \textit{Peer Assessment} saat parameter stagnasi terpenuhi. \\
+        \hline
+    \end{tabular}
+\end{table}

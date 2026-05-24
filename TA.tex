@@ -163,6 +163,7 @@
 
 % --- Ubah nama list of algorithm ke "DAFTAR ALGORITMA" ---
 \renewcommand{\algorithmname}{Algoritma}
+\renewcommand{\algorithmiccomment}[1]{\quad \{\{ #1 \}\}}
 \renewcommand{\listalgorithmname}{DAFTAR ALGORITMA}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
 \renewcommand{\thealgorithm}{\thechapter.\arabic{algorithm}}
@@ -372,7 +373,7 @@
 \input{9 Daftar Tabel.tex}
 \input{10 Daftar Persamaan.tex}
 \input{11 Daftar Algoritma.tex}
-\input{12 Daftar Listing.tex}
+% \input{12 Daftar Listing.tex}
 \input{13 Daftar Simbol.tex}
 \input{14 Daftar Singkatan.tex}
 

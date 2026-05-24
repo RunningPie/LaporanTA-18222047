@@ -9,96 +9,46 @@
 \setcounter{section}{0}
 \vspace{2em}
 
-
-
-
 \begin{longtable}{@{} l >{\raggedright\arraybackslash}p{6.5cm} c @{}}
 \multicolumn{1}{l}{\textbf{Notasi}} & \multicolumn{1}{l}{\textbf{Deskripsi}} & \multicolumn{1}{l}{\parbox[c]{3.5cm}{\raggedright \textbf{Pemakaian pertama kali}}} \\
 
+% --- Parameter Kemahiran & Model ---
+$\theta$ & Tingkat kemahiran siswa (\textit{Student proficiency}) & 5 \\
+$\theta_{individu}$ & Dimensi kemahiran pengerjaan soal secara mandiri & 30 \\
+$\theta_{sosial}$ & Dimensi kontribusi dalam aktivitas kolaboratif & 30 \\
+$\theta_{display}$ & Nilai gabungan kemahiran untuk pemeringkatan & 30 \\
+$\beta$ & Tingkat kesulitan butir soal (\textit{Item difficulty}) & 25 \\
+$a$ & Parameter diskriminasi butir soal & 25 \\
+$c$ & Parameter tebakan (\textit{guessing parameter}) & 25 \\
+$\sigma(x)$ & Fungsi aktivasi \textit{sigmoid} / logistik & 25 \\
 
+% --- Algoritma Elo Rating ---
+$R_i$ & \textit{Rating} (skor kemahiran) siswa ke-$i$ & 35 \\
+$D_j$ & Tingkat kesulitan soal ke-$j$ & 35 \\
+$K$ & Faktor sensitivitas pembaruan \textit{Elo rating} & 35 \\
+$W$ & Nilai keberhasilan aktual pengerjaan soal & 36 \\
+$W_e$ & Nilai ekspektasi keberhasilan (probabilitas) & 36 \\
+$A_s$ & Jumlah upaya (\textit{attempts}) yang berhasil & 36 \\
+$A_o$ & Total jumlah upaya yang dilakukan & 36 \\
+$T_c$ & Jumlah kriteria pengerjaan (\textit{test cases}) yang benar & 36 \\
+$T_p$ & Total jumlah kriteria pengerjaan yang diuji & 36 \\
+$t_i$ & Waktu yang dihabiskan untuk pengerjaan soal & 37 \\
+$d_i$ & Batas waktu pengerjaan soal (\textit{deadline}) & 37 \\
+$\Delta\theta$ & Perubahan nilai kemahiran setelah aktivitas & 40 \\
 
-% \multicolumn{2}{l}{\textbf{Huruf Yunani (Parameter Model)}} \\
+% --- Statistik & Mitigasi ---
+$\epsilon$ & Ambang batas variansi untuk deteksi stagnasi & 42 \\
+$\sigma^2$ & Nilai variansi populasi dari $\Delta\theta$ & 42 \\
+$d$ & Indeks \textit{Effect Size Cohen's d} & 50 \\
+$\alpha$ & Ambang batas proporsi minimum \textit{favorable items} & 55 \\
+$\beta$ & Ambang batas proporsi maksimum \textit{controversial items} & 55 \\
+$g$ & Metrik \textit{Normalized Learning Gain} (Hake's g) & 70 \\
+$p$ & Nilai probabilitas signifikansi statistik (\textit{p-value}) & 72 \\
 
-$\alpha$ & Koefisien bobot untuk \textit{loss function}, tingkat signifikansi statistik & 75 \\
-$\beta$ & Koefisien bobot untuk \textit{Binary Cross-Entropy loss} & 75 \\
-$\lambda$ & Koefisien bobot untuk CTC \textit{loss}, parameter regularisasi & 75 \\
-$\theta$ & Parameter model \textit{neural network} & 75 \\
-$\sigma$ & Deviasi standar & 75 \\
-$\mu$ & Rata-rata (\textit{mean}) & 75 \\
-$\epsilon$ & \textit{Token blank}/kosong dalam CTC, konstanta kecil untuk stabilitas numerik & 75 \\
-$\Delta$ & Delta (selisih/perubahan nilai) & 75 \\
-$\pi$ & \textit{Alignment path} dalam CTC & 75 \\
-$\pi_t$ & \textit{Token} pada \textit{timestep} $t$ dalam \textit{alignment path} & 76 \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Operator Matematis}} \\
-
-$\nabla$ atau $\partial$ & Operator gradien atau turunan parsial & 75 \\
-$\sum$ & Operator penjumlahan & 75 \\
-$\prod$ & Operator perkalian & 75 \\
-$\int$ & Operator integral & 75 \\
-argmax & Argumen yang memaksimalkan fungsi & 76 \\
-$\sim$ & Terdistribusi menurut & 75 \\
-$\to$ & Menuju atau konvergen ke & 75 \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Fungsi \textit{Loss} dan Kerugian}} \\
-
-$\mathcal{L}$ & Fungsi \textit{loss} (kerugian) & 75 \\
-$\mathcal{L}_{total}$ & Total \textit{loss function} & 75 \\
-$\mathcal{L}_{adversarial}$ atau $\mathcal{L}_{adv}$ & \textit{Adversarial loss} & 75 \\
-$\mathcal{L}_{reconstruction}$ & \textit{Reconstruction loss} & 75 \\
-$\mathcal{L}_{L1}$ & L1 \textit{loss} (\textit{Mean Absolute Error}) & 75 \\
-$\mathcal{L}_{L2}$ & L2 \textit{loss} (\textit{Mean Squared Error}) & 75 \\
-$\mathcal{L}_{CTC}$ & CTC (\textit{Connectionist Temporal Classification}) \textit{loss} & 75 \\
-$\mathcal{L}_{perceptual}$ & \textit{Perceptual loss} & 75 \\
-$\mathcal{L}_{pixel}$ & \textit{Pixel-wise loss} & 75 \\
-$\mathcal{L}_{BCE}$ & \textit{Binary Cross-Entropy loss} & 75 \\
-$\mathcal{L}_{GAN}$ & GAN \textit{loss} & 75 \\
-$\mathcal{L}_{cycle}$ & \textit{Cycle consistency loss} & 75 \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Variabel Model dan Komponen GAN}} \\
-
-$G$ & \textit{Generator} dalam GAN & 75 \\
-$D$ & \textit{Discriminator} dalam GAN & 75 \\
-$G(z)$ & \textit{Output} dari \textit{generator} dengan \textit{input} $z$ & 75 \\
-$D(x)$ & \textit{Output} dari \textit{discriminator} dengan \textit{input} $x$ & 75 \\
-$G_{A \to B}$ & \textit{Generator} dari domain $A$ ke $B$ & 75 \\
-$G_{B \to A}$ & \textit{Generator} dari domain $B$ ke $A$ & 75 \\
-$V(D, G)$ & Fungsi nilai (\textit{value function}) dalam GAN & 75 \\
-$x$ & Sampel data asli, \textit{input} citra & 75 \\
-$y$ & Label atau \textit{ground truth}, kondisi dalam \textit{conditional GAN} & 75 \\
-$z$ & \textit{Noise vector} atau representasi laten \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Distribusi Probabilitas}} \\
-
-$\mathbb{E}$ & Ekspektasi atau nilai harapan & 75 \\
-$p_{data}$ & Distribusi data asli & 75 \\
-$p_z$ & Distribusi \textit{prior} (\textit{noise}) & 75 \\
-$p(y|x)$ & Probabilitas bersyarat \textit{output} $y$ \textit{given input} $x$ & 75 \\
-$p_t(\pi_t|x)$ & Probabilitas \textit{token} pada \textit{timestep} $t$ \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Fungsi dan Transformasi CTC}} \\
-
-$\mathcal{B}$ & Fungsi penciutan (\textit{collapse function}) dalam CTC & 75 \\
-$\mathcal{B}^{-1}$ & Fungsi invers penciutan dalam CTC & 75 \\
-$T$ & Jumlah \textit{timestep} atau panjang \textit{sequence} \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Metrik Jarak dan Norma}} \\
-
-$|x - G(y)|_1$ & L1 \textit{distance} antara \textit{ground truth} dan \textit{generated image} & 75 \\
-$|x - G(y)|_2$ & L2 \textit{distance} antara \textit{ground truth} dan \textit{generated image} & 75 \\
-$N \times N$ & Ukuran \textit{patch} dalam PatchGAN \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Statistik dan Analisis}} \\
-
-$d$ & Cohen's $d$ (\textit{effect size}) & 75 \\
-$n$ & Jumlah sampel & 75 \\
-$p$ & \textit{p-value} (nilai probabilitas statistik) & 75 \\
-$r$ & Koefisien korelasi & 75 \\
-$R^2$ & Koefisien determinasi \\[1ex]
-
-% \multicolumn{2}{l}{\textbf{Notasi Kompleksitas Komputasi}} \\
-
-$O(n)$ & Notasi Big-O untuk kompleksitas linear & 75 \\
-$O(n^2)$ & Notasi Big-O untuk kompleksitas kuadratik & 75 \\
+% --- Umum ---
+$\mathbb{P}$ & Probabilitas suatu kejadian & 55 \\
+$\sum$ & Operator penjumlahan & 25 \\
+$\in$ & Operator keanggotaan himpunan & 55 \\
+$\notin$ & Operator bukan anggota himpunan & 55 \\
 
 \end{longtable}

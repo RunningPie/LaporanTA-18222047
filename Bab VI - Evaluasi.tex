@@ -25,26 +25,7 @@ Realisasi pengembangan sistem secara umum mengalami keterlambatan satu bulan dib
 \subsection{Kesesuaian Anggaran Biaya}
 Realisasi biaya operasional sistem disajikan pada Tabel \ref{tbl:realisasi_rab}. Terjadi efisiensi biaya pada komponen LLM yang tidak digunakan, namun terdapat pengeluaran untuk konsolidasi infrastruktur \textit{cloud} guna menjaga kelancaran pengembangan.
 
-\begin{table}[!ht]
-    \centering
-    \caption{Realisasi Anggaran Biaya Implementasi}
-    \label{tbl:realisasi_rab}
-    \begin{tabular}{|p{0.05\textwidth}|p{0.30\textwidth}|p{0.30\textwidth}|p{0.15\textwidth}|}
-        \hline
-        \textbf{No} & \textbf{Komponen} & \textbf{Spesifikasi/Layanan} & \textbf{Biaya (Rp)} \\
-        \hline
-        1 & \textit{Consolidated Hosting} & Railway (\textit{Hobby Tier}) & Rp 80.000 \\
-        \hline
-        2 & \textit{Domain} & Subdomain Provider & Rp 0 \\
-        \hline
-        3 & Layanan LLM & Tidak digunakan & Rp 0 \\
-        \hline
-        4 & Perangkat \& Internet & Aset Pribadi / \textit{Sunk Cost} & Rp 0 \\
-        \hline
-        \multicolumn{3}{|r|}{\textbf{Total Biaya Aktual}} & \textbf{Rp 80.000} \\
-        \hline
-    \end{tabular}
-\end{table}
+\input{tables/tabel_6_realisasi_biaya.tex}
 
 \section{Prosedur Pengujian Laboratorium (\textit{Lab Study})}
 \label{sec:prosedur_pengujian}
@@ -71,21 +52,7 @@ Mengingat asesmen dilakukan secara terintegrasi, skor \textit{pre-test} dan prok
 
 Tabel \ref{tbl:perbandingan_skor} menyajikan rekapitulasi skor rata-rata berdasarkan skala \textit{Elo rating} tersebut, beserta nilai NLG teoretis dan empirisnya.
 
-\begin{table}[!ht]
-    \centering
-    \caption{Perbandingan Skor Rata-rata Pre-test dan Post-test}
-    \label{tbl:perbandingan_skor}
-    \begin{tabular}{|p{2.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
-        \hline
-        \textbf{Kelompok} & \textbf{Rata-rata Pre-test} & \textbf{Rata-rata Post-test} & \textbf{NLG Teoretis} & \textbf{NLG Empiris} \\
-        \hline
-        \hline
-        Grup A (Intervensi) & 1313,33 & 1445,08 & 0,69 & 0,57 \\
-        \hline
-        Grup B (Kontrol) & 1300,00 & 1236,59 & -0,21 & -0,19 \\
-        \hline
-    \end{tabular}
-\end{table}
+\input{tables/tabel_6_performa_grup.tex}
 
 \subsection{Analisis Signifikansi Peningkatan (NLG)}
 Berdasarkan Tabel \ref{tbl:perbandingan_skor}, terlihat bahwa Grup A mengalami peningkatan hasil belajar yang sangat positif, dengan nilai NLG Teoretis sebesar $0,69$ dan NLG Empiris sebesar $0,57$. Merujuk pada kriteria interpretasi Hake, nilai ini tergolong ke dalam kategori peningkatan sedang hingga tinggi (\textit{medium to high gain}). Sebaliknya, Grup B justru mengalami penurunan performa dengan nilai NLG Teoretis $-0,21$ dan Empiris $-0,19$. Penurunan skor pada grup kontrol ini secara empiris mengindikasikan terjadinya kelelahan kognitif (\textit{cognitive fatigue}) atau demotivasi akibat terjebak berulang kali dalam soal-soal sulit (\textit{stagnasi}) tanpa adanya bantuan eksternal.
@@ -165,5 +132,8 @@ Meskipun memberikan hasil yang positif, terdapat beberapa faktor yang perlu dipe
 \end{enumerate}
 
 Implikasi dari studi ini menunjukkan bahwa desain sistem \textit{e-learning} ke depannya tidak cukup lagi hanya dengan merekomendasikan soal yang selaras dengan kemahiran, melainkan harus memiliki fitur mitigasi sosial proaktif. Umpan balik kualitatif tambahan dari mahasiswa menunjukkan bahwa interupsi proaktif dari sistem membantu meringankan beban psikologis bagi siswa yang merasa "malu/takut" untuk bertanya langsung pada sejawat. Adanya batasan anonimitas yang diatur secara algoritmik (\textit{Constraint-based Re-ranking}) memberikan dorongan positif bagi mereka untuk meninjau kueri secara objektif tanpa bias. Hal ini meletakkan fondasi baru bagi perancangan sistem pendidikan adaptif yang lebih kolaboratif dan manusiawi.
+
+
+mereka untuk meninjau kueri secara objektif tanpa bias. Hal ini meletakkan fondasi baru bagi perancangan sistem pendidikan adaptif yang lebih kolaboratif dan manusiawi.
 
 
