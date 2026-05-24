@@ -4,17 +4,57 @@
 \cleardoublepage
 \chapter{PENUTUP}
 \label{chap:penutup}
+
+Bab ini menyajikan kesimpulan yang ditarik dari hasil rancang bangun, implementasi, serta evaluasi yang telah dilakukan terhadap purwarupa sistem Equilibria. Selain itu, bab ini juga memuat saran bagi pengguna sistem dan rekomendasi pengembangan lebih lanjut untuk menyempurnakan penelitian di masa depan.
+
 \section{Kesimpulan}
-Jelaskan secara detail langkah-langkah rencana selanjutnya, hal-hal yang diperlukan atau akan disiapkan, dan risiko dan mitigasinya, yang meliputi:
+\label{sec:kesimpulan}
+
+Berdasarkan hasil pelaksanaan tugas akhir yang mencakup proses perancangan, realisasi
+mekanisme, dan implementasi sistem asesmen adaptif kolaboratif Equilibria, dapat
+ditarik beberapa kesimpulan sebagai berikut:
+
+\begin{enumerate}
+    \item Telah berhasil dirancang sebuah arsitektur sistem asesmen adaptif yang
+    mengintegrasikan parameter kemahiran individual berbasis algoritma \textit{Elo
+    rating} dengan dimensi kontribusi sosial secara holistik. Rancangan ini
+    memungkinkan sistem untuk memodelkan profil siswa tidak hanya berdasarkan
+    kemampuan pengerjaan soal secara mandiri, tetapi juga keterlibatan aktif dalam
+    aktivitas kolaboratif.
+    
+    \item Telah berhasil dikembangkan mekanisme mitigasi \textit{overpersonalization}
+    yang bekerja secara proaktif melalui deteksi stagnasi kognitif (berdasarkan
+    variansi perubahan skor $\Delta\theta$) dan pemilihan mitra kolaborasi yang
+    heterogen menggunakan algoritma \textit{Constraint-based Re-ranking}. Mekanisme
+    ini terbukti mampu memicu intervensi sosial secara otomatis untuk memecah
+    isolasi pembelajaran (\textit{filter bubble}) yang dialami siswa.
+    
+    \item Telah berhasil diimplementasikan purwarupa sistem asesmen adaptif
+    kolaboratif bernama Equilibria pada domain pembelajaran kueri SQL. Implementasi
+    ini mencakup integrasi lingkungan eksekusi \textit{query} (\textit{sandbox})
+    yang aman, pembaruan rating secara \textit{real-time}, serta antarmuka
+    pembelajaran yang reaktif guna mendukung siklus belajar adaptif dan interaksi
+    sejawat secara transparan.
+\end{enumerate}
+
 \section{Saran}
-asdfas
+\label{sec:saran}
+
+Berdasarkan pengalaman selama proses pengerjaan dan temuan pada tahap evaluasi, terdapat beberapa saran yang dapat dipertimbangkan oleh pengguna atau pengelola sistem:
+
+\begin{enumerate}
+    \item \textbf{Bagi Instruktur/Pengajar:} Disarankan untuk tidak membiarkan siswa menggunakan sistem adaptif individual dalam durasi yang terlalu lama tanpa adanya sesi interaksi antar-rekan, guna mencegah terjadinya frustrasi akademik akibat materi yang terlalu tersegmentasi pada satu tingkat kesulitan saja.
+    \item \textbf{Bagi Siswa:} Umpan balik dari rekan sejawat sebaiknya ditinjau secara kritis sebagai bahan refleksi diri, karena proses memberikan dan menerima ulasan terbukti secara statistik membantu mempercepat penguasaan konsep yang sulit dibandingkan belajar secara mandiri.
+\end{enumerate}
 
 \section{Saran Pengembangan Selanjutnya}
 \label{sec:future_works}
 
-Berdasarkan hasil evaluasi, diidentifikasi beberapa area pengembangan untuk penelitian selanjutnya:
+Penelitian ini masih memiliki keterbatasan yang dapat diperbaiki pada pengembangan selanjutnya, antara lain:
+
 \begin{enumerate}
-    \item {[Placeholder: Misal peningkatan akurasi NLP untuk feedback bahasa Indonesia.]}
-    \item {[Placeholder: Misal pengujian pada populasi yang lebih besar dan durasi yang lebih lama.]}
-    \item {[Placeholder: Misal integrasi model generatif (LLM) untuk membantu proses \textit{peer review}.]}
+    \item \textbf{Rekalibrasi Parameter Stagnasi:} Ambang batas variansi ($\epsilon = 165$) yang digunakan saat ini terdeteksi terlalu sensitif (\textit{hypersensitive}). Pengembangan selanjutnya perlu mencari nilai ambang batas yang lebih optimal atau menggunakan jendela aktivitas (\textit{sliding window}) yang lebih lebar agar tidak setiap fluktuasi kecil memicu intervensi.
+    \item \textbf{Peningkatan Akurasi NLP untuk Bahasa Indonesia:} Komponen \textit{Social Elo} dapat diperkuat dengan menggunakan model bahasa alami yang dilatih secara spesifik pada istilah teknis komputasi dalam bahasa Indonesia, guna meningkatkan akurasi penilaian kualitas umpan balik secara otomatis.
+    \item \textbf{Integrasi Model Generatif (LLM):} Penggunaan \textit{Large Language Model} dapat dipertimbangkan untuk membantu memberikan \textit{scaffolding} awal kepada siswa saat melakukan \textit{peer review}, misalnya dengan memberikan saran poin-poin kesalahan yang perlu dikomentari pada kueri rekan.
+    \item \textbf{Pengujian Skala Besar:} Melakukan pengujian pada populasi siswa yang lebih besar dan durasi yang lebih lama (satu semester penuh) untuk melihat stabilitas konvergensi skor \textit{Social Elo} serta dampak jangka panjang terhadap retensi pengetahuan siswa.
 \end{enumerate}

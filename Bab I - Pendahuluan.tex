@@ -60,17 +60,27 @@ juga mempertimbangkan risiko isolasi pembelajaran pada sistem adaptif
 konvensional. Kesenjangan teknologi saat ini terletak pada terbatasnya
 penelitian yang menguji apakah integrasi fitur kolaboratif dalam sistem asesmen
 adaptif dapat meminimalkan efek \textit{overpersonalization}.
-
 Maka dari itu, permasalahan utama yang ingin diselesaikan adalah:
 \begin{enumerate}
-  \item Bagaimana rancang bangun dan implementasi purwarupa sistem asesmen
-  adaptif yang mengintegrasikan fitur kolaboratif sebagai upaya untuk
-  meminimalkan efek \textit{overpersonalization}?
-  \item Bagaimana efektivitas integrasi fitur kolaboratif tersebut dalam
-  meminimalkan efek \textit{overpersonalization} sekaligus mempertahankan
-  fungsionalitas personalisasi pada sistem asesmen adaptif?
+  \item Bagaimana merancang arsitektur sistem asesmen adaptif yang mampu
+  mengintegrasikan parameter kemahiran individual dengan dimensi kontribusi
+  sosial secara terpadu?
+  \item Bagaimana mengembangkan mekanisme mitigasi \textit{overpersonalization}
+  berbasis deteksi stagnasi kognitif dan pemilihan mitra kolaborasi yang
+  heterogen?
+  \item Bagaimana mengimplementasikan rancangan arsitektur dan mekanisme tersebut
+  menjadi purwarupa sistem asesmen adaptif kolaboratif yang fungsional?
 \end{enumerate}
 
+Sebagai upaya untuk menjawab permasalahan tersebut, tugas akhir ini mengusulkan
+pengembangan purwarupa sistem asesmen adaptif kolaboratif yang mengintegrasikan
+mekanisme intervensi proaktif. Kontribusi dari pekerjaan ini terletak pada
+penggabungan metrik kemahiran individual dengan dimensi kontribusi sosial ke
+dalam sebuah arsitektur asesmen yang terpadu. Selain itu, penelitian ini
+mengusulkan pengembangan metode mitigasi risiko
+\textit{overpersonalization} melalui deteksi stagnasi kognitif secara otomatis,
+yang diharapkan dapat menjaga dinamika pertumbuhan pengetahuan pembelajar dalam
+lingkungan yang terpersonalisasi.
 
 % --- Tujuan ---
 \section{Tujuan}
@@ -81,13 +91,17 @@ dapat meminimalkan efek \textit{overpersonalization} dalam lingkungan pembelajar
 
  Secara spesifik, tujuan penelitian ini adalah:
 \begin{enumerate}
-  \item Mengimplementasikan purwarupa sistem asesmen adaptif yang mengintegrasikan
-  fitur kolaboratif untuk mengeksplorasi potensi minimasi efek
-  \textit{overpersonalization}.
-  \item Mengevaluasi efektivitas sistem melalui uji coba pengguna untuk menguji
-  sejauh mana integrasi fitur kolaboratif mampu meminimalkan efek
-  \textit{overpersonalization} tanpa mengorbankan fungsionalitas adaptif sistem.
+  \item Merancang arsitektur sistem asesmen adaptif yang mampu mengintegrasikan
+  parameter kemahiran individual (\textit{Elo Rating}) dengan dimensi kontribusi
+  sosial secara holistik.
+  \item Mengembangkan mekanisme mitigasi \textit{overpersonalization} melalui
+  algoritma deteksi stagnasi kognitif dan pemilihan mitra kolaborasi yang
+  heterogen.
+  \item Mengimplementasikan rancangan arsitektur dan mekanisme tersebut menjadi
+  purwarupa sistem asesmen adaptif kolaboratif yang fungsional sebagai bukti
+  konsep (\textit{proof-of-concept}).
 \end{enumerate}
+
 
 % --- Batasan Masalah ---
 \section{Batasan Masalah}
