@@ -49,7 +49,7 @@ Realisasi biaya operasional sistem disajikan pada Tabel \ref{tbl:realisasi_rab}.
 \section{Prosedur Pengujian Laboratorium (\textit{Lab Study})}
 \label{sec:prosedur_pengujian}
 
-Pengujian dilakukan menggunakan metode \textit{Ablation Study Two-Group Pretest Posttest} yang dimodifikasi, dengan pembagian peserta ke dalam Grup A (dengan intervensi kolaboratif) dan Grup B (tanpa intervensi/kontrol). Partisipan terdiri dari 10 mahasiswa yang telah menyelesaikan mata kuliah pemodelan basis data program studi Sistem dan Teknologi Informasi ITB (IF2040), yang kemudian dibagi menjadi dua kelompok. Sesi pengujian berlangsung selama kurang lebih 105 menit yang mencakup tahap \textit{pre-test} untuk kalibrasi awal, interaksi sistem (75 menit), dan tahap akhir untuk pengumpulan umpan balik kualitatif. Berbeda dengan metode klasik, pengujian ini tidak melaksanakan ujian \textit{post-test} secara terpisah, melainkan metrik \textit{post-test} diwakili (diproksi) oleh nilai kemahiran akhir (\textit{final individual theta}) yang dicapai pengguna pada sistem di penghujung sesi interaksi.
+Pengujian dilakukan menggunakan metode \textit{Ablation Study Two-Group Pretest Posttest} yang dimodifikasi, dengan pembagian peserta ke dalam Grup A (dengan intervensi kolaboratif) dan Grup B (tanpa intervensi/kontrol). Partisipan terdiri dari 10 mahasiswa yang telah menyelesaikan mata kuliah pemodelan basis data program studi Sistem dan Teknologi Informasi ITB (IF2040), yang kemudian dibagi menjadi dua kelompok. Sesi pengujian berlangsung selama kurang lebih 105 menit yang mencakup tahap \textit{pre-test} untuk kalibrasi awal, interaksi sistem (75 menit), dan tahap akhir untuk pengumpulan umpan balik kualitatif. Berbeda dengan metode klasik, pengujian ini tidak melaksanakan ujian \textit{post-test} secara terpisah, melainkan metrik \textit{post-test} diwakili (diproksi) oleh nilai kemahiran individual akhir ($\theta$) yang dicapai pengguna pada sistem di penghujung sesi interaksi.
 
 \section{Hasil dan Analisis Peningkatan Hasil Belajar}
 \label{sec:hasil_belajar}
@@ -65,11 +65,11 @@ Berdasarkan pengolahan data menggunakan uji statistik non-parametrik \textit{Man
 Mengingat asesmen dilakukan secara terintegrasi, skor \textit{pre-test} dan proksi \textit{post-test} direpresentasikan menggunakan skala \textit{Elo rating} ($\theta$). Untuk menghitung metrik NLG menggunakan skala ini, digunakan dua pendekatan batas maksimum: 
 
 \begin{enumerate}
-    \item \textbf{Teoretis:} Menggunakan nilai \textit{Elo} maksimal sebesar 1500 (berdasarkan rentang kesulitan sistem pada studi \textcite{Vesin2022}).
-    \item \textbf{Empiris:} Menggunakan nilai \textit{Elo} tertinggi yang secara empiris dicapai oleh peserta selama pengujian sebagai batas maksimum.
+    \item \textbf{Teoretis:} Menggunakan nilai \textit{Elo rating} maksimal sebesar 1500 (berdasarkan rentang kesulitan sistem pada studi \textcite{Vesin2022}).
+    \item \textbf{Empiris:} Menggunakan nilai \textit{Elo rating} tertinggi yang secara empiris dicapai oleh peserta selama pengujian sebagai batas maksimum.
 \end{enumerate}
 
-Tabel \ref{tbl:perbandingan_skor} menyajikan rekapitulasi skor rata-rata berdasarkan skala \textit{Elo} tersebut, beserta nilai NLG teoretis dan empirisnya.
+Tabel \ref{tbl:perbandingan_skor} menyajikan rekapitulasi skor rata-rata berdasarkan skala \textit{Elo rating} tersebut, beserta nilai NLG teoretis dan empirisnya.
 
 \begin{table}[!ht]
     \centering
@@ -98,7 +98,7 @@ Untuk menguji signifikansi perbedaan metrik tersebut, dilakukan analisis statist
 Analisis ini berfokus pada kemampuan sistem dalam mendeteksi stagnasi dan mengembalikan momentum pertumbuhan kemahiran siswa melalui intervensi kolaboratif.
 
 \subsection{Analisis Perubahan Kemahiran (\textit{Slope} \texorpdfstring{$\Delta\theta$}{Delta Theta})}
-Evaluasi dilakukan dengan membandingkan gradien (\textit{slope}) perubahan skor Elo sebelum dan sesudah intervensi pada titik stagnasi terdeteksi.
+Evaluasi dilakukan dengan membandingkan gradien (\textit{slope}) perubahan skor \textit{Elo rating} sebelum dan sesudah intervensi pada titik stagnasi terdeteksi.
 
 \begin{figure}[!ht]
     \centering
@@ -117,12 +117,12 @@ Meskipun algoritma utamanya terbukti terlalu sensitif, kombinasi dengan pemicu c
 \section{Hasil dan Analisis Komponen Kolaboratif}
 \label{sec:hasil_kolaborasi}
 
-Bagian ini mengevaluasi kualitas interaksi sosial yang terjadi dalam sistem serta validitas algoritma \textit{Social Elo} dan mekanisme \textit{Re-ranking}.
+Bagian ini mengevaluasi kualitas interaksi sosial yang terjadi dalam sistem serta validitas algoritma \textit{Social Elo rating} dan mekanisme \textit{Re-ranking}.
 
 \subsection{Validitas Algoritma \textit{Constraint-based Re-ranking}}
 Algoritma \textit{Re-ranking} dirancang untuk secara spesifik memastikan bahwa pengguna yang sedang mengalami stagnasi tidak dipasangkan dengan sejawat yang memiliki tingkat kompetensi identik, guna memastikan terjadinya transfer pengetahuan yang bermakna. Berdasarkan ekstraksi data \textit{syslogs} sistem terkait kejadian (\textit{events}) pembuatan sesi kolaboratif, tercatat 10 kali pemicuan pencarian sejawat heterogen (\textit{find\_heterogeneous\_peer}) yang berhasil. 
 
-Data log menunjukkan bahwa perbedaan kemahiran absolut (\textit{theta difference}) antara peminta (\textit{requester}) dan peninjau (\textit{reviewer}) memiliki rata-rata sebesar $112,56$ poin Elo. Lebih penting lagi, validasi terhadap indeks \textit{Effect Size} menunjukkan bahwa seluruh pasangan menghasilkan nilai \textit{Cohen's d} di atas batas minimal desain ($d \geq 0,5$), dengan nilai terendah $d = 0,61$ dan rata-rata keseluruhan mencapai $d = 1,186$ (kategori efek sangat besar). Metrik ini mengonfirmasi bahwa algoritma sistem telah berfungsi dengan tepat dan sesuai dengan kerangka teoretis, yakni berhasil mencegah isolasi kompetensi dengan menyajikan keberagaman sudut pandang dari sejawat yang memiliki perbedaan pemahaman yang signifikan secara statistik.
+Data log menunjukkan bahwa perbedaan kemahiran $\theta$ (\textit{theta difference}) antara peminta (\textit{requester}) dan peninjau (\textit{reviewer}) memiliki rata-rata sebesar $112,56$ poin \textit{Elo rating}. Lebih penting lagi, validasi terhadap indeks \textit{Effect Size} menunjukkan bahwa seluruh pasangan menghasilkan nilai \textit{Cohen's d} di atas batas minimal desain ($d \geq 0,5$), dengan nilai terendah $d = 0,61$ dan rata-rata keseluruhan mencapai $d = 1,186$ (kategori efek sangat besar). Metrik ini mengonfirmasi bahwa algoritma sistem telah berfungsi dengan tepat dan sesuai dengan kerangka teoretis, yakni berhasil mencegah isolasi kompetensi dengan menyajikan keberagaman sudut pandang dari sejawat yang memiliki perbedaan pemahaman yang signifikan secara statistik.
 
 \subsection{Kualitas Umpan Balik Sejawat (\textit{Peer Feedback Quality})}
 Kualitas umpan balik dievaluasi berdasarkan skor yang dihasilkan oleh mesin NLP (\textit{system\_score}) dan penilaian subjektif penerima (\textit{is\_helpful}).
@@ -144,13 +144,13 @@ Kualitas umpan balik dievaluasi berdasarkan skor yang dihasilkan oleh mesin NLP 
 
 Berdasarkan Tabel \ref{tbl:social_quality}, terdapat perbedaan yang cukup mencolok antara skor otomatis dari sistem (0,404) dengan tingkat kebergunaan subjektif menurut pengguna (100\%). Rendahnya skor NLP ini merupakan indikasi adanya keterbatasan model \textit{multilingual MiniLM} dalam menangani dialek teknis bahasa Indonesia informal yang digunakan partisipan saat memberikan ulasan. Meskipun demikian, validitas kualitas interaksi tetap terjaga karena sistem menggunakan mekanisme konfirmasi biner (\textit{thumbs up/down}) dari penerima umpan balik sebagai metrik kualitas utama yang lebih merepresentasikan kebergunaan riil di lapangan.
 
-\subsection{Konvergensi \textit{Social Elo}}
-Perhitungan skor Elo Sosial pada sistem terbukti mampu menguantifikasi kualitas umpan balik sejawat. Dengan mengandalkan perhitungan NLP yang divalidasi oleh penerima ulasan, nilai $\theta_{social}$ untuk setiap pengguna berubah secara dinamis. Rata-rata persentase \textit{thumbs up} yang menyentuh angka absolut 100\% mengindikasikan bahwa responden sangat menghargai bantuan dari sejawatnya. Meskipun demikian, dijumpai suatu fenomena keterbatasan dalam durasi pengujian singkat ini (75 menit), yaitu skala $\theta_{social}$ pada beberapa pengguna belum mencapai konvergensi yang matang sehingga pemanfaatannya dalam porsi bobot $\theta_{display}$ (sebesar 20\%) belum sepenuhnya terlihat memisahkan rentang pemeringkatan antar siswa dengan jelas. Pada implementasi skala riilnya nanti, fitur ini akan memerlukan partisipasi jangka panjang agar model pemeringkat kolaboratifnya lebih matang dan stabil.
+\subsection{Konvergensi \textit{Social Elo rating}}
+Perhitungan skor \textit{Social Elo rating} pada sistem terbukti mampu menguantifikasi kualitas umpan balik sejawat. Dengan mengandalkan perhitungan NLP yang divalidasi oleh penerima ulasan, nilai $\theta_{social}$ untuk setiap pengguna berubah secara dinamis. Rata-rata persentase \textit{thumbs up} yang menyentuh angka absolut 100\% mengindikasikan bahwa responden sangat menghargai bantuan dari sejawatnya. Meskipun demikian, dijumpai suatu fenomena keterbatasan dalam durasi pengujian singkat ini (75 menit), yaitu skala $\theta_{social}$ pada beberapa pengguna belum mencapai konvergensi yang matang sehingga pemanfaatannya dalam porsi bobot $\theta_{display}$ (sebesar 20\%) belum sepenuhnya terlihat memisahkan rentang pemeringkatan antar siswa dengan jelas. Pada implementasi skala riilnya nanti, fitur ini akan memerlukan partisipasi jangka panjang agar model pemeringkat kolaboratifnya lebih matang dan stabil.
 
 \section{Pembahasan Umum dan Ancaman terhadap Validitas}
 \label{sec:pembahasan_umum}
 
-Analisis dari hasil pengujian menegaskan satu hal penting: membiarkan siswa belajar secara terisolasi dengan sistem asesmen adaptif konvensional menyimpan risiko \textit{overpersonalization} berupa isolasi akademik (\textit{filter bubble}). Ketika siswa berulang kali dihadapkan pada materi yang dinilai "sesuai" namun sesungguhnya memicu stagnasi karena mereka tidak kunjung mampu memecahkan masalah, sistem yang pasif hanya akan mencatat penurunan skor tanpa memberikan jalan keluar. Sebagaimana yang ditunjukkan oleh tren penurunan gradien elo-rating pada Grup B, isolasi ini menyebabkan frustrasi dan mematikan momentum pertumbuhan belajar siswa. Fenomena empiris ini sejalan dengan kerangka teoretis yang diajukan oleh \textcite{Bahg2025}, yang memperingatkan bahwa algoritma personalisasi sering kali mengorbankan diversitas informasi dan membatasi eksposur pengguna terhadap perspektif alternatif. Dalam konteks pembelajaran, lingkungan yang terlampau dipersonalisasi (\textit{hyper-personalized}) dapat mendistorsi pemahaman siswa terhadap ruang masalah, mendorong pengambilan sampel informasi yang bias, serta memicu generalisasi pengetahuan yang keliru (\textit{inaccurate generalization}) yang sering kali justru diiringi oleh rasa percaya diri yang semu (\textit{overconfidence}).
+Analisis dari hasil pengujian menegaskan satu hal penting: membiarkan siswa belajar secara terisolasi dengan sistem asesmen adaptif konvensional menyimpan risiko \textit{overpersonalization} berupa isolasi akademik (\textit{filter bubble}). Ketika siswa berulang kali dihadapkan pada materi yang dinilai "sesuai" namun sesungguhnya memicu stagnasi karena mereka tidak kunjung mampu memecahkan masalah, sistem yang pasif hanya akan mencatat penurunan skor tanpa memberikan jalan keluar. Sebagaimana yang ditunjukkan oleh tren penurunan gradien \textit{Elo rating} pada Grup B, isolasi ini menyebabkan frustrasi dan mematikan momentum pertumbuhan belajar siswa. Fenomena empiris ini sejalan dengan kerangka teoretis yang diajukan oleh \textcite{Bahg2025}, yang memperingatkan bahwa algoritma personalisasi sering kali mengorbankan diversitas informasi dan membatasi eksposur pengguna terhadap perspektif alternatif. Dalam konteks pembelajaran, lingkungan yang terlampau dipersonalisasi (\textit{hyper-personalized}) dapat mendistorsi pemahaman siswa terhadap ruang masalah, mendorong pengambilan sampel informasi yang bias, serta memicu generalisasi pengetahuan yang keliru (\textit{inaccurate generalization}) yang sering kali justru diiringi oleh rasa percaya diri yang semu (\textit{overconfidence}).
 
 Sebaliknya, keberadaan mekanisme intervensi terautomasi (\textit{automated intervention}) pada Grup A berhasil memutus siklus stagnasi tersebut. Dengan "memaksa" terjadinya pertukaran perspektif melalui konten \textit{peer-review} secara terkalibrasi, sistem tidak hanya berhasil mendiversifikasi eksposur siswa, tetapi secara statistik terbukti membangkitkan kembali grafik pertumbuhan kemahiran mereka. Terlihat dari perubahan gradien yang positif setelah titik terdeteksinya stagnasi dan nilai positif NLG yang signifikan secara statistik.
 

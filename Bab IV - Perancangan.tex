@@ -46,7 +46,7 @@ diusulkan menunjukkan pergeseran dari paradigma sistem yang pasif menjadi sistem
 Perbedaan utamanya terletak pada mekanisme \textit{System-initiated Intervention}, khususnya pada UC-03.
 Berbeda dengan sistem pembelajaran konvensional yang mengandalkan motivasi atau kesadaran siswa untuk
 melakukan kolaborasi, sistem yang diusulkan ini akan secara proaktif memantau kondisi model kompetensi siswa
-melalui hasil algoritma Elo rating. Ketika terjadi stagnasi dalam perubahan skor, maka sistem akan "mendorong"
+melalui hasil algoritma \textit{Elo rating}. Ketika terjadi stagnasi dalam perubahan skor, maka sistem akan "mendorong"
 aktivitas kolaboratif sebagai response otomatis. Hal ini memperluas cakupan sistem dari sekadar penyaji konten
 pembelajaran adaptif menjadi fasilitator pembelajaran otonom yang menjamin terjadinya eksposur sosial
 terhadap keberagaman kompetensi.
@@ -95,11 +95,11 @@ Alur pertukaran pesan pada Gambar \ref{fig:communication_diagram} dirancang untu
 
 \begin{enumerate}
     \item \textbf{Inisiasi dan Evaluasi (Pesan 1-4):}
-    Interaksi dimulai ketika aktor \textit{User} mengirimkan jawaban (\texttt{submitAnswer}) ke \texttt{:LearningInterface}. Antarmuka meneruskan data ke \texttt{:AssessmentController}, yang bertindak sebagai koordinator pusat. Kontroller kemudian meminta atribut kesulitan ($D_j$) dari objek \texttt{currentTask} untuk menghitung probabilitas keberhasilan. Setelah perhitungan selesai, kontroller memerintahkan objek \texttt{currentUser} untuk memperbarui skor Elo-nya (\texttt{updateElo}).
+    Interaksi dimulai ketika aktor \textit{User} mengirimkan jawaban (\texttt{submitAnswer}) ke \texttt{:LearningInterface}. Antarmuka meneruskan data ke \texttt{:AssessmentController}, yang bertindak sebagai koordinator pusat. Kontroller kemudian meminta atribut kesulitan ($D_j$) dari objek \texttt{currentTask} untuk menghitung probabilitas keberhasilan. Setelah perhitungan selesai, kontroller memerintahkan objek \texttt{currentUser} untuk memperbarui skor \textit{Elo}-nya (\texttt{updateElo}).
     
     \item \textbf{Deteksi Stagnasi (Pesan 5):}
     Segera setelah pembaruan skor, kontroller mengirim pesan \texttt{checkStagnation()} ke objek \texttt{currentUser}. 
-    Langkah ini dirancang untuk mendeteksi fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}, yaitu kondisi stagnasi kognitif akibat personalisasi berlebih. Deteksi dilakukan secara algoritmik dengan menghitung nilai variansi dari perubahan skor (\textit{variance of} $\Delta\theta$) pada beberapa aktivitas terakhir. Jika nilai variansi berada di bawah ambang batas ($\epsilon$) tertentu, hal tersebut diinterpretasikan sebagai konvergensi prematur yaitu kondisi yang mengindikasikan tantangan sistem sudah terlalu selaras dengan kemampuan siswa saat ini sehingga tidak lagi mendorong pertumbuhan kognitif.
+    Langkah ini dirancang untuk mendeteksi fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}, yaitu kondisi stagnasi kognitif akibat personalisasi berlebih. Deteksi dilakukan secara algoritmik dengan menghitung nilai variansi dari perubahan skor kemahiran $\theta$ (\textit{variance of} $\Delta\theta$) pada beberapa aktivitas terakhir. Jika nilai variansi berada di bawah ambang batas ($\epsilon$) tertentu, hal tersebut diinterpretasikan sebagai konvergensi prematur yaitu kondisi yang mengindikasikan tantangan sistem sudah terlalu selaras dengan kemampuan siswa saat ini sehingga tidak lagi mendorong pertumbuhan kognitif.
     
     \item \textbf{Delegasi Mitigasi (Pesan 6-7):}
     Jika status stagnasi bernilai \textit{true}, kontroller tidak menangani pencarian rekan sendiri, melainkan mendelegasikannya ke objek \texttt{:ReRankingService} melalui pesan \texttt{findHeterogeneousPeer()}.

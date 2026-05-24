@@ -29,7 +29,7 @@ Materi pembelajaran disusun berdasarkan kurikulum mata kuliah \textbf{IF2040 - P
 Setiap modul dilengkapi dengan bank soal berisi \textbf{20 butir soal} dengan tingkat kesulitan yang bervariasi, sehingga total keseluruhan materi mencakup \textbf{60 butir soal}. Penentuan kuantitas ini merujuk pada temuan \textcite{Vesin2022} yang menyatakan bahwa konvergensi optimal kemahiran siswa dalam sistem adaptif tercapai dalam rata-rata \textbf{10 iterasi}. Dengan menyediakan 20 soal per modul, sistem menjamin variasi yang cukup untuk mencegah siswa menghafal jawaban (\textit{answer memorization}) serta memberikan ruang bagi algoritma untuk melakukan kalibrasi ulang terhadap tingkat kesulitan soal secara dinamis. Selain itu, penggunaan total 60 butir soal ini juga sejalan dengan penelitian \textcite{Hadi2022} yang membuktikan bahwa bank soal dengan ukuran tersebut sudah memadai dan andal untuk implementasi sistem asesmen adaptif skala kelas.
 
 \subsection{Kalkulasi Ambang Batas Transisi Modul}
-Sistem menerapkan batasan skor Elo untuk mengontrol progres siswa antar modul dengan ambang batas: CH01 (0), CH02 (1300), dan CH03 (1500), basis nilai tengah 1300  diadaptasi dari \textcite{Vesin2022}. Penetapan selisih 200 poin antara CH02 dan CH03 didasarkan pada asumsi 10 iterasi sukses untuk mencapai penguasaan modul. Berdasarkan kalkulasi algoritma Elo yang dimodifikasi, estimasi kenaikan skor rata-rata per soal ($\Delta\theta$) dihitung dengan asumsi siswa menjawab benar pada median waktu pengerjaan ($t_i = 0,5 d_i$) sebagai berikut:
+Sistem menerapkan batasan skor \textit{Elo rating} untuk mengontrol progres siswa antar modul dengan ambang batas: CH01 (0), CH02 (1300), dan CH03 (1500), basis nilai tengah 1300  diadaptasi dari \textcite{Vesin2022}. Penetapan selisih 200 poin antara CH02 dan CH03 didasarkan pada asumsi 10 iterasi sukses untuk mencapai penguasaan modul. Berdasarkan kalkulasi algoritma \textit{Elo rating} yang dimodifikasi, estimasi kenaikan skor rata-rata per soal ($\Delta\theta$) dihitung dengan asumsi siswa menjawab benar pada median waktu pengerjaan ($t_i = 0,5 d_i$) sebagai berikut:
 \begin{enumerate}
     \item Diketahui parameter diskriminasi waktu $a_i = 10^{-6}$ (diadopsi dari \textcite{Vesin2022}) dan batas waktu $d_i = 300.000$ms (dari penelitian \textcite{Vesin2022} juga), maka komponen waktu $a_i(d_i - t_i) = 10^{-6}(300.000 - 150.000) = 0,15$.
     \item Nilai keberhasilan dihitung melalui Persamaan \ref{eq:rumus_W_elo} (asumsi pengerjaan benar dalam satu kali percobaan): $W = 1 \times (1 + 0,15) = 1,15$.
@@ -38,12 +38,12 @@ Sistem menerapkan batasan skor Elo untuk mengontrol progres siswa antar modul de
 Dengan kenaikan $\approx 20$ poin per soal, maka 10 iterasi sukses akan menghasilkan peningkatan kemahiran sebesar 200 poin, yang menjadi dasar logis perpindahan ke modul berikutnya.
 
 \subsection{Evaluasi Kualitas Umpan Balik Berbasis NLP}
-Penilaian pada aktivitas kolaboratif (\textit{Social Elo}) diimplementasikan melalui modul evaluasi teks otomatis yang menguantifikasi kualitas umpan balik dari siswa sebagai \textit{reviewer}. Sistem menggunakan model \textit{embedding} bahasa alami untuk menilai kedalaman semantik dan relevansi komentar siswa:
+Penilaian pada aktivitas kolaboratif (\textit{Social Elo rating}) diimplementasikan melalui modul evaluasi teks otomatis yang menguantifikasi kualitas umpan balik dari siswa sebagai \textit{reviewer}. Sistem menggunakan model \textit{embedding} bahasa alami untuk menilai kedalaman semantik dan relevansi komentar siswa:
 
 \begin{enumerate}
     \item \textbf{Model Bahasa Multilingual MiniLM:} Sistem memanfaatkan model \textbf{\textit{paraphrase-multilingual-MiniLM-L12-v2}} untuk merepresentasikan teks umpan balik ke dalam vektor dimensi tinggi (\textit{Word-Level Semantic Max}). Penggunaan model ini merupakan titik keseimbangan (\textit{sweet spot}) desain arsitektur yang ideal; pendekatan pencocokan kata kunci (\textit{keyword matching}) terbukti terlalu kaku untuk mengidentifikasi frasa dengan makna yang mirip, sementara pengerahan model \textit{Deep Learning} skala besar (seperti LLM penuh) akan sangat memboroskan sumber daya komputasi peladen untuk sebuah modul yang bukan merupakan fungsionalitas utama sistem.
     \item \textbf{Inferensi Efisien dengan FastEmbed:} Untuk merealisasikan komputasi yang ringan, proses \textit{embedding} dijalankan menggunakan pustaka \textbf{FastEmbed}. Hal ini memungkinkan kalkulasi kemiripan semantik terhadap jangkar domain (\textit{domain relevance anchor}) dilakukan langsung secara lokal di sisi peladen (\textit{CPU-optimized inference}) tanpa membebani memori dan tanpa ketergantungan pada API eksternal berbayar.
-    \item \textbf{Kalkulasi Skor dan Social Elo:} Luaran dari analisis semantik dikonversi menjadi nilai probabilitas $[0, 1]$ yang merepresentasikan tingkat kualitas umpan balik. Nilai ini kemudian digunakan sebagai input bagi algoritma \textit{Social Elo} untuk memperbarui rating kontribusi sosial siswa terhadap standar netral (0,5), sesuai dengan kerangka teoretis yang diusulkan dalam spesifikasi teknis v4.3.
+    \item \textbf{Kalkulasi Skor dan \textit{Social Elo rating}:} Luaran dari analisis semantik dikonversi menjadi nilai probabilitas $[0, 1]$ yang merepresentasikan tingkat kualitas umpan balik. Nilai ini kemudian digunakan sebagai input bagi algoritma \textit{Social Elo rating} untuk memperbarui rating kontribusi sosial siswa terhadap standar netral (0,5), sesuai dengan kerangka teoretis yang diusulkan dalam spesifikasi teknis v4.3.
 \end{enumerate}
 
 \section{Implementasi Teknis \textit{Backend}}
@@ -52,7 +52,7 @@ Penilaian pada aktivitas kolaboratif (\textit{Social Elo}) diimplementasikan mel
 Bagian ini membahas detail implementasi sisi peladen yang bertanggung jawab atas seluruh logika adaptivitas dan keamanan sistem.
 
 \subsection{Arsitektur API dan Standardisasi}
-Implementasi \textit{backend} dibangun menggunakan \textit{framework} \textbf{FastAPI} yang mendukung operasi \textit{asynchronous} I/O secara \textit{non-blocking}, yang krusial untuk menangani permintaan eksekusi \textit{query} SQL dan kalkulasi Elo secara simultan. Arsitektur ini mengadopsi beberapa standar industri:
+Implementasi \textit{backend} dibangun menggunakan \textit{framework} \textbf{FastAPI} yang mendukung operasi \textit{asynchronous} I/O secara \textit{non-blocking}, yang krusial untuk menangani permintaan eksekusi \textit{query} SQL dan kalkulasi \textit{Elo rating} secara simultan. Arsitektur ini mengadopsi beberapa standar industri:
 
 \begin{enumerate}
     \item \textbf{Modularitas Router:} Logika API dipecah ke dalam beberapa modul \texttt{APIRouter} (seperti \texttt{auth.py}, \texttt{session.py}, \texttt{collaboration.py}) untuk memisahkan domain tanggung jawab. Setiap \textit{endpoint} dilengkapi dengan skema validasi data menggunakan \textbf{Pydantic V2}, yang menjamin tipe data yang masuk ke sistem selalu konsisten dengan kontrak API.
@@ -66,12 +66,12 @@ Implementasi \textit{backend} dibangun menggunakan \textit{framework} \textbf{Fa
     \item \textbf{Keamanan dan Autentikasi:} Setiap permintaan ke \textit{endpoint} sensitif diwajibkan menyertakan \textbf{JSON Web Token (JWT)} pada \textit{header} otorisasi. Sistem menerapkan \textit{dependency injection} pada FastAPI (\texttt{get\_current\_user}) untuk mendekripsi token HS256 dan memvalidasi identitas pengguna sebelum mengeksekusi logika bisnis. Hal ini memastikan bahwa model kompetensi seorang siswa tidak dapat dimanipulasi oleh pengguna lain secara tidak sah.
 \end{enumerate}
 
-\subsection{Mesin Elo dan Deteksi Stagnasi}
+\subsection{Mesin \textit{Elo rating} dan Deteksi Stagnasi}
 Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelola dua aspek utama:
 \begin{enumerate}
     \item \textbf{Siklus Pembaruan Skor dan Evaluasi Parsial:} Pembaruan rating dilakukan satu kali setiap kali siswa menyelesaikan atau beralih dari suatu soal (\textit{event next}). Mekanisme \textbf{\textit{multi-attempt}} (maksimal 3 upaya) ini diimplementasikan secara spesifik untuk memfasilitasi rumus keberhasilan (\textit{success rate}) usulan \textcite{Vesin2022}, yang menghitung rasio upaya yang berhasil terhadap total upaya ($A_s / A_o$). Pembatasan maksimal tiga upaya diterapkan untuk mencegah proses tebak-tebakan (\textit{trial-and-error}) berlebihan yang dapat mendistorsi pemodelan kemahiran siswa.
 
-    Selain itu, terdapat penyesuaian pada parameter pengujian (\textit{test ratio}). Pada sistem ProTuS asli yang berfokus pada bahasa pemrograman prosedural (seperti Java), keberhasilan dapat diukur secara parsial melalui persentase \textit{unit test} yang lolos ($T_c / T_p$). Namun, sebagaimana diuraikan pada Subbab \ref{sec:evaluasi_kueri_sql}, dalam konteks \textit{query} SQL penilaian parsial secara praktis jauh lebih sulit untuk diimplementasikan. Mengevaluasi ekuivalensi semantik \textit{query} hanya karena strukturnya hampir benar (misal: klausa \texttt{SELECT} benar namun \texttt{WHERE} salah) membutuhkan analisis Pohon Sintaksis Abstrak (\textit{Abstract Syntax Tree}) yang amat kompleks dan secara komputasional tergolong permasalahan NP-Hard \autocite{Silberschatz2019}. Oleh karena itu, sistem Equilibria mengadaptasi dan menyederhanakan rasio $T_c / T_p$ menjadi evaluasi biner (0 jika himpunan luaran berbeda, 1 jika luaran tabel identik sepenuhnya dengan \textit{sandbox}). Ketiadaan gradasi nilai dari \textit{unit test} ini kemudian dikompensasi secara proporsional oleh penggunaan rasio multi-upaya ($A_s / A_o$) tadi, sehingga kalibrasi Elo tetap memiliki gradasi skor ($1,0$; $0,5$; atau $0,33$) yang akurat dan berkeadilan.
+    Selain itu, terdapat penyesuaian pada parameter pengujian (\textit{test ratio}). Pada sistem ProTuS asli yang berfokus pada bahasa pemrograman prosedural (seperti Java), keberhasilan dapat diukur secara parsial melalui persentase \textit{unit test} yang lolos ($T_c / T_p$). Namun, sebagaimana diuraikan pada Subbab \ref{sec:evaluasi_kueri_sql}, dalam konteks \textit{query} SQL penilaian parsial secara praktis jauh lebih sulit untuk diimplementasikan. Mengevaluasi ekuivalensi semantik \textit{query} hanya karena strukturnya hampir benar (misal: klausa \texttt{SELECT} benar namun \texttt{WHERE} salah) membutuhkan analisis Pohon Sintaksis Abstrak (\textit{Abstract Syntax Tree}) yang amat kompleks dan secara komputasional tergolong permasalahan NP-Hard \autocite{Silberschatz2019}. Oleh karena itu, sistem Equilibria mengadaptasi dan menyederhanakan rasio $T_c / T_p$ menjadi evaluasi biner (0 jika himpunan luaran berbeda, 1 jika luaran tabel identik sepenuhnya dengan \textit{sandbox}). Ketiadaan gradasi nilai dari \textit{unit test} ini kemudian dikompensasi secara proporsional oleh penggunaan rasio multi-upaya ($A_s / A_o$) tadi, sehingga kalibrasi \textit{Elo rating} tetap memiliki gradasi skor ($1,0$; $0,5$; atau $0,33$) yang akurat dan berkeadilan.
     
     \item \textbf{Kalkulasi Numerik Stagnasi:} Deteksi stagnasi dihitung berdasarkan variansi populasi dari perubahan skor ($\Delta\theta$) pada jendela lima aktivitas terakhir. Berdasarkan kalibrasi empiris pada spesifikasi sistem, ambang batas variansi yang digunakan adalah $\epsilon = 165$. Nilai ini dipilih sebagai titik tengah antara dua skenario perhitungan $\Delta\theta = K \times (W - W_e)$ dengan $K=30$:
     \begin{itemize}
@@ -125,7 +125,7 @@ else
         -> (WrongCount > 4)
 \end{lstlisting}
 
-    \item \textbf{Integrasi Skor Kemahiran (\textit{Theta Display})}: Sistem menghitung skor akhir yang digunakan untuk pemeringkatan secara \textit{on-the-fly}. Skema pembobotan ini mengadopsi rasio 80:20 \autocite{Demetroulis2024} yang bertujuan untuk menjaga dominasi kompetensi individual sekaligus memberikan pengakuan terhadap kontribusi sosial (lihat Subbab \ref{ssec:pembobotan_terintegrasi}).
+    \item \textbf{Integrasi Skor Kemahiran (skor $\theta$)}: Sistem menghitung skor akhir yang digunakan untuk pemeringkatan secara \textit{on-the-fly}. Skema pembobotan ini mengadopsi rasio 80:20 \autocite{Demetroulis2024} yang bertujuan untuk menjaga dominasi kompetensi individual sekaligus memberikan pengakuan terhadap kontribusi sosial (lihat Subbab \ref{ssec:pembobotan_terintegrasi}).
 \end{enumerate}
 
 \subsection{Mekanisme Perekaman Data Trajektori (\textit{Data Logging})}
@@ -134,7 +134,7 @@ Analisis pergerakan momentum kemahiran siswa (\textit{slope} $\Delta\theta$) san
 \begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Perekaman Data Trajektori}, label={alg:data_logging}]
 procedure LogTrajectory (input SessionID : string, input UserID : string, input QuestionID : string, input IsCorrect : boolean, input DB : Database)
 { I.S. Sesi aktif dan pengguna meminta soal berikutnya melalui endpoint /next }
-{ F.S. Data perubahan Elo dan status stagnasi tersimpan di basis data }
+{ F.S. Data perubahan \textit{Elo rating} dan status stagnasi tersimpan di basis data }
 
 KAMUS LOKAL
 ThetaBefore, ThetaAfter : float
@@ -144,7 +144,7 @@ NewLog : AssessmentLog
 ALGORITMA
 ThetaBefore <- GetCurrentTheta(DB, UserID)
 
-{ Perbarui skor Elo berdasarkan jawaban }
+{ Perbarui skor \textit{Elo rating} berdasarkan jawaban }
 ThetaAfter <- UpdateEloRating(ThetaBefore, QuestionID, IsCorrect)
 
 { Deteksi stagnasi setelah skor diperbarui }
@@ -192,7 +192,7 @@ Antarmuka pengerjaan soal mengintegrasikan \textbf{CodeMirror 6} sebagai kompone
 \subsection{Visualisasi Kemahiran dan Umpan Balik Pengerjaan}
 Sistem memberikan umpan balik instan kepada siswa tanpa menggunakan pustaka grafik eksternal, melainkan melalui komponen kustom yang dioptimalkan:
 \begin{enumerate}
-    \item \textbf{Indikator Kemahiran (\textit{Theta Progress})}: Progres kemahiran siswa divisualisasikan menggunakan \textit{progress bar} berbasis CSS yang memetakan nilai \textit{theta} dalam rentang $[1000, 1800]$. Hal ini memberikan indikasi langsung mengenai pertumbuhan kompetensi siswa tanpa beban komputasi grafik yang berat.
+    \item \textbf{Indikator Kemahiran (progres $\theta$)}: Progres kemahiran siswa divisualisasikan menggunakan \textit{progress bar} berbasis CSS yang memetakan skor $\theta$ dalam rentang $[1000, 1800]$. Hal ini memberikan indikasi langsung mengenai pertumbuhan kompetensi siswa tanpa beban komputasi grafik yang berat.
     \item \textbf{Umpan Balik Hasil Query}: Melalui komponen \texttt{QueryResultDisplay}, sistem menampilkan hasil eksekusi SQL siswa secara detail. Jika jawaban benar, sistem menampilkan tabel hasil data; jika salah, sistem menyajikan pesan kesalahan atau perbandingan luaran untuk membantu siswa melakukan perbaikan pada percobaan berikutnya.
     \item \textbf{Papan Peringkat (\textit{Leaderboard})}: Halaman papan peringkat menyajikan urutan siswa berdasarkan nilai \textit{theta\_display}. Nilai ini dihitung secara \textit{on-the-fly} menggunakan skema pembobotan terintegrasi: $(0,8 \times \theta_{individu}) + (0,2 \times \theta_{sosial})$. Pembobotan ini merujuk pada justifikasi teoretis bahwa kontribusi individu harus tetap dominan dalam penilaian agar tetap mencerminkan kemahiran personal \autocite{Demetroulis2024} (lihat Subbab \ref{ssec:pembobotan_terintegrasi}). Fitur ini dirancang untuk memberikan motivasi belajar melalui perbandingan prestasi antar rekan sejawat dalam lingkungan yang teranonimisasi.
 \end{enumerate}
