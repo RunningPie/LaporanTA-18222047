@@ -789,7 +789,7 @@ Upaya yang lebih dekat dengan integrasi ini adalah
     \centering
     \captionsetup{justification=centering}
     \includegraphics[width=1.0\textwidth]
-    {images/brusilovsky_fig1a.png}
+    {images/brusilovsky_fig1a_processed.jpg}
     \caption{Model Konseptual Antarmuka Pembelajaran
     Sosial (OSSM) (diadaptasi dari \textcite{Brusilovsky2016})}
     \label{fig:model-konseptual-sosial}
@@ -1009,6 +1009,23 @@ tahap \textit{post-processing}, sebagaimana dijelaskan secara teknis oleh
 \textcite{DeBiasio2023}. Hal ini membuatnya lebih layak diimplementasikan pada
 kondisi data terbatas (\textit{cold-start}) dibandingkan metode berbasis
 \textit{Deep Learning} yang membutuhkan pelatihan ekstensif.
+
+\section{Strategi Desain Asesmen Formatif Daring}
+\label{sec:strategi_asesmen_formatif}
+
+Implementasi asesmen adaptif dalam lingkungan digital memerlukan strategi desain instrumen yang tidak hanya mengandalkan algoritma, tetapi juga mempertimbangkan mekanisme interaksi siswa dengan soal untuk mendukung tujuan pembelajaran formatif. Bagian ini membahas landasan teoretis mengenai penggunaan kuis daring yang mengintegrasikan fitur percobaan berulang dan sistem umpan balik otomatis sebagai upaya untuk meningkatkan pemahaman konsep secara mandiri.
+
+\subsection{Mekanisme Percobaan Berulang (\textit{Multiple Attempts})}
+
+Penggunaan kuis daring dengan fitur percobaan berulang (\textit{multiple attempts}) merupakan bagian dari asesmen formatif yang bertujuan untuk meningkatkan proses berpikir dan pemahaman konsep siswa terhadap materi pembelajaran. Menurut \textcite{Mendoza2022}, pemberian kesempatan bagi siswa untuk mengerjakan soal kuis lebih dari satu kali memungkinkan mereka untuk mengenali celah dalam pemahaman kurikulum serta memantau progres belajar secara mandiri selama proses berlangsung. Hasil penelitian menunjukkan bahwa rata-rata nilai pada kuis daring dengan percobaan berulang terbukti menjadi prediktor yang signifikan terhadap pencapaian nilai siswa pada ujian akhir. Selain itu, siswa cenderung menunjukkan peningkatan skor yang signifikan dan waktu pengerjaan yang lebih singkat pada percobaan terakhir dibandingkan dengan percobaan pertama mereka setelah mendapatkan intervensi. Implementasi mekanisme ini juga terbukti memotivasi siswa untuk menyelesaikan tugas persiapan, meningkatkan partisipasi dalam diskusi kelas, dan secara umum meningkatkan kinerja akademik pada ujian sumatif.
+
+Dalam konteks jumlah upaya yang diberikan, penggunaan batasan tiga kali percobaan (\textit{three attempts}) teridentifikasi memiliki dampak positif yang signifikan terhadap peningkatan nilai kuis daring siswa secara konsisten. \textcite{Mendoza2022} menjelaskan bahwa pada percobaan kedua dan ketiga, siswa diwajibkan untuk menjawab kembali seluruh butir soal guna memperbaiki kesalahan dari percobaan sebelumnya sekaligus memastikan penguasaan konsep pada jawaban yang sudah benar. Persyaratan untuk menunjukkan solusi lengkap pada setiap percobaan bertujuan untuk mencegah siswa melakukan penebakan jawaban secara sembarangan (\textit{guessing}) dan mendorong mereka untuk benar-benar belajar dari umpan balik yang diberikan sistem. Analisis kuantitatif melalui uji ANOVA menunjukkan bahwa terjadi peningkatan rerata nilai yang konsisten di seluruh instrumen kuis yang diujikan dalam kerangka tiga kali percobaan tersebut. Oleh karena itu, batasan tiga kali upaya ini dipandang mampu memberikan ruang yang cukup bagi siswa untuk melakukan evaluasi diri dan melakukan penyuntingan terhadap pekerjaan mereka sendiri (\textit{self-edit}).
+
+\subsection{Sistem Umpan Balik Otomatis (\textit{Automated Feedback System})}
+
+Integrasi sistem umpan balik otomatis dalam kuis daring merupakan elemen krusial untuk mengatasi keterbatasan instruktur dalam memberikan koreksi secara instan dan berkelanjutan pada kelas dengan jumlah siswa yang besar. \textcite{Mendoza2022} menyatakan bahwa umpan balik yang diberikan secara tepat waktu, spesifik, dan berkelanjutan sangat penting untuk memperbaiki kesalahan serta kekeliruan siswa selama proses asesmen berlangsung agar tidak terulang kembali. Penggunaan teknologi digital dalam penyampaian umpan balik berpotensi meningkatkan kualitas respon serta menghemat waktu pemeriksaan bagi pengajar dibandingkan dengan metode tertulis tradisional. Umpan balik yang efektif harus memiliki karakteristik yang mudah dipahami, selektif, spesifik, tepat waktu, kontekstual, dan berorientasi ke depan agar dapat memicu tindakan perbaikan lebih lanjut dari sisi pembelajar. Selain itu, umpan balik elektronik dapat mengurangi hambatan logistik sambil tetap mempertahankan fitur-fitur terbaik dari umpan balik tradisional yang bersifat jelas dan komprehensif bagi penerimanya.
+
+Dampak dari sistem umpan balik otomatis ini tercermin pada persepsi positif siswa yang menganggapnya sebagai panduan yang berguna dalam memahami materi pembelajaran meskipun tanpa kehadiran fisik instruktur secara langsung. Berdasarkan temuan \textcite{Mendoza2022}, mayoritas siswa merasa terbantu dalam mengidentifikasi aspek materi yang belum dikuasai serta keterampilan spesifik yang perlu mereka tingkatkan melalui pesan koreksi yang muncul setelah setiap jawaban diberikan. Umpan balik yang dirancang dengan mempertimbangkan alasan masuk akal dari pilihan jawaban salah (\textit{plausible distractors}) memungkinkan siswa untuk melakukan komputasi ulang dan mengingat kembali konsep yang telah diajarkan sebelumnya. Penting untuk dicatat bahwa umpan balik dalam sistem ini idealnya bersifat menyarankan (\textit{suggestive}) dan bukan memerintah (\textit{prescriptive}), sehingga siswa tetap memiliki otonomi dan kebebasan dalam menentukan cara pemecahan masalah sesuai preferensi mereka sendiri. Dengan demikian, ketersediaan umpan balik yang instan bersamaan dengan fitur percobaan berulang menciptakan ruang interaksi yang bermakna antara siswa dan sistem untuk meminimalkan stagnasi pembelajaran.
 
 \section{Metodologi Evaluasi Purwarupa Sistem Pembelajaran}
 \label{sec:metodologi_evaluasi}
