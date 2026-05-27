@@ -13,42 +13,41 @@
 \multicolumn{1}{l}{\textbf{Notasi}} & \multicolumn{1}{l}{\textbf{Deskripsi}} & \multicolumn{1}{l}{\parbox[c]{3.5cm}{\raggedright \textbf{Pemakaian pertama kali}}} \\
 
 % --- Parameter Kemahiran & Model ---
-$\theta$ & Tingkat kemahiran siswa (\textit{Student proficiency}) & 5 \\
-$\theta_{individu}$ & Dimensi kemahiran pengerjaan soal secara mandiri & 30 \\
-$\theta_{sosial}$ & Dimensi kontribusi dalam aktivitas kolaboratif & 30 \\
-$\theta_{display}$ & Nilai gabungan kemahiran untuk pemeringkatan & 30 \\
-$\beta$ & Tingkat kesulitan butir soal (\textit{Item difficulty}) & 25 \\
-$a$ & Parameter diskriminasi butir soal & 25 \\
-$c$ & Parameter tebakan (\textit{guessing parameter}) & 25 \\
-$\sigma(x)$ & Fungsi aktivasi \textit{sigmoid} / logistik & 25 \\
+$\theta$ & Tingkat kemahiran siswa (\textit{Student proficiency}) & 13 \\
+$\theta_{individu}$ & Dimensi kemahiran pengerjaan soal secara mandiri & 71 \\
+$\theta_{sosial}$ & Dimensi kontribusi dalam aktivitas kolaboratif & 71 \\
+$\theta_{display}$ & Nilai gabungan kemahiran untuk pemeringkatan & 71 \\
+$\beta$ & Tingkat kesulitan butir soal (\textit{Item difficulty}) & 33 \\
+$\sigma(x)$ & Fungsi aktivasi \textit{sigmoid} / logistik & 13 \\
 
 % --- Algoritma Elo Rating ---
-$R_i$ & \textit{Rating} (skor kemahiran) siswa ke-$i$ & 35 \\
-$D_j$ & Tingkat kesulitan soal ke-$j$ & 35 \\
-$K$ & Faktor sensitivitas pembaruan \textit{Elo rating} & 35 \\
-$W$ & Nilai keberhasilan aktual pengerjaan soal & 36 \\
-$W_e$ & Nilai ekspektasi keberhasilan (probabilitas) & 36 \\
-$A_s$ & Jumlah upaya (\textit{attempts}) yang berhasil & 36 \\
-$A_o$ & Total jumlah upaya yang dilakukan & 36 \\
-$T_c$ & Jumlah kriteria pengerjaan (\textit{test cases}) yang benar & 36 \\
-$T_p$ & Total jumlah kriteria pengerjaan yang diuji & 36 \\
-$t_i$ & Waktu yang dihabiskan untuk pengerjaan soal & 37 \\
-$d_i$ & Batas waktu pengerjaan soal (\textit{deadline}) & 37 \\
-$\Delta\theta$ & Perubahan nilai kemahiran setelah aktivitas & 40 \\
+$R_i$ & \textit{Rating} (skor kemahiran) siswa ke-$i$ & 18 \\
+$D_j$ & Tingkat kesulitan soal ke-$j$ & 18 \\
+$K$ & Faktor sensitivitas pembaruan \textit{Elo rating} & 18 \\
+$W$ & Nilai keberhasilan aktual pengerjaan soal & 18 \\
+$W_e$ & Nilai ekspektasi keberhasilan (probabilitas) & 18 \\
+$A_s$ & Jumlah upaya (\textit{attempts}) yang berhasil & 18 \\
+$A_o$ & Total jumlah upaya yang dilakukan & 18 \\
+$T_c$ & Jumlah kriteria pengerjaan (\textit{test cases}) yang benar & 18 \\
+$T_p$ & Total jumlah kriteria pengerjaan yang diuji & 18 \\
+$t_i$ & Waktu yang dihabiskan untuk pengerjaan soal & 18 \\
+$d_i$ & Batas waktu pengerjaan soal (\textit{deadline}) & 18 \\
+$\Delta\theta$ & Perubahan nilai kemahiran setelah aktivitas & 60 \\
 
 % --- Statistik & Mitigasi ---
-$\epsilon$ & Ambang batas variansi untuk deteksi stagnasi & 42 \\
-$\sigma^2$ & Nilai variansi populasi dari $\Delta\theta$ & 42 \\
-$d$ & Indeks \textit{Effect Size Cohen's d} & 50 \\
-$\alpha$ & Ambang batas proporsi minimum \textit{favorable items} & 55 \\
-$\beta$ & Ambang batas proporsi maksimum \textit{controversial items} & 55 \\
-$g$ & Metrik \textit{Normalized Learning Gain} (Hake's g) & 70 \\
-$p$ & Nilai probabilitas signifikansi statistik (\textit{p-value}) & 72 \\
+$\epsilon$ & Ambang batas variansi untuk deteksi stagnasi & 60 \\
+$\sigma^2$ & Nilai variansi populasi dari $\Delta\theta$ & 67    \\
+$d$ & Indeks \textit{Effect Size Cohen's d} & 22 \\
+$\sigma_{pooled}$ &  Rata-rata akar kuadrat dari varians kedua kelompok yang dibandingkan dalam Cohen's d & 22 \\
+$\alpha$ & Ambang batas proporsi minimum \textit{favorable items} & 33 \\
+$\beta$ & Ambang batas proporsi maksimum \textit{controversial items} & 33 \\
+$g$ & Metrik \textit{Normalized Learning Gain} (Hake's g) & 37 \\
+$p$ & Nilai probabilitas signifikansi statistik (\textit{p-value}) & 75 \\
 
 % --- Umum ---
-$\mathbb{P}$ & Probabilitas suatu kejadian & 55 \\
-$\sum$ & Operator penjumlahan & 25 \\
-$\in$ & Operator keanggotaan himpunan & 55 \\
-$\notin$ & Operator bukan anggota himpunan & 55 \\
+$P  \text{ atau } \mathbb{P}$ & Probabilitas suatu kejadian & 14 \\
+$\sum$ & Operator penjumlahan & 14 \\
+$\in$ & Operator keanggotaan himpunan & 14 \\
+$\notin$ & Operator bukan anggota himpunan & 33 \\
 
 \end{longtable}

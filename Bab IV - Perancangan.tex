@@ -5,7 +5,7 @@
 \chapter{PERANCANGAN ARSITEKTUR DAN INTERAKSI SISTEM}
 \label{chap:perancangan}
 
-Bab ini menguraikan rancangan konsep solusi yang diusulkan melalui dua perspektif pemodelan utama: pemodelan konteks-interaksi untuk menggambarkan batasan dan fungsionalitas sistem, serta pemodelan struktur-perilaku untuk merinci mekanisme kolaborasi antarkomponen internal.
+Bab ini menguraikan rancangan konsep solusi yang diusulkan melalui dua perspektif pemodelan utama: pemodelan konteks dan interaksi untuk menggambarkan batasan dan fungsionalitas sistem, serta pemodelan struktur dan perilaku untuk merinci mekanisme kolaborasi antarkomponen internal.
 
 \section{Model Konteks dan Interaksi (\textit{Use Case Diagram})}
 \label{sec:context_interaction_model}
@@ -42,10 +42,10 @@ pada tabel-tabel berikut ini.
 
 Berdasarkan pemodelan \textit{use case} yang telah dijelaskan di atas, karakteristik interaksi sistem yang
 diusulkan menunjukkan pergeseran dari paradigma sistem yang pasif menjadi sistem dengan intervensi aktif.
-Perbedaan utamanya terletak pada mekanisme \textit{System-initiated Intervention}, khususnya pada UC-03.
-Berbeda dengan sistem pembelajaran konvensional yang mengandalkan motivasi atau kesadaran siswa untuk
+Perbedaan utamanya terletak pada mekanisme intervensi yang diinisiasi dari sistem, khususnya pada UC-03.
+Berbeda dengan sistem yang sudah ada seperti UCRS dan OSSM yang mengandalkan motivasi atau kesadaran siswa untuk
 melakukan kolaborasi, sistem yang diusulkan ini akan secara proaktif memantau kondisi model kompetensi siswa
-melalui hasil algoritma \textit{Elo rating}. Ketika terjadi stagnasi dalam perubahan skor, maka sistem akan "mendorong"
+melalui hasil algoritma \textit{Elo rating}. Ketika terjadi stagnasi dalam perubahan skor, maka sistem akan mendorong
 aktivitas kolaboratif sebagai respons otomatis. Hal ini memperluas cakupan sistem dari sekadar penyaji konten
 pembelajaran adaptif menjadi fasilitator pembelajaran otonom yang menjamin terjadinya eksposur sosial
 terhadap keberagaman kompetensi.

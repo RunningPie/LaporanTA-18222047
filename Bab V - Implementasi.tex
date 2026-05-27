@@ -2,7 +2,7 @@
 % BAB V IMPLEMENTASI
 % ==========================================
 \cleardoublepage
-\chapter{IMPLEMENTASI MEKANISME MITIGASI DAN IMPLEMENTASI SISTEM}
+\chapter{IMPLEMENTASI PURWARUPA SISTEM}
 \label{chap:implementasi}
 
 Bab ini menguraikan realisasi dari rancangan sistem yang telah dibahas pada bab sebelumnya. Penjelasan dimulai dari spesifikasi lingkungan pengembangan, persiapan instrumen materi pembelajaran, hingga detail implementasi teknis sisi peladen (\textit{backend}) dan antarmuka (\textit{frontend}).
@@ -31,9 +31,9 @@ Setiap modul dilengkapi dengan bank soal berisi \textbf{20 butir soal} dengan ti
 \subsection{Kalkulasi Ambang Batas Transisi Modul}
 Sistem menerapkan batasan skor \textit{Elo rating} untuk mengontrol progres siswa antarmodul dengan ambang batas: CH01 (0), CH02 (1300), dan CH03 (1500), basis nilai tengah 1300 diadaptasi dari \textcite{Vesin2022}. Penetapan selisih 200 poin antara CH02 dan CH03 didasarkan pada asumsi 10 iterasi sukses untuk mencapai penguasaan modul. Berdasarkan kalkulasi algoritma \textit{Elo rating} yang dimodifikasi, estimasi kenaikan skor rata-rata per soal ($\Delta\theta$) dihitung dengan asumsi siswa menjawab benar pada median waktu pengerjaan ($t_i = 0,5 d_i$) sebagai berikut:
 \begin{enumerate}
-    \item Diketahui parameter diskriminasi waktu $a_i = 10^{-6}$ (diadopsi dari \textcite{Vesin2022}) dan batas waktu $d_i = 300.000$ms (dari penelitian \textcite{Vesin2022} juga), maka komponen waktu $a_i(d_i - t_i) = 10^{-6}(300.000 - 150.000) = 0,15$.
+    \item Diketahui parameter diskriminasi waktu $a_i = 10^{-6}$ dan batas waktu $d_i = 300.000$ms (keduanya diadopsi dari penelitian \textcite{Vesin2022}), maka komponen waktu $a_i(d_i - t_i) = 10^{-6}(300.000 - 150.000) = 0,15$.
     \item Nilai keberhasilan dihitung melalui Persamaan \ref{eq:rumus_W_elo} (asumsi pengerjaan benar dalam satu kali percobaan): $W = 1 \times (1 + 0,15) = 1,15$.
-    \item Dengan $K=30$ (diambil dari \textcite{Vesin2022} juga) dan $W_e=0,5$ (saat kemampuan setara kesulitan), maka $\Delta\theta = 30(1,15 - 0,5) = 19,5 \approx 20$.
+    \item Dengan $K=30$ dan $W_e=0,5$ (saat kemampuan setara kesulitan), maka $\Delta\theta = 30(1,15 - 0,5) = 19,5 \approx 20$.
 \end{enumerate}
 Dengan kenaikan $\approx 20$ poin per soal, maka 10 iterasi sukses akan menghasilkan peningkatan kemahiran sebesar 200 poin, yang menjadi dasar logis perpindahan ke modul berikutnya.
 
@@ -41,9 +41,9 @@ Dengan kenaikan $\approx 20$ poin per soal, maka 10 iterasi sukses akan menghasi
 Penilaian pada aktivitas kolaboratif (\textit{Social Elo rating}) diimplementasikan melalui modul evaluasi teks otomatis yang menguantifikasi kualitas umpan balik dari siswa sebagai \textit{reviewer}. Sistem menggunakan model \textit{embedding} bahasa alami untuk menilai kedalaman semantik dan relevansi komentar siswa:
 
 \begin{enumerate}
-    \item \textbf{Model Bahasa Multilingual MiniLM:} Sistem memanfaatkan model \textbf{\textit{paraphrase-multilingual-MiniLM-L12-v2}} untuk merepresentasikan teks umpan balik ke dalam vektor dimensi tinggi (\textit{Word-Level Semantic Max}). Penggunaan model ini merupakan titik keseimbangan (\textit{sweet spot}) desain arsitektur yang ideal; pendekatan pencocokan kata kunci (\textit{keyword matching}) terbukti terlalu kaku untuk mengidentifikasi frasa dengan makna yang mirip, sementara pengerahan model \textit{Deep Learning} skala besar (seperti LLM penuh) akan sangat memboroskan sumber daya komputasi peladen untuk sebuah modul yang bukan merupakan fungsionalitas utama sistem.
-    \item \textbf{Inferensi Efisien dengan FastEmbed:} Untuk merealisasikan komputasi yang ringan, proses \textit{embedding} dijalankan menggunakan pustaka \textbf{FastEmbed}. Hal ini memungkinkan kalkulasi kemiripan semantik terhadap jangkar domain (\textit{domain relevance anchor}) dilakukan langsung secara lokal di sisi peladen (\textit{CPU-optimized inference}) tanpa membebani memori dan tanpa ketergantungan pada API eksternal berbayar.
-    \item \textbf{Kalkulasi Skor dan \textit{Social Elo rating}:} Luaran dari analisis semantik dikonversi menjadi nilai probabilitas $[0, 1]$ yang merepresentasikan tingkat kualitas umpan balik. Nilai ini kemudian digunakan sebagai input bagi algoritma \textit{Social Elo rating} untuk memperbarui nilai kontribusi sosial siswa terhadap standar netral (0,5), sesuai dengan kerangka teoretis yang diusulkan dalam spesifikasi teknis v4.3.
+    \item \textbf{Model Bahasa Multilingual MiniLM:} Sistem memanfaatkan model \linebreak \textbf{\textit{paraphrase-multilingual-MiniLM-L12-v2}} untuk merepresentasikan teks umpan balik ke dalam vektor dimensi tinggi (\textit{Word-Level Semantic Max}). Penggunaan model ini merupakan titik keseimbangan (\textit{sweet spot}) desain arsitektur yang ideal karena pendekatan pencocokan kata kunci (\textit{keyword matching}) terlalu kaku untuk mengidentifikasi frasa dengan makna yang mirip, sementara pengerahan model \textit{Deep Learning} skala besar yang sudah dilatih sebelumnya (\textit{pre-trained}) (seperti \textit{pre-trained LLM}) akan sangat memboroskan sumber daya komputasi peladen untuk sebuah modul yang bukan merupakan fungsionalitas utama sistem.
+    \item \textbf{Inferensi Efisien dengan FastEmbed:} Untuk merealisasikan komputasi yang ringan, proses \textit{embedding} dijalankan menggunakan pustaka \textbf{FastEmbed}. Hal ini memungkinkan kalkulasi kemiripan semantik terhadap kata-kata acuan domain (\textit{domain relevance anchor}) dilakukan langsung secara lokal di sisi peladen cukup dengan sumber daya CPU (\textit{CPU-optimized inference}) tanpa membebani memori dan tanpa ketergantungan pada API eksternal berbayar.
+    \item \textbf{Kalkulasi Skor dan \textit{Social Elo rating}:} Luaran dari analisis semantik dikonversi menjadi nilai probabilitas $[0, 1]$ yang merepresentasikan tingkat kualitas umpan balik. Nilai ini kemudian digunakan sebagai input bagi algoritma \textit{Social Elo rating} untuk memperbarui nilai kontribusi sosial siswa terhadap standar netral (0,5).
 \end{enumerate}
 
 \section{Implementasi Teknis \textit{Backend}}
@@ -55,7 +55,7 @@ Bagian ini membahas detail implementasi sisi peladen yang bertanggung jawab atas
 Implementasi \textit{backend} dibangun menggunakan \textit{framework} \textbf{FastAPI} yang mendukung operasi \textit{asynchronous} I/O secara \textit{non-blocking}, yang krusial untuk menangani permintaan eksekusi \textit{query} SQL dan kalkulasi \textit{Elo rating} secara simultan. Arsitektur ini mengadopsi beberapa standar industri:
 
 \begin{enumerate}
-    \item \textbf{Modularitas Router:} Logika API dipecah ke dalam beberapa modul \texttt{APIRouter} (seperti \texttt{auth.py}, \texttt{session.py}, \texttt{collaboration.py}) untuk memisahkan domain tanggung jawab. Setiap \textit{endpoint} dilengkapi dengan skema validasi data menggunakan \textbf{Pydantic V2}, yang menjamin tipe data yang masuk ke sistem selalu konsisten dengan kontrak API.
+    \item \textbf{Modularitas Router:} Logika API dipecah ke dalam beberapa modul \linebreak \texttt{APIRouter} (seperti \texttt{auth.py}, \texttt{session.py}, \texttt{collaboration.py}) untuk memisahkan domain tanggung jawab. Setiap \textit{endpoint} dilengkapi dengan skema validasi data menggunakan \textbf{Pydantic V2}, yang menjamin tipe data yang masuk ke sistem selalu konsisten dengan kontrak API.
     \item \textbf{Standardisasi JSend:} Untuk mempermudah penanganan \textit{error} pada sisi \textit{frontend}, sistem menggunakan format respons JSend yang terdiri dari:
     \begin{itemize}
         \item \texttt{status}: Berupa \textit{success} (2xx) artinya permintaan diterima dan server berhasil menemukan sumber daya yang diminta, \textit{fail} (4xx) artinya permintaan gagal karena kesalahan pengguna, atau \textit{error} (5xx) artinya terjadi kesalahan internal server.
@@ -71,7 +71,7 @@ Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelol
 \begin{enumerate}
     \item \textbf{Siklus Pembaruan Skor dan Evaluasi Parsial:} Pembaruan skor dilakukan satu kali setiap kali siswa menyelesaikan atau beralih dari suatu soal (\textit{event next}). Mekanisme \textbf{\textit{multi-attempt}} (maksimal 3 upaya) ini diimplementasikan secara spesifik untuk memfasilitasi rumus keberhasilan (\textit{success rate}) usulan \textcite{Vesin2022}, yang menghitung rasio upaya yang berhasil terhadap total upaya ($A_s / A_o$). Pembatasan maksimal tiga upaya ini merujuk pada temuan \textcite{Mendoza2022} bahwa batasan tersebut efektif dalam meningkatkan pemahaman konsep melalui umpan balik otomatis, sekaligus mencegah proses tebak-tebakan (\textit{trial-and-error}) berlebihan yang dapat mendistorsi pemodelan kemahiran siswa.
 
-    Selain itu, terdapat penyesuaian pada parameter pengujian (\textit{test ratio}). Pada sistem ProTuS asli yang berfokus pada bahasa pemrograman prosedural (seperti Java), keberhasilan dapat diukur secara parsial melalui persentase \textit{unit test} yang lolos ($T_c / T_p$). Namun, sebagaimana diuraikan pada Subbab \ref{sec:evaluasi_kueri_sql}, dalam konteks \textit{query} SQL penilaian parsial secara praktis jauh lebih sulit untuk diimplementasikan. Mengevaluasi ekuivalensi semantik \textit{query} hanya karena strukturnya hampir benar (misal: klausa \texttt{SELECT} benar namun \texttt{WHERE} salah) membutuhkan analisis Pohon Sintaksis Abstrak (\textit{Abstract Syntax Tree}) yang amat kompleks dan secara komputasional tergolong permasalahan NP-Hard \autocite{Silberschatz2019}. Oleh karena itu, sistem Equilibria mengadaptasi dan menyederhanakan rasio $T_c / T_p$ menjadi evaluasi biner (0 jika himpunan luaran berbeda, 1 jika luaran tabel identik sepenuhnya dengan \textit{sandbox}). Ketiadaan gradasi nilai dari \textit{unit test} ini kemudian dikompensasi secara proporsional oleh penggunaan rasio upaya berulang ($A_s / A_o$) tadi, sehingga kalibrasi \textit{Elo rating} tetap memiliki gradasi skor ($1,0$; $0,5$; atau $0,33$) yang akurat dan berkeadilan.
+    Selain itu, terdapat penyesuaian pada parameter pengujian (\textit{test ratio}). Pada sistem ProTuS asli, seperti yang digunakan dalam penelitian \textcite{Vesin2022}, yang berfokus pada bahasa pemrograman prosedural (seperti Java), keberhasilan dapat diukur secara parsial melalui persentase \textit{unit test} yang lolos ($T_c / T_p$). Namun, sebagaimana diuraikan pada Subbab \ref{sec:evaluasi_kueri_sql}, dalam konteks \textit{query} SQL penilaian parsial secara praktis jauh lebih sulit untuk diimplementasikan. Mengevaluasi ekuivalensi semantik \textit{query} hanya karena strukturnya hampir benar (misal: klausa \texttt{SELECT} benar namun \texttt{WHERE} salah) membutuhkan analisis Pohon Sintaksis Abstrak (\textit{Abstract Syntax Tree}) yang amat kompleks dan secara komputasional tergolong permasalahan NP-Hard \autocite{Silberschatz2019}. Oleh karena itu, sistem Equilibria mengadaptasi dan menyederhanakan rasio $T_c / T_p$ menjadi evaluasi biner (0 jika himpunan luaran berbeda, 1 jika luaran tabel identik sepenuhnya dengan \textit{sandbox}). Ketiadaan gradasi nilai dari \textit{unit test} ini kemudian dikompensasi secara proporsional oleh penggunaan rasio upaya berulang ($A_s / A_o$) tadi, sehingga kalibrasi \textit{Elo rating} tetap memiliki gradasi skor ($1,0$; $0,5$; atau $0,33$) yang akurat dan adil.
     
     \item \textbf{Kalkulasi Numerik Stagnasi:} Deteksi stagnasi dihitung berdasarkan variansi populasi dari perubahan skor ($\Delta\theta$) pada jendela lima aktivitas terakhir. Berdasarkan kalibrasi empiris pada spesifikasi sistem, ambang batas variansi yang digunakan adalah $\epsilon = 165$. Nilai ini dipilih sebagai titik tengah antara dua skenario perhitungan $\Delta\theta = K \times (W - W_e)$ dengan $K=30$:
     \begin{itemize}
@@ -79,51 +79,6 @@ Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelol
         \item \textbf{Batas Atas (Fluktuasi Normal):} Saat siswa masih dalam fase pertumbuhan dan pembelajaran (skor berfluktuasi signifikan, misal $\Delta\theta$ mencapai $+27$ jika cepat dan benar, atau $-18$ jika salah semua), rangkaian simulasi fluktuasi normal seperti $\Delta\theta = [+27, -18, +15, -12, +20]$ menghasilkan variansi $\sigma^2 \approx 310$.
     \end{itemize}
     Dengan menetapkan ambang batas median di angka 165, deteksi dapat dilakukan secara cukup sensitif tanpa salah menafsirkan fluktuasi normal sebagai stagnasi. Selain itu, diterapkan pula mekanisme \textit{fallback} (cadangan) berupa rasio jawaban salah $>50\%$ dari $N=9$ soal terakhir untuk mencegah pengguna Grup A terjebak tanpa intervensi. Pemilihan angka 9 didasarkan pada temuan \textcite{Vesin2022} bahwa konvergensi terjadi pada rentang 7--10 iterasi, dengan titik tengah 8,5 yang dibulatkan menjadi 9. Pertimbangan rasio $>50\%$ adalah karena ketika siswa sudah seharusnya konvergen namun masih mayoritas salah, hal tersebut mengindikasikan terjadinya \textit{overpersonalization}. \textit{Pseudocode} untuk kedua fungsi ini disajikan pada Kode \ref{alg:stagnation_detection}.
-    
-% \begin{lstlisting}[frame=lines, captionpos=t, caption={Algoritma Deteksi Stagnasi dan Fallback}, label={alg:stagnation_detection}]
-% function DetectStagnation (UserID : string, ModuleID : string, DB : Database) -> boolean
-% { Mengirimkan true jika stagnasi terdeteksi (variansi < 165), false jika tidak }
-
-% KAMUS LOKAL
-% Last5Logs : List of AssessmentLog
-% Deltas : List of float
-% Variance : float
-
-% ALGORITMA
-% if (ModuleID = "CH03") then { Konvergensi di modul akhir bukan stagnasi }
-%     -> false
-% else
-%     Last5Logs <- GetLastFinalAttempts(DB, UserID, 5)
-%     if (NBElmtlist(Last5Logs) < 5) then
-%         -> false
-%     else
-%         Deltas <- CalculateThetaDeltas(Last5Logs)
-%         Variance <- CalculatePopulationVariance(Deltas)
-%         -> (Variance < 165)
-
-
-% function CheckFallbackTrigger (GroupID : char, ModuleID : string, IsNextUnlocked : boolean, RecentLogs : List of AssessmentLog) -> boolean
-% { Mengirimkan true jika > 4 jawaban salah dari 9 attempt terakhir }
-
-% KAMUS LOKAL
-% WrongCount : integer
-% Log : AssessmentLog
-
-% ALGORITMA
-% if (GroupID != 'A' or ModuleID = "CH03" or IsNextUnlocked = true) then
-%     -> false
-% else
-%     if (NBElmtlist(RecentLogs) < 9) then
-%         -> false
-%     else
-%         WrongCount <- 0
-%         Log <- FirstElmt(RecentLogs)
-%         while (Log != Nil) do
-%             if (not IsCorrect(Log)) then
-%                 WrongCount <- WrongCount + 1
-%             Log <- Next(Log)
-%         -> (WrongCount > 4)
-% \end{lstlisting}
 
 \input{algorithms/stagnation-detection.tex}
 

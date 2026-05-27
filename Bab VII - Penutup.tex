@@ -16,7 +16,7 @@ ditarik beberapa kesimpulan sebagai berikut:
 \begin{enumerate}
     \item Perancangan arsitektur sistem asesmen adaptif dilakukan dengan mengintegrasikan parameter kemahiran individual berbasis algoritma \textit{Elo rating} dengan dimensi kontribusi sosial secara holistik. Pendekatan ini memungkinkan sistem untuk memodelkan profil siswa yang mencakup kemampuan teknis pengerjaan soal secara mandiri sekaligus tingkat keterlibatan aktif dalam aktivitas kolaboratif.
 
-    \item Mekanisme mitigasi \textit{overpersonalization} bekerja secara proaktif melalui deteksi stagnasi kognitif yang didasarkan pada variansi perubahan skor $\Delta\theta$ dan pemilihan mitra kolaborasi yang heterogen menggunakan algoritma \textit{Constraint-based Re-ranking}. Implementasi ini terbukti mampu memicu intervensi sosial secara otomatis untuk memecah isolasi pembelajaran (\textit{filter bubble}) yang dialami oleh siswa.
+    \item Mekanisme mitigasi \textit{overpersonalization} bekerja secara proaktif melalui deteksi stagnasi kognitif yang didasarkan pada variansi perubahan skor $\Delta\theta$ dan pemilihan rekan kolaborasi yang heterogen menggunakan algoritma \textit{Constraint-based Re-ranking}. Implementasi ini terbukti mampu memicu intervensi sosial secara otomatis untuk memecah stagnasi pembelajaran (\textit{learning plateau}) yang dialami oleh siswa.
 
     \item Realisasi purwarupa sistem Equilibria pada domain pembelajaran kueri SQL mewujudkan siklus belajar adaptif melalui integrasi lingkungan eksekusi \textit{query} (\textit{sandbox}) yang aman, mekanisme pembaruan \textit{rating} secara \textit{real-time}, dan penyediaan antarmuka reaktif yang mendukung transparansi interaksi sejawat.
 \end{enumerate}
@@ -41,4 +41,5 @@ Penelitian ini masih memiliki keterbatasan yang dapat diperbaiki pada pengembang
     \item Komponen \textit{Social Elo rating} dapat diperkuat dengan menggunakan model bahasa alami yang dilatih secara spesifik pada istilah teknis komputasi dalam bahasa Indonesia, guna meningkatkan akurasi penilaian kualitas umpan balik secara otomatis.
     \item Penggunaan \textit{Large Language Model} dapat dipertimbangkan untuk membantu memberikan \textit{scaffolding} awal kepada siswa saat melakukan \textit{peer review}, misalnya dengan memberikan saran poin-poin kesalahan yang perlu dikomentari pada kueri rekan.
     \item Melakukan pengujian pada populasi siswa yang lebih besar dan durasi yang lebih lama (satu semester penuh) untuk melihat stabilitas konvergensi skor \textit{Social Elo rating} serta dampak jangka panjang terhadap retensi pengetahuan siswa.
+    \item Melakukan penelitian untuk metrik pendeteksi \textit{overpersonalization} yang spesifik untuk domain pendidikan. Mengingat metrik yang digunakan dalam tugas akhir ini masih berupa proksi yang diadaptasi dari literatur rekomendasi konten dan literatur fenomena pembelajaran secara umum.
 \end{enumerate}
