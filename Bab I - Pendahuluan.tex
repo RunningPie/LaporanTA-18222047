@@ -54,9 +54,9 @@ pembelajaran komunitas.
 % --- Rumusan Masalah ---
 \section{Rumusan Masalah}
 \label{sec:rumusan_masalah}
-Berdasarkan latar belakang tersebut, teridentifikasi adanya kebutuhan untuk
-mengeksplorasi pengembangan sistem asesmen yang selaras dengan Stranas KA, namun 
-juga mempertimbangkan risiko isolasi pembelajaran pada sistem adaptif
+Berdasarkan latar belakang tersebut, dapat diidentifikasi adanya kebutuhan untuk
+mengeksplorasi pengembangan sistem asesmen yang selaras dengan Stranas KA, tetapi juga 
+mempertimbangkan risiko isolasi pembelajaran pada sistem adaptif
 konvensional. Kesenjangan teknologi saat ini terletak pada terbatasnya
 penelitian yang menguji apakah integrasi fitur kolaboratif dalam sistem asesmen
 adaptif dapat meminimalkan efek \textit{overpersonalization}.
@@ -89,7 +89,7 @@ Tujuan utama dari tugas akhir ini adalah \textbf{membangun purwarupa sistem
 asesmen adaptif kolaboratif untuk menguji apakah integrasi fitur kolaboratif
 dapat meminimalkan efek \textit{overpersonalization} dalam lingkungan pembelajaran}.
 
- Secara spesifik, tujuan penelitian ini adalah:
+Secara spesifik, tujuan penelitian ini adalah:
 \begin{enumerate}
   \item Merancang arsitektur sistem asesmen adaptif yang mampu mengintegrasikan
   parameter kemahiran individual (\textit{Elo rating}) dengan dimensi kontribusi
@@ -106,7 +106,7 @@ dapat meminimalkan efek \textit{overpersonalization} dalam lingkungan pembelajar
 % --- Batasan Masalah ---
 \section{Batasan Masalah}
 \label{sec:batasan_masalah}
-Untuk memastikan penelitian ini tetap fokus dan dapat diselesaikan dalam jangka waktu yang ditentukan, maka ditetapkan batasan-batasan sebagai berikut:
+Untuk memastikan penelitian ini tetap fokus dan dapat diselesaikan dalam jangka waktu yang ditentukan, ditetapkan batasan-batasan sebagai berikut:
 \begin{enumerate}
   \item Permasalahan asesmen adaptif yang
   dikaji akan difokuskan pada konteks yang selaras dengan visi Strategi Nasional
@@ -115,7 +115,7 @@ Untuk memastikan penelitian ini tetap fokus dan dapat diselesaikan dalam jangka 
   dengan kebutuhan dan potensi implementasi di lingkungan pendidikan tinggi di
   Indonesia.
   \item Fokus masalah utama penelitian ini adalah pada kesenjangan integrasi
-  algoritmik antara asesmen adaptif individual and asesmen kolaboratif. Penelitian
+  algoritmik antara asesmen adaptif individual dan asesmen kolaboratif. Penelitian
   tidak akan menginvestigasi masalah lain dalam asesmen adaptif (seperti deteksi
   gaya belajar atau deteksi kecurangan dalam asesmen), melainkan terbatas pada
   perancangan model yang menggabungkan metrik kemahiran personal dengan metrik
@@ -126,7 +126,7 @@ Untuk memastikan penelitian ini tetap fokus dan dapat diselesaikan dalam jangka 
   afektif (seperti motivasi atau kepuasan) atau luaran perilaku (seperti durasi
   belajar) sebagai ukuran utama kemahiran.
   \item Implementasi purwarupa sistem akan diujicobakan pada populasi sampel terbatas.
-  Merujuk pada konteks pendidikan tinggi di Indonesia and ketersediaan sumber daya,
+  Merujuk pada konteks pendidikan tinggi di Indonesia dan ketersediaan sumber daya,
   uji coba akan difokuskan pada sekelompok mahasiswa dari angkatan tertentu
   di institusi tertentu.
 \end{enumerate}
@@ -134,16 +134,32 @@ Untuk memastikan penelitian ini tetap fokus dan dapat diselesaikan dalam jangka 
 % --- Metodologi Pengerjaan TA ---
 \section{Metodologi}
 
-Pelaksanaan tugas akhir ini akan mengadopsi and mengadaptasi metodologi yang digunakan oleh \textcite{Vesin2022} dalam penelitian mereka mengenai asesmen adaptif and rekomendasi konten. Metodologi ini terdiri atas beberapa tahapan utama yang sistematis, dimulai dari studi pendahuluan hingga analisis data sebagai .
+Pelaksanaan tugas akhir ini akan mengadopsi dan mengadaptasi metodologi yang digunakan oleh \textcite{Vesin2022} dalam penelitian mereka mengenai asesmen adaptif dan rekomendasi konten. Metodologi ini terdiri atas beberapa tahapan utama yang sistematis, dimulai dari studi pendahuluan hingga analisis data.
 
 \begin{enumerate}
-    \item \textbf{Studi Literatur:} Melakukan tinjauan sistematis terhadap penelitian terkait asesmen adaptif, pembelajaran kolaboratif, and implementasi sistem serupa.
+    \item \textbf{Studi Literatur:} Melakukan tinjauan sistematis terhadap penelitian terkait asesmen adaptif, pembelajaran kolaboratif, dan implementasi sistem serupa.
     
-    \item \textbf{Perancangan and Pengembangan Sistem:} Merancang arsitektur perangkat lunak serta mengimplementasikan modul-modul sistem, termasuk integrasi algoritma asesmen adaptif and antarmuka pengguna kolaboratif.
+    \item \textbf{Perancangan dan Pengembangan Sistem:} Merancang arsitektur perangkat lunak serta mengimplementasikan modul-modul sistem, termasuk integrasi algoritma asesmen adaptif dan antarmuka pengguna kolaboratif.
     
-    \item \textbf{Sesi Pengguna (Pengujian and Evaluasi):} Melaksanakan studi dengan partisipan sebagai sampel populasi pengguna untuk mengumpulkan data kuantitatif and kualitatif mengenai penggunaan and pengalaman mereka terhadap purwarupa sistem. Data yang dikumpulkan dapat mencakup data interaksi (\textit{click-streams}, \textit{log files}), hasil asesmen (peringkat yang dihasilkan), serta umpan balik pengguna (misalnya melalui survei atau wawancara).
+    \item \textbf{Sesi Pengguna (Pengujian dan Evaluasi):} Melaksanakan studi dengan partisipan sebagai sampel populasi pengguna untuk mengumpulkan data kuantitatif dan kualitatif mengenai penggunaan dan pengalaman mereka terhadap purwarupa sistem. Data yang dikumpulkan dapat mencakup data interaksi (\textit{click-streams}, \textit{log files}), hasil asesmen (peringkat yang dihasilkan), serta umpan balik pengguna (misalnya melalui survei atau wawancara).
     
-    \item \textbf{Analisis Data:} Menganalisis data yang terkumpul untuk mengevaluasi fungsionalitas purwarupa and efektivitas sistem dalam konteks asesmen adaptif and kolaboratif, guna menjawab rumusan masalah serta tujuan penelitian.
+    \item \textbf{Analisis Data:} Menganalisis data yang terkumpul untuk mengevaluasi fungsionalitas purwarupa dan efektivitas sistem dalam konteks asesmen adaptif dan kolaboratif, guna menjawab rumusan masalah serta tujuan penelitian.
     
-    \item \textbf{Penarikan Kesimpulan and Pelaporan:} Menyusun laporan tugas akhir berdasarkan hasil analisis and temuan penelitian.
+    \item \textbf{Penarikan Kesimpulan dan Pelaporan:} Menyusun laporan tugas akhir berdasarkan hasil analisis dan temuan penelitian.
+\end{enumerate}
+
+% --- Sistematika Penulisan ---
+\section{Sistematika Penulisan}
+\label{sec:sistematika_penulisan}
+Sistematika penulisan ini memberikan gambaran umum mengenai struktur dan alur pembahasan dalam penyusunan laporan tugas akhir ini:
+\begin{enumerate}
+\item	\textbf{Bab I Pendahuluan:} Berisi latar belakang masalah, rumusan masalah, tujuan penelitian, batasan masalah, metodologi pelaksanaan, dan sistematika penulisan laporan tugas akhir.
+\item	\textbf{Bab II Studi Literatur:} Berisi kajian pustaka yang relevan dengan topik tugas akhir, termasuk teori-teori, konsep-konsep, dan hasil-hasil penelitian sebelumnya yang mendukung perancangan dan evaluasi sistem.
+\item	\textbf{Bab III Analisis:} Berisi penjelasan mengenai analisis kebutuhan sistem asesmen adaptif dan kolaboratif, serta berbagai alternatif solusi untuk mitigasi \textit{overpersonalization}.
+\item   \textbf{Bab IV Perancangan:} Berisi penjelasan mengenai perancangan arsitektur sistem yang diusulkan, rancangan algoritma, desain basis data, dan antarmuka pengguna (\textit{user interface}).
+\item	\textbf{Bab V Implementasi:} Berisi penjelasan mengenai proses implementasi solusi berdasarkan hasil perancangan, termasuk lingkungan pengembangan, batasan sistem, dan dokumentasi modul atau komponen yang dibangun.
+\item	\textbf{Bab VI Evaluasi:} Berisi analisis dan evaluasi terhadap purwarupa sistem yang telah diimplementasikan, meliputi metodologi pengujian dengan pengguna, analisis data hasil pengujian kuantitatif dan kualitatif, serta validasi pencapaian tujuan.                  
+\item   \textbf{Bab VII Penutup:} Berisi kesimpulan dari seluruh tahapan dan hasil pelaksanaan tugas akhir beserta saran yang dapat digunakan untuk pengembangan sistem lebih lanjut.
+\item   \textbf{Daftar Pustaka:} Berisi daftar referensi yang menjadi rujukan dalam penyusunan laporan tugas akhir.
+\item   \textbf{Lampiran:} Berisi dokumen pendukung penelitian seperti rincian \textit{source code} sistem, data mentah hasil pengujian, serta transkrip atau log tambahan. 
 \end{enumerate}

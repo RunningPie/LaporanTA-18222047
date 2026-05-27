@@ -1,0 +1,95 @@
+\begin{lstlisting}[language=Python, caption={Implementasi Algoritma Elo Rating}, label={lst:elo_rating}]
+import math
+import numpy
+from typing import Tuple
+from sqlalchemy.future import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.db.models import AssessmentLog
+
+# === Konstanta sesuai Vesin et al. (2022) ===
+BASE_RATING = 1300.0  # Rating awal semua siswa
+RATING_MIN = 1000.0
+RATING_MAX = 1800.0  
+K_FACTORS = {
+    'novice': 30,    # 0-9 attempt
+    'intermediate': 20,  # 10-24 attempt
+    'advanced': 15,  # 25-49 attempt
+    'expert': 10     # 50+ attempt
+}
+TIME_DISCRIMINATION = 1e-6 
+DEFAULT_TIME_LIMIT = 300000  # 5 menit dalam milidetik
+
+def calculate_initial_theta(correct_count: int, total_questions: int = 5) -> float:
+    base_rating = 1300.0
+    baseline_correct = 2.5
+    multiplier = 80.0
+    adjustment = (correct_count - baseline_correct) * multiplier
+    theta = base_rating + adjustment
+    return max(1100, min(1500, theta))
+
+def calculate_expected_score(student_rating: float, question_difficulty: float)->float:
+    rating_diff = question_difficulty - student_rating
+    return 1.0 / (1.0 + math.pow(10, rating_diff / 400.0))
+
+def get_k_factor(total_attempts: int)->int:
+    if total_attempts < 10:
+        return K_FACTORS['novice']
+    elif total_attempts < 25:
+        return K_FACTORS['intermediate']
+    elif total_attempts < 50:
+        return K_FACTORS['advanced']
+    else:
+        return K_FACTORS['expert']
+
+def calculate_success_rate(
+    successful_attempts: int,
+    overall_attempts: int,
+    correct_tests: int,
+    performed_tests: int,
+    time_used_ms: int,
+    time_limit_ms: int = DEFAULT_TIME_LIMIT,
+    discrimination: float = TIME_DISCRIMINATION
+) -> float:
+    if overall_attempts == 0 or performed_tests == 0:
+        return 0.0
+    attempt_ratio = successful_attempts / overall_attempts
+    test_ratio = correct_tests / performed_tests
+    time_component = max(0.0, discrimination * (time_limit_ms - time_used_ms))
+    W = attempt_ratio * test_ratio * (1.0 + time_component)
+    return max(0.0, min(2.0, W))
+
+def update_elo_ratings(
+    student_rating: float,
+    question_difficulty: float,
+    success_rate: float,
+    k_factor: int
+) -> tuple[float, float]:
+    expected_score = calculate_expected_score(student_rating, question_difficulty)
+    new_student_rating = student_rating + k_factor * (success_rate - expected_score)
+    new_question_difficulty = question_difficulty + k_factor * (expected_score - success_rate)
+    new_student_rating = max(RATING_MIN, min(RATING_MAX, new_student_rating))
+    new_question_difficulty = max(RATING_MIN, min(RATING_MAX, new_question_difficulty))
+    return new_student_rating, new_question_difficulty
+
+async def detect_stagnation(user_id: str, current_module_id: str, db: AsyncSession) -> bool:
+    if current_module_id == "CH03": return False
+    result = await db.execute(
+        select(AssessmentLog)
+        .where(AssessmentLog.user_id == user_id)
+        .where(AssessmentLog.is_final_attempt == True)
+        .order_by(AssessmentLog.timestamp.desc()).limit(5)
+    )
+    last_5_logs = result.scalars().all()
+    if len(last_5_logs) < 5: return False
+    deltas = [log.theta_after - log.theta_before for log in last_5_logs 
+              if log.theta_before is not None and log.theta_after is not None]
+    if len(deltas) < 5: return False
+    return numpy.var(deltas) < 165
+
+def check_fallback_trigger(group_assignment, current_module_id, is_next_module_unlocked, recent_logs) -> bool:
+    if group_assignment != 'A' or current_module_id == "CH03" or is_next_module_unlocked:
+        return False
+    if len(recent_logs) < 9: return False
+    wrong_count = sum(1 for log in recent_logs if not log.is_correct)
+    return wrong_count > 4.5
+\end{lstlisting}

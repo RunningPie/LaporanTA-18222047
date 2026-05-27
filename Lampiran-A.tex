@@ -1,10 +1,44 @@
 \cleardoublepage
 \chapter{KODE PROGRAM}
-Pada umumnya, kode program tidak perlu disertakan di dalam laporan tugas akhir karena kode program biasanya sangat panjang
-dan sudah disimpan dalam bentuk berkas-berkas elektronik terpisah di repositori daring. 
-Namun, jika ada bagian kode program singkat yang penting untuk ditulis dalam laporan tugas akhir, 
-bagian tersebut dapat disertakan di dalam laporan.
-\section{Perangkat Lunak untuk Akuisisi Data dari Sensor Ultrasonik}
-\lstinputlisting[language=Python, caption=Binary search code]{listings/binary-search-python.tex}  
-\section{Perangkat Lunak untuk Pengolahan Data Akuisisi dan Visualisasi Hasil Pengukuran Jarak} 
-asdjfkjashdkjfas
+
+\section{Repositori dan Strukturnya}
+Kode program yang diimplementasikan untuk membangun sistem Equilibria disimpan dalam repositori daring yang dapat diakses pada pranala
+\url{https://github.com/RunningPie/Equilibria}
+
+Struktur repositori yang digunakan adalah seperti di bawah ini.
+
+\dirtree{%
+.1 equilibria/.
+.2 LICENSE.
+.2 README.md.
+.2 client/.
+.3 README.md.
+.3 index.html.
+.3 public/.
+.3 src/.
+.2 docs/.
+.3 18222047-ProposalTA-signed.pdf.
+.3 \parbox{11cm}{compressed Adaptive Assessment and Content Recommendation in Online Programming Courses.pdf}.
+.2 server/.
+.3 Dockerfile.
+.3 alembic/.
+.3 alembic.ini.
+.3 app/.
+.3 docker-compose.yml.
+.3 logs/.
+.3 requirements.txt.
+}
+
+
+\section{Implementasi Kode Teknis}
+Beberapa algoritma yang dinilai penting untuk dilampirkan implementasi secara teknisnya ada dua, yaitu algoritma untuk menghitung Elo rating dan algoritma untuk memilih rekan sejawat (re-ranking).
+
+\subsection{Algoritma Elo Rating}
+Kode implementasi untuk Elo rating dapat ditinjau pada repositori dalam berkas bernama \texttt{elo\_engine.py} di direktori \texttt{app/core/}. Berikut adalah kode lengkapnya:
+
+\input{listings/elo-rating.tex}
+
+\subsection{Algoritma Re-ranking (Peer Matching)}
+Kode implementasi untuk \textit{re-ranking} dapat ditinjau pada repositori dalam berkas bernama \texttt{peer\_matching.py} di direktori \texttt{app/core/}. Berikut adalah kode lengkapnya:
+
+\input{listings/peer-matching.tex}

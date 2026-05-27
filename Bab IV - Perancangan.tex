@@ -5,7 +5,7 @@
 \chapter{PERANCANGAN ARSITEKTUR DAN INTERAKSI SISTEM}
 \label{chap:perancangan}
 
-Bab ini menguraikan rancangan konsep solusi yang diusulkan melalui dua perspektif pemodelan utama: pemodelan konteks-interaksi untuk menggambarkan batasan dan fungsionalitas sistem, serta pemodelan struktur-perilaku untuk merinci mekanisme kolaborasi antar-komponen internal.
+Bab ini menguraikan rancangan konsep solusi yang diusulkan melalui dua perspektif pemodelan utama: pemodelan konteks-interaksi untuk menggambarkan batasan dan fungsionalitas sistem, serta pemodelan struktur-perilaku untuk merinci mekanisme kolaborasi antarkomponen internal.
 
 \section{Model Konteks dan Interaksi (\textit{Use Case Diagram})}
 \label{sec:context_interaction_model}
@@ -16,8 +16,7 @@ Selain itu, bisa dijelaskan juga interaksi yang terjadi antara aktor
 eksternal dengan fitur-fitur utama sistem.
 
 \textit{Use case} didefinisikan berdasarkan pemetaan terhadap
-kebutuhan fungsional yang telah diuraikan pada subbab \ref{sec:analisis_kebutuhan}
-bisa dilihat pada tabel \ref{tbl:mapping_fr_uc}.
+kebutuhan fungsional yang telah diuraikan pada subbab \ref{sec:analisis_kebutuhan}, sebagaimana dapat dilihat pada Tabel \ref{tbl:mapping_fr_uc}.
 
 \input{tables/tabel_4_mapping_fr_uc.tex}
 
@@ -47,7 +46,7 @@ Perbedaan utamanya terletak pada mekanisme \textit{System-initiated Intervention
 Berbeda dengan sistem pembelajaran konvensional yang mengandalkan motivasi atau kesadaran siswa untuk
 melakukan kolaborasi, sistem yang diusulkan ini akan secara proaktif memantau kondisi model kompetensi siswa
 melalui hasil algoritma \textit{Elo rating}. Ketika terjadi stagnasi dalam perubahan skor, maka sistem akan "mendorong"
-aktivitas kolaboratif sebagai response otomatis. Hal ini memperluas cakupan sistem dari sekadar penyaji konten
+aktivitas kolaboratif sebagai respons otomatis. Hal ini memperluas cakupan sistem dari sekadar penyaji konten
 pembelajaran adaptif menjadi fasilitator pembelajaran otonom yang menjamin terjadinya eksposur sosial
 terhadap keberagaman kompetensi.
 
@@ -86,23 +85,23 @@ Diagram di atas menunjukkan interaksi yang diawali oleh Aktor \textbf{Siswa} dan
     \end{enumerate}
     
     \item \textbf{Entity Objects (\texttt{currentTask} \& \texttt{currentUser}):} 
-    Objek yang merepresentasikan konsep data persisten yang berumur panjang. Objek ini menyimpan \textbf{state} penting seperti parameter tingkat kesulitan soal ($D_j$) serta skor kemahiran siswa yang mencakup dimensi kemampuan individu dan kontribusi sosialnya dalam sistem. Data ini menjadi basis perhitungan utama bagi objek \textit{Control}.
+    Objek yang merepresentasikan konsep data persisten yang berumur panjang. Objek ini menyimpan \textit{state} penting seperti parameter tingkat kesulitan soal ($D_j$) serta skor kemahiran siswa yang mencakup dimensi kemampuan individu dan kontribusi sosialnya dalam sistem. Data ini menjadi basis perhitungan utama bagi objek \textit{Control}.
 \end{enumerate}
 
-Alur pesan (\textit{Message Flow}) pada diagram menunjukkan bahwa interaksi tidak hanya terjadi antar-modul, melainkan melibatkan manipulasi langsung terhadap objek data (\textit{Entities}). Misalnya, pesan \texttt{updateElo()} dikirimkan ke objek \texttt{currentUser}, dan pesan \texttt{getDifficulty()} diambil dari objek \texttt{currentTask}.
+Alur pesan (\textit{Message Flow}) pada diagram menunjukkan bahwa interaksi tidak hanya terjadi antarmodul, melainkan melibatkan manipulasi langsung terhadap objek data (\textit{Entities}). Misalnya, pesan \texttt{updateElo()} dikirimkan ke objek \texttt{currentUser}, dan pesan \texttt{getDifficulty()} diambil dari objek \texttt{currentTask}.
 
 Alur pertukaran pesan pada Gambar \ref{fig:communication_diagram} dirancang untuk menangani transisi mulus antara aktivitas pengerjaan tugas individu dan intervensi sosial. Berikut adalah penjelasan rasionalisasi untuk setiap tahapan interaksi:
 
 \begin{enumerate}
     \item \textbf{Inisiasi dan Evaluasi (Pesan 1-4):}
-    Interaksi dimulai ketika aktor \textit{User} mengirimkan jawaban (\texttt{submitAnswer}) ke \texttt{:LearningInterface}. Antarmuka meneruskan data ke \texttt{:AssessmentController}, yang bertindak sebagai koordinator pusat. Kontroller kemudian meminta atribut kesulitan ($D_j$) dari objek \texttt{currentTask} untuk menghitung probabilitas keberhasilan. Setelah perhitungan selesai, kontroller memerintahkan objek \texttt{currentUser} untuk memperbarui skor \textit{Elo}-nya (\texttt{updateElo}).
+    Interaksi dimulai ketika aktor \textit{User} mengirimkan jawaban (\texttt{submitAnswer}) ke \texttt{:LearningInterface}. Antarmuka meneruskan data ke \texttt{:AssessmentController}, yang bertindak sebagai koordinator pusat. kontroler kemudian meminta atribut kesulitan ($D_j$) dari objek \texttt{currentTask} untuk menghitung probabilitas keberhasilan. Setelah perhitungan selesai, kontroler memerintahkan objek \texttt{currentUser} untuk memperbarui skor \textit{Elo}-nya (\texttt{updateElo}).
     
     \item \textbf{Deteksi Stagnasi (Pesan 5):}
-    Segera setelah pembaruan skor, kontroller mengirim pesan \texttt{checkStagnation()} ke objek \texttt{currentUser}. 
-    Langkah ini dirancang untuk mendeteksi fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}, yaitu kondisi stagnasi kognitif akibat personalisasi berlebih. Deteksi dilakukan secara algoritmik dengan menghitung nilai variansi dari perubahan skor kemahiran $\theta$ (\textit{variance of} $\Delta\theta$) pada beberapa aktivitas terakhir. Jika nilai variansi berada di bawah ambang batas ($\epsilon$) tertentu, hal tersebut diinterpretasikan sebagai konvergensi prematur yaitu kondisi yang mengindikasikan tantangan sistem sudah terlalu selaras dengan kemampuan siswa saat ini sehingga tidak lagi mendorong pertumbuhan kognitif.
+    Segera setelah pembaruan skor, kontroler mengirim pesan \texttt{checkStagnation()} ke objek \texttt{currentUser}. 
+    Langkah ini dirancang untuk mendeteksi fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}, yaitu kondisi stagnasi kognitif akibat personalisasi berlebih. Deteksi dilakukan secara algoritmik dengan menghitung nilai variansi dari perubahan skor kemahiran $\theta$ (\textit{variance of} $\Delta\theta$) pada beberapa aktivitas terakhir. Jika nilai variansi berada di bawah ambang batas ($\epsilon$) tertentu, hal tersebut diinterpretasikan sebagai konvergensi prematur, yaitu kondisi yang mengindikasikan tantangan sistem sudah terlalu selaras dengan kemampuan siswa saat ini sehingga tidak lagi mendorong pertumbuhan kognitif.
     
     \item \textbf{Delegasi Mitigasi (Pesan 6-7):}
-    Jika status stagnasi bernilai \textit{true}, kontroller tidak menangani pencarian rekan sendiri, melainkan mendelegasikannya ke objek \texttt{:ReRankingService} melalui pesan \texttt{findHeterogeneousPeer()}.
+    Jika status stagnasi bernilai \textit{true}, kontroler tidak menangani pencarian rekan sendiri, melainkan mendelegasikannya ke objek \texttt{:ReRankingService} melalui pesan \texttt{findHeterogeneousPeer()}.
     Pemisahan ini dilakukan untuk mengisolasi logika algoritma \textit{Constraint-based Re-ranking} \autocite{DeBiasio2023} yang kompleks. Layanan ini bertanggung jawab menerapkan batasan statistik berdasarkan indeks \textit{Effect Size} (seperti \textit{Cohen's d} $\geq 0.5$) untuk menyaring daftar kandidat rekan, memastikan bahwa rekan yang terpilih memiliki perbedaan tingkat kemampuan yang cukup signifikan untuk memecahkan isolasi kompetensi siswa.
     
     \item \textbf{Eksekusi Intervensi (Pesan 8):}

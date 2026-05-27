@@ -1,8 +1,80 @@
 \cleardoublepage
-\chapter{HASIL SURVEI LAPANGAN}
-\section{Foto Survei Lokasi 1}
-Teks survei lokasi 1.
-\section{Foto Survei Lokasi 2}
-Teks survei lokasi 2.
-\section{Transkrip Wawancara dengan Narasumber}
-Teks transkrip wawancara.
+\chapter{HASIL PENGUJIAN}
+
+Pengumpulan umpan balik dari partisipan dilakukan melalui dua pendekatan, yaitu kuantitatif dan kualitatif. Umpan balik kuantitatif digunakan untuk mengukur persepsi partisipan terhadap aspek-aspek sistem dalam skala numerik, sementara umpan balik kualitatif digunakan untuk menggali pengalaman subjektif dan saran perbaikan secara lebih mendalam. Data mentah responden dapat diakses melalui pranala \url{https://bit.ly/FeedbackTA-18222047}
+
+\section{Umpan Balik Kuantitatif Pengujian}
+
+\subsection{Daftar Pertanyaan Kuantitatif}
+Berikut adalah daftar pertanyaan kuantitatif yang diajukan kepada partisipan:
+\begin{enumerate}[1.]
+    \item Selama sesi mengerjakan asesmen, seberapa sesuai kamu merasa tingkat kesulitan soal yang diberikan dengan kemampuanmu pada waktu tersebut? (Skala 0-5)
+    \item Seberapa jauh kamu merasa kemampuanmu tentang SQL meningkat dibandingkan sebelum mengerjakan testing? (Skala 0-5)
+    \item Apakah kamu merasa ada ``sense of community'' saat mengerjakan latihan soal dengan platform ini? (Skala 0-5)
+    \item Sistem ini menggabungkan latihan yang dipersonalisasi dengan peer review, menurutmu apakah lebih baik sistem yang 100\% menyesuaikan soal SAJA (0) atau sistem yang seperti ini yang kadang ``memaksa'' kamu berinteraksi dengan rekan (5)? (Skala 0-5)
+    \item Apakah ada momen saat kamu merasa ``stuck'' atau frustrasi karena tidak bisa unlock chapter selanjutnya? (Pilihan: Ya, Mungkin, Tidak)
+    \item Sistem memberikan maksimum 3 kali percobaan (attempts) per soal. Apakah kamu merasa 3 kali cukup untuk belajar dari kesalahan? (Pilihan: Ya, Mungkin, Tidak)
+    \item Apakah kamu merasa 3 kali percobaan tersebut terlalu sedikit atau terlalu banyak? (Pilihan: Terlalu Sedikit, Pas, Terlalu Banyak)
+    \item Apakah kamu merasa tertekan dengan adanya batasan percobaan ini atau justru terbantu? (Pilihan: Tertekan, Terbantu)
+    \item Apakah kamu merasa waktu 75 menit cukup untuk mengeksplorasi semua chapter materi? (Pilihan: Ya, Mungkin, Tidak)
+\end{enumerate}
+
+\subsection{Ringkasan Hasil Kuantitatif}
+Hasil ringkasan statistik deskriptif dari data partisipan adalah sebagai berikut:
+
+\input{tables/tabel_b_stats_deskriptif.tex}
+
+Ringkasan kategori untuk pertanyaan pilihan:
+\begin{itemize}
+    \item \textbf{Frustrasi/Stuck:} 80\% partisipan menjawab ``Ya'', menunjukkan tantangan pada ambang batas \textit{unlock} chapter.
+    \item \textbf{Batas Percobaan (3x):} 50\% merasa ``Tertekan'' dan 50\% merasa ``Terbantu''. 40\% merasa jumlah percobaan tersebut ``Terlalu Sedikit''.
+    \item \textbf{Kecukupan Waktu:} Mayoritas (80\%) merasa waktu 75 menit masih kurang untuk menyelesaikan seluruh materi.
+\end{itemize}
+
+\section{Umpan Balik Kualitatif Pengujian}
+
+\subsection{Daftar Pertanyaan Kualitatif}
+Berikut adalah daftar pertanyaan kualitatif terbuka yang diajukan:
+\begin{enumerate}[1.]
+    \item Jelaskan pengalamanmu mengenai adaptabilitas kesulitan soal dengan kemampuanmu.
+    \item Jelaskan pengalamanmu mengenai ``sense of progression'' yang diberikan oleh sistem.
+    \item Bagaimana pengalamanmu membaca perintah soal dan menggunakan editor SQL di platform ini? Apakah ada fitur yang kurang atau mengganggu?
+    \item Jika dibandingkan dengan pengalaman menjawab soal praktikum/tugas SQL tradisional, apa yang lebih baik, lebih buruk, dan apakah kamu lebih memilih sistem ini?
+    \item Apakah ada hal yang mengejutkan atau tidak kamu duga selama menggunakan sistem ini?
+    \item Jika kamu bisa mengubah sistem ini, apa yang akan kamu ubah dan mengapa?
+    \item \textit{(Grup Treatment)} Pengalaman memberikan feedback kepada teman (kesulitan memahami query, kebermanfaatan, keyakinan membantu).
+    \item \textit{(Grup Treatment)} Pengalaman menerima feedback dari teman (pemahaman kesalahan, perbaikan cara berpikir, perbandingan dengan mencoba sendiri).
+    \item Jelaskan alasan pemilihan angka pada skala preferensi sistem hybrid vs individual.
+\end{enumerate}
+
+\subsection{Ringkasan Hasil Kualitatif}
+Ringkasan parafrasa dari jawaban partisipan adalah sebagai berikut:
+\begin{itemize}
+    \item Partisipan merasa sistem memberikan variasi soal yang baik, namun ada keluhan mengenai lonjakan kesulitan yang tiba-tiba (\textit{difficulty gap}) yang terkadang terasa tidak berjenjang.
+    \item Keberadaan rating Elo memberikan efek ``reward'' dan ``punishment'' yang nyata. Namun, penurunan rating yang drastis saat gagal atau lambat mengerjakan soal dirasakan cukup ``kejam'' oleh beberapa partisipan.
+    \item Antarmuka editor SQL yang berwarna dan memiliki \textit{auto-suggestion} sangat disukai. Namun, partisipan sangat mengharapkan adanya fitur \textit{run/preview query} sebelum melakukan submisi final.
+    \item Feedback dari rekan dirasakan sangat membantu saat partisipan sudah benar-benar buntu (\textit{stuck}). Namun, ada keraguan mengenai kualitas feedback jika pemberi feedback sendiri belum menguasai materi tersebut.
+    \item Sistem dinilai jauh lebih interaktif dan praktis dibandingkan metode praktikum tradisional karena integrasi materi, soal, dan lingkungan kerja dalam satu layar yang terstruktur.
+\end{itemize}
+
+\section{Dokumentasi Pengujian}
+Pengujian dilakukan di ITB. Berikut adalah dokumentasi kegiatan pengujian:
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/dokumentasi_pengujian_control_group.jpg}
+        \caption{Sesi Pengujian Grup B (Kontrol)}
+        \label{fig:dokumentasi_pengujian_control_group}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/dokumentasi_pengujian_treatment_group.jpg}
+        \caption{Sesi Pengujian Grup A (Treatment)}
+        \label{fig:dokumentasi_pengujian_treatment_group}
+    \end{subfigure}
+    \caption{Dokumentasi Kegiatan Pengujian}
+    \label{fig:dokumentasi_pengujian}
+\end{figure}

@@ -1,0 +1,47 @@
+\begin{lstlisting}[language=Python, caption={Implementasi Peer Matching (Re-ranking)}, label={lst:peer_matching}]
+import numpy
+import random
+from typing import Optional
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from sqlalchemy import func as sql_func
+from app.db.models import User, PeerSession
+
+COHEN_D_THRESHOLD = 0.5
+FALLBACK_POPULATION_STD = 100.0
+
+async def calculate_population_std(db: AsyncSession) -> float:
+    result = await db.execute(select(User.theta_individu).where(User.status == "ACTIVE"))
+    thetas = [row[0] for row in result.all()]
+    if len(thetas) < 2: return FALLBACK_POPULATION_STD
+    population_std = numpy.std(thetas, ddof=0)
+    return float(population_std) if population_std != 0 else FALLBACK_POPULATION_STD
+
+async def find_heterogeneous_peer(requester: User, db: AsyncSession) -> Optional[User]:
+    population_std = await calculate_population_std(db)
+    min_difference = COHEN_D_THRESHOLD * population_std
+    result = await db.execute(
+        select(User).where(
+            User.user_id != requester.user_id,
+            User.group_assignment != 'B',
+            User.status != "NEEDS_PEER_REVIEW",
+            sql_func.abs(User.theta_individu - requester.theta_individu) >= min_difference
+        ).order_by(User.theta_individu.desc()).limit(5)
+    )
+    candidates = result.scalars().all()
+    if not candidates: return None
+    return random.choice(list(candidates))
+
+async def create_peer_session(requester, reviewer, question_id, requester_query, db) -> PeerSession:
+    peer_session = PeerSession(
+        requester_id=requester.user_id,
+        reviewer_id=reviewer.user_id,
+        question_id=question_id,
+        requester_query=requester_query,
+        status="PENDING_REVIEW"
+    )
+    db.add(peer_session)
+    requester.status = "NEEDS_PEER_REVIEW"
+    await db.flush()
+    return peer_session
+\end{lstlisting}

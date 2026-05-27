@@ -96,6 +96,7 @@
 \usepackage{algorithmicx} % for algorithmic environment
 \usepackage{algpseudocode} % for pseudocode
 \usepackage{microtype} % Untuk optimasi typography dan spacing
+\usepackage{emptypage} % Menghilangkan nomor halaman pada halaman kosong
 \usepackage{floatrow} % for customizing float (figure and table) positions
 \usepackage{array} % for better arrays (eg. in tabular environment)
 \usepackage{threeparttable} % for tables with notes
@@ -104,6 +105,8 @@
 \usepackage[title,titletoc]{appendix} % for appendix management
 \usepackage{csquotes} % for context-sensitive quotation facilities
 \usepackage[hidelinks]{hyperref} % for hyperlinks
+\usepackage{dirtree} % for native directory trees
+
 
 
 \setmainfont{Times New Roman} % set main font to Times New Roman
@@ -368,12 +371,12 @@
 
 
 \input{7 Daftar Isi.tex}
-%\input{7a Daftar Lampiran.tex} % Optional. Daftar lampiran sudah ada di dalam daftar isi.
+\input{7a Daftar Lampiran.tex} % Optional. Daftar lampiran sudah ada di dalam daftar isi.
 \input{8 Daftar Gambar.tex}
 \input{9 Daftar Tabel.tex}
 \input{10 Daftar Persamaan.tex}
 \input{11 Daftar Algoritma.tex}
-% \input{12 Daftar Listing.tex}
+\input{12 Daftar Listing.tex}
 \input{13 Daftar Simbol.tex}
 \input{14 Daftar Singkatan.tex}
 
@@ -421,8 +424,8 @@
   %\makeatletter 
   %\renewcommand{\thechapter}{\@Alph\c@chapter} 
   %\makeatother
-% \input{Lampiran-A.tex}
-% \input{Lampiran-B.tex}
+\input{Lampiran-A.tex}
+\input{Lampiran-B.tex}
 \end{appendices}
 \backmatter
 
