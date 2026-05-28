@@ -6,18 +6,17 @@ from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models import AssessmentLog
 
-# === Konstanta sesuai Vesin et al. (2022) ===
-BASE_RATING = 1300.0  # Rating awal semua pelajar
+BASE_RATING = 1300.0  
 RATING_MIN = 1000.0
 RATING_MAX = 1800.0  
 K_FACTORS = {
-    'novice': 30,    # 0-9 attempt
-    'intermediate': 20,  # 10-24 attempt
-    'advanced': 15,  # 25-49 attempt
-    'expert': 10     # 50+ attempt
+    'novice': 30,    
+    'intermediate': 20,  
+    'advanced': 15,  
+    'expert': 10     
 }
 TIME_DISCRIMINATION = 1e-6 
-DEFAULT_TIME_LIMIT = 300000  # 5 menit dalam milidetik
+DEFAULT_TIME_LIMIT = 300000  
 
 def calculate_initial_theta(correct_count: int, total_questions: int = 5) -> float:
     base_rating = 1300.0

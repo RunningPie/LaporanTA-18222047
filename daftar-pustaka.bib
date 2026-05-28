@@ -198,17 +198,61 @@
    volume = {10},
    year = {2023},
 }
-@article{Handayani2025,
-   author = {Dian Handayani and Muhammad Alief Ghifari and Vera Maya Santi and Rahfa Qur'aniyatin Dhuha},
-   doi = {10.21009/jsa.09104},
-   issue = {1},
-   journal = {Jurnal Statistika dan Aplikasinya},
-   pages = {37-49},
-   publisher = {Universitas Negeri Jakarta},
-   title = {ITEM RESPONSE MODEL FOR ANALYZING ITEM RESPONSES IN THE INSTRUMENT OF CHANGE MANAGEMENT AND ORGANIZATIONAL CULTURE},
-   volume = {9},
-   year = {2025},
+
+@inproceedings{Pavlik2009,
+author = {Pavlik, Philip I. and Cen, Hao and Koedinger, Kenneth R.},
+title = {Performance Factors Analysis --A New Alternative to Knowledge Tracing},
+year = {2009},
+isbn = {9781607500285},
+publisher = {IOS Press},
+address = {NLD},
+abstract = {Knowledge tracing (KT)[1] has been used in various forms for adaptive computerized instruction for more than 40 years. However, despite its long history of application, it is difficult to use in domain model search procedures, has not been used to capture learning where multiple skills are needed to perform a single action, and has not been used to compute latencies of actions. On the other hand, existing models used for educational data mining (e.g. Learning Factors Analysis (LFA)[2]) and model search do not tend to allow the creation of a “model overlay” that traces predictions for individual students with individual skills so as to allow the adaptive instruction to automatically remediate performance. Because these limitations make the transition from model search to model application in adaptive instruction more difficult, this paper describes our work to modify an existing data mining model so that it can also be used to select practice adaptively. We compare this new adaptive data mining model (PFA, Performance Factors Analysis) with two versions of LFA and then compare PFA with standard KT.},
+booktitle = {Proceedings of the 2009 Conference on Artificial Intelligence in Education: Building Learning Systems That Care: From Knowledge Representation to Affective Modelling},
+pages = {531–538},
+numpages = {8},
+keywords = {Knowledge Tracing, Educational Data Mining, Adaptive Modeling}
 }
+
+@article{Lindsey2014,
+   author = {Robert V. Lindsey and Jeffery D. Shroyer and Harold Pashler and Michael C. Mozer},
+   doi = {10.1177/0956797613504302},
+   issn = {0956-7976},
+   issue = {3},
+   journal = {Psychological Science},
+   month = {3},
+   pages = {639-647},
+   title = {Improving Students' Long-Term Knowledge Retention Through Personalized Review},
+   volume = {25},
+   year = {2014}
+}
+
+@article{Lan2013,
+   abstract = {We develop a new model and algorithms for machine learning-based learning analytics, which estimate a learner's knowledge of the concepts underlying a domain, and content analytics, which estimate the relationships among a collection of questions and those concepts. Our model represents the probability that a learner provides the correct response to a question in terms of three factors: their understanding of a set of underlying concepts, the concepts involved in each question, and each question's intrinsic difficulty. We estimate these factors given the graded responses to a collection of questions. The underlying estimation problem is ill-posed in general, especially when only a subset of the questions are answered. The key observation that enables a well-posed solution is the fact that typical educational domains of interest involve only a small number of key concepts. Leveraging this observation, we develop both a bi-convex maximum-likelihood and a Bayesian solution to the resulting SPARse Factor Analysis (SPARFA) problem. We also incorporate user-defined tags on questions to facilitate the interpretability of the estimated factors. Experiments with synthetic and real-world data demonstrate the efficacy of our approach. Finally, we make a connection between SPARFA and noisy, binary-valued (1-bit) dictionary learning that is of independent interest.},
+   author = {Andrew S. Lan and Andrew E. Waters and Christoph Studer and Richard G. Baraniuk},
+   month = {7},
+   title = {Sparse Factor Analysis for Learning and Content Analytics},
+   url = {http://arxiv.org/abs/1303.5685},
+   year = {2013}
+}
+
+@article{Vie2018,
+   abstract = {Knowledge tracing is a sequence prediction problem where the goal is to predict the outcomes of students over questions as they are interacting with a learning platform. By tracking the evolution of the knowledge of some student, one can optimize instruction. Existing methods are either based on temporal latent variable models, or factor analysis with temporal features. We here show that factorization machines (FMs), a model for regression or classification, encompasses several existing models in the educational literature as special cases, notably additive factor model, performance factor model, and multidimensional item response theory. We show, using several real datasets of tens of thousands of users and items, that FMs can estimate student knowledge accurately and fast even when student data is sparsely observed, and handle side information such as multiple knowledge components and number of attempts at item or skill level. Our approach allows to fit student models of higher dimension than existing models, and provides a testbed to try new combinations of features in order to improve existing models.},
+   author = {Jill-Jênn Vie and Hisashi Kashima},
+   month = {11},
+   title = {Knowledge Tracing Machines: Factorization Machines for Knowledge Tracing},
+   url = {http://arxiv.org/abs/1811.03388},
+   year = {2018}
+}
+
+@article{Choffin2019,
+   abstract = {Spaced repetition is among the most studied learning strategies in the cognitive science literature. It consists in temporally distributing exposure to an information so as to improve long-term memorization. Providing students with an adaptive and personalized distributed practice schedule would benefit more than just a generic scheduler. However, the applicability of such adaptive schedulers seems to be limited to pure memorization, e.g. flashcards or foreign language learning. In this article, we first frame the research problem of optimizing an adaptive and personalized spaced repetition scheduler when memorization concerns the application of underlying multiple skills. To this end, we choose to rely on a student model for inferring knowledge state and memory dynamics on any skill or combination of skills. We argue that no knowledge tracing model takes both memory decay and multiple skill tagging into account for predicting student performance. As a consequence, we propose a new student learning and forgetting model suited to our research problem: DAS3H builds on the additive factor models and includes a representation of the temporal distribution of past practice on the skills involved by an item. In particular, DAS3H allows the learning and forgetting curves to differ from one skill to another. Finally, we provide empirical evidence on three real-world educational datasets that DAS3H outperforms other state-of-the-art EDM models. These results suggest that incorporating both item-skill relationships and forgetting effect improves over student models that consider one or the other.},
+   author = {Benoît Choffin and Fabrice Popineau and Yolaine Bourda and Jill-Jênn Vie},
+   month = {5},
+   title = {DAS3H: Modeling Student Learning and Forgetting for Optimally Scheduling Distributed Practice of Skills},
+   url = {http://arxiv.org/abs/1905.06873},
+   year = {2019}
+}
+
 @article{Sonkar2020,
    author = {Shashank Sonkar and Andrew E. Waters and Andrew S. Lan and Phillip J. Grimaldi and Richard G. Baraniuk},
    title = {qDKT: Question-centric Deep Knowledge Tracing},
@@ -560,4 +604,15 @@
    address = {New York, NY, USA},
 }
 
+@article{Wei2021,
+   author = {Xiaomei Wei and Nadira Saab and Wilfried Admiraal},
+   doi = {10.1016/j.compedu.2020.104097},
+   issn = {03601315},
+   journal = {Computers \& Education},
+   month = {4},
+   pages = {104097},
+   title = {Assessment of cognitive, behavioral, and affective learning outcomes in massive open online courses: A systematic literature review},
+   volume = {163},
+   year = {2021}
+}
 

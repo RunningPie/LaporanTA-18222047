@@ -69,12 +69,14 @@ Evaluasi dilakukan dengan membandingkan gradien (\textit{slope}) perubahan skor 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{images/individual_trajectories_with_trendline.png}
-    \caption{Visualisasi Perubahan Momentum Belajar Sebelum dan Sesudah Titik Pertama Stagnasi}
+    \includegraphics[width=1\textwidth]{images/group_trajectories_with_trendline.png}
+    \caption{Visualisasi Perubahan Momentum Belajar Sebelum dan Sesudah Rata-rata Pemicu Stagnasi}
     \label{fig:slope_comparison}
 \end{figure}
 
-Gambar \ref{fig:slope_comparison} menunjukkan tren perubahan kemahiran setiap individu (\textit{user}) dalam masing-masing grup kontrol (grup B) dan grup \textit{treatment} (grup A) seiring banyaknya soal yang dikerjakan. Tanda silang (X) berwarna merah menunjukkan titik pertama kali dideteksinya stagnasi oleh sistem, garis putus-putus berwarna biru terang menunjukkan \textit{trendline} perubahan skor kemahiran Elo sebelum titik stagnasi, dan garis putus-putus berwarna merah muda menunjukkan \textit{trendline} perubahan skor kemahiran Elo setelah titik stagnasi. Terlihat adanya perubahan tren pergerakan kemahiran (\textit{trajectory}) antara fase sebelum (\textit{pre}) dan sesudah (\textit{post}) titik stagnasi. Temuan ini dikonfirmasi oleh fakta statistik bahwa rerata gradien tren kemahiran (\textit{slope post-intervention}) pengguna Grup A secara konsisten kembali naik dengan rata-rata perbedaan gradien positif sebesar $+0,67$ setelah titik stagnasi. Di sisi lain, meskipun secara matematis Grup B mencatatkan rata-rata perbedaan gradien akhir yang juga positif ($+1,01$), nilai tersebut bersifat semu karena memiliki simpangan baku yang sangat besar ($SD = 2,47$). Pemeriksaan data individual menunjukkan bahwa angka ini terdistorsi oleh satu partisipan pencilan (\textit{outlier}) yang mengalami lonjakan ekstrem, sedangkan mayoritas partisipan Grup B lainnya mencatatkan pertumbuhan yang nyaris datar (mendekati nol). Distribusi peningkatan Grup A yang jauh lebih merata ($SD = 0,68$), menunjukkan indikasi positif terkait efektivitas intervensi dalam mengembalikan momentum belajar yang konsisten dan lebih merata bagi seluruh populasi kelompok yang sebelumnya mengalami stagnasi.
+Gambar \ref{fig:slope_comparison} menyajikan perbandingan tren perubahan kemahiran rata-rata kelompok berdampingan dengan sebaran lintasan belajar individu yang digambarkan secara samar (\textit{fade out}) berwarna abu-abu muda di latar belakang. Kurva tebal berwarna tegas (biru untuk Grup A dan jingga untuk Grup B) menunjukkan kurva rata-rata lintasan kemahiran kelompok. Garis vertikal merah putus-putus melambangkan rata-rata pemicu stagnasi kelompok. Garis putus-putus merah muda menunjukkan \textit{trendline} setelah pemicu stagnasi (\textit{post-stagnation trend}).
+
+Melalui visualisasi ini, terlihat jelas adanya kontras perubahan tren pergerakan kemahiran (\textit{trajectory}) antara fase sebelum (\textit{pre}) dan sesudah (\textit{post}) pemicu stagnasi. Temuan ini dikonfirmasi oleh rata-rata gradien tren kemahiran (\textit{slope post-intervention}) pengguna Grup A secara konsisten kembali naik dengan rata-rata perbedaan gradien positif sebesar $+0,67$ setelah titik stagnasi. Di sisi lain, meskipun secara matematis Grup B memiliki rata-rata perbedaan gradien akhir yang juga positif ($+1,01$), nilai tersebut bersifat semu karena memiliki simpangan baku yang sangat besar ($SD = 2,47$). Teknik \textit{fade out} pada grafik ini memperlihatkan bahwa rata-rata Grup B terdistorsi oleh satu lintasan individu pencilan (\textit{outlier}) yang melonjak sendiri di latar belakang (terlihat dari garis abu-abu tunggal yang mengalami kenaikan), sedangkan mayoritas lintasan abu-abu individu Grup B lainnya terlihat mendatar bahkan ada yang menurun. Distribusi peningkatan Grup A yang jauh lebih merata ($SD = 0,68$) menunjukkan indikasi kuat terkait efektivitas intervensi kolaboratif dalam mengembalikan momentum belajar secara konsisten dan merata bagi seluruh populasi kelompok yang sebelumnya mengalami stagnansi.
 
 \subsection{Validitas Pemicuan Stagnasi (\textit{Trigger Rate})}
 Mekanisme deteksi stagnasi yang menggunakan ambang batas variansi $\epsilon = 165$ pada awalnya dirancang untuk mendeteksi pola \textit{learning plateau}. Berdasarkan data log pengujian, tingkat keberhasilan pemicuan mencapai 100\%, artinya seluruh pengguna di Grup A berhasil memicu mekanisme kolaboratif ini (dengan rata-rata 15 kejadian stagnasi per pengguna). Hal ini secara nominal melampaui target awal pelaksanaan pengujian yang mengharapkan setidaknya 50\% pengguna mendapatkan kesempatan intervensi. Namun, tingginya angka pemicuan ini mengekspos sebuah kelemahan desain sistem yaitu, parameter variansi yang ditetapkan ternyata terlalu sensitif (\textit{hypersensitive}). Sebagai gambaran ekstrem, rata-rata 30 kejadian stagnasi (seperti yang dicatat oleh data internal sistem untuk pengguna Grup B) dalam rentang pengujian yang hanya berisi sekitar 60 aktivitas pengerjaan soal mengimplikasikan bahwa sistem mendeteksi stagnasi belajar hampir di setiap dua soal. Secara pedagogis, frekuensi interupsi seketat ini kurang masuk akal karena fluktuasi kognitif minor atau jeda berpikir normal pengguna rentan tertafsirkan sebagai stagnasi akut.
@@ -94,20 +96,7 @@ Data log menunjukkan bahwa perbedaan kemahiran $\theta$ (\textit{theta differenc
 \subsection{Kualitas Umpan Balik Sejawat (\textit{Peer Feedback Quality})}
 Kualitas umpan balik dievaluasi berdasarkan skor yang dihasilkan oleh mesin NLP (\textit{system\_score}) dan penilaian subjektif penerima (\textit{is\_helpful}).
 
-\begin{table}[!ht]
-    \centering
-    \caption{Statistik Kualitas Umpan Balik Kolaboratif}
-    \label{tbl:social_quality}
-    \begin{tabular}{|l|c|}
-        \hline
-        \textbf{Metrik} & \textbf{Nilai Rata-rata} \\
-        \hline
-        Skor Sistem (NLP) & 0,404 \\
-        \hline
-        Tingkat Kebergunaan (\textit{Helpfulness Rate}) & 100\% \\
-        \hline
-    \end{tabular}
-\end{table}
+\input{tables/tabel_6_kualitas_feedback.tex}
 
 Berdasarkan Tabel \ref{tbl:social_quality}, terdapat perbedaan yang cukup mencolok antara skor otomatis dari sistem (0,404) dengan tingkat kebergunaan subjektif menurut pengguna (100\%). Rendahnya skor NLP ini merupakan indikasi adanya keterbatasan model \textit{multilingual MiniLM} dalam menangani dialek teknis bahasa Indonesia informal yang digunakan partisipan saat memberikan ulasan. Meskipun demikian, validitas kualitas interaksi tetap terjaga karena sistem menggunakan mekanisme konfirmasi biner (\textit{thumbs up/down}) dari penerima umpan balik sebagai metrik kualitas utama yang lebih merepresentasikan kebergunaan riil di lapangan.
 
