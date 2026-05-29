@@ -21,7 +21,7 @@ yang menyesuaikan dan mempersonalisasi proses pembelajaran, terutama konten pemb
 adalah untuk mengubah instruksi penyajian materi pembelajaran menggunakan seperangkat aturan yang telah
 ditentukan sehingga materi pembelajaran disesuaikan dengan
 kebutuhan dan perilaku pelajar. Pembelajaran adaptif memungkinkan
-pelajar menjadi kolaborator dalam proses pendidikan, tidak hanya menjadi penerima informasi pasif. Hal ini dikarenakan setiap pelajar memiliki jalur pembelajaran optimal tersendiri yang terdiri dari banyak titik terhubung, dengan setiap titik mewakili komponen pengetahuan atau keterampilan \autocite{Ihichr2024}.
+pelajar menjadi kolaborator dalam proses pendidikan, tidak hanya menjadi penerima informasi pasif. Hal ini dikarenakan setiap pelajar memiliki jalur pembelajaran optimal tersendiri yang terdiri dari banyak titik terhubung, dengan setiap titik mewakili komponen pengetahuan atau keterampilan tertentu \autocite{Ihichr2024}.
 
 Pembelajaran adaptif mempertimbangkan banyak aspek, seperti: tingkat kemampuan pelajar saat ini, kebutuhan unik masing-masing pelajar, gaya belajar masing-masing pelajar, dan interaksi pelajar yang berbeda-beda, untuk mengindividualisasi semua komponen proses pembelajaran. Komponen proses pembelajaran yang dapat diindividualisasikan antara lain: konten, antarmuka, gaya belajar, dan asesmen. Oleh karena itu, pembelajaran adaptif memungkinkan seorang pelajar untuk berkembang ke pembelajaran yang lebih menantang berdasarkan kinerjanya, sambil tetap memberikan dukungan kepada pelajar lainnya untuk menguasai keterampilan tertentu. Pendekatan ini memastikan bahwa pelajar tidak dibatasi
 oleh kecepatan kelas tetapi dapat mengikuti kecepatan belajar mereka sendiri.
@@ -206,7 +206,7 @@ P_{ij} &= \sigma(\theta_i - \beta_j) \notag \\
 
 Namun ada satu hal yang perlu diperhatikan, menurut \textcite{Minn2022} IRT bukanlah pendekatan \textit{Knowledge Tracing} 
 karena mengasumsikan pelajar tidak belajar selama proses pengujian sehingga lebih sesuai dianggal sebagai pendekatan \textit{Knowledge Assessment}.
-Salah satu kelemahan IRT menurut \textcite{Vesin2022} adalah dalam hal kalibrasi pada sampel besar dan sulitnya melakukan komputasi untuk pembaruan yang sering karena estimasi baru terhadap keterampilan harus dihitung untuk setiap pelajar setelah satu respons untuk satu tugas.
+Kelemahan IRT menurut \textcite{Vesin2022} adalah dalam hal kalibrasi pada sampel besar dan sulitnya melakukan komputasi untuk pembaruan yang sering karena estimasi baru terhadap keterampilan harus dihitung untuk setiap pelajar setelah satu respons untuk satu tugas.
 
 % \subsection{Model IRT* (\textit{Bayesian IRT})}
 Selain pendekatan standard, model IRT juga dapat diterapkan dalam
@@ -299,7 +299,7 @@ BKT mengandalkan model Markov untuk menyimpulkan keadaan penguasaan, dari belum 
 \begin{figure}[!ht]
     \centering
     \captionsetup{justification=centering}
-        \includegraphics[width=0.9\textwidth]
+        \includegraphics[width=0.75\textwidth]
         {images/standard_bkt.png}
     \caption{Contoh Model Konseptual dari BKT Standard yang Mengestimasi
     Transisi \textit{State} pelajar dari Belum Dipelajari (\textit{Not Learned})
@@ -376,7 +376,7 @@ variabel-variabelnya dijelaskan dalam laporan hasil risetnya dengan definisi di 
     \item $A_o$: banyaknya total upaya untuk latihan tertentu
     \item $T_c$: banyaknya latihan yang sudah diselesaikan
     \item $T_p$: banyaknya latihan yang diselesaikan dengan benar
-    \item $a_i$: bobot yang menentukan seberapa penting kecepatan (waktu) memengaruhi skor akhir
+    \item $a_i$: bobot kepentingan kecepatan (waktu) penyelesaian
     \item $d_i$: merepresentasikan batas waktu
     \item $t_i$: merepresentasikan waktu yang dibutuhkan untuk menyelesaikan latihan
 \end{itemize}
@@ -404,7 +404,7 @@ ditunjukkan pada Gambar \ref{fig:model-konseptual-individu}.
         \includegraphics[width=0.8\textwidth]
         {images/vesin_fig1.png}
     \caption{Model Konseptual Alur Proses Sistem Adaptif
-    Individual (diadaptasi dari \textcite{Vesin2022})}
+    Individual (dari \textcite{Vesin2022})}
     \label{fig:model-konseptual-individu}
 \end{figure}
 
@@ -957,10 +957,10 @@ pembelajaran. Nilai $g$ diklasifikasikan ke dalam tiga kategori:
     \item \textbf{Sedang}
     (\textit{Medium-g}) jika $0{,}3 \leq g < 0{,}7$; dan 
     \item \textbf{Tinggi}
-    (\textit{High-g}) jika $g \geq 0{,}7$. Klasifikasi ini menyediakan kerangka kerja
+    (\textit{High-g}) jika $g \geq 0{,}7$.
 \end{enumerate}
 
-komparatif yang konsisten bagi para peneliti untuk mengevaluasi apakah sebuah
+Klasifikasi ini menyediakan kerangka kerja komparatif yang konsisten bagi para peneliti untuk mengevaluasi apakah sebuah
 metode pedagogis mampu menghasilkan peningkatan pemahaman konsep yang substansial
 terlepas dari kesulitan materi yang diajarkan \autocite{Coletta2020}.
 
