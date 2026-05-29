@@ -99,7 +99,7 @@ Inti logika sistem berada pada modul \texttt{elo\_engine.py}. Modul ini mengelol
 \end{enumerate}
 
 \subsection{Mekanisme Perekaman Data Trajektori (\textit{Data Logging})}
-Analisis pergerakan momentum kemahiran pelajar (\textit{slope} $\Delta\theta$) sangat bergantung pada data \textit{time-series} yang direkam secara presisi. Oleh karena itu, sistem diimplementasikan untuk melakukan \textit{logging} secara komprehensif pada modul \texttt{session.py} setiap kali titik akhir (\textit{endpoint}) API \texttt{/next} dipanggil. Kode \ref{alg:data_logging} mengilustrasikan logika perekaman data tersebut, yang menyimpan status kemahiran sebelum dan sesudah pengerjaan beserta status deteksi stagnasi.
+Analisis pergerakan gradien kemahiran pelajar (\textit{slope} $\Delta\theta$) sangat bergantung pada data \textit{time-series} yang direkam secara presisi. Oleh karena itu, sistem diimplementasikan untuk melakukan \textit{logging} secara komprehensif pada modul \texttt{session.py} setiap kali titik akhir (\textit{endpoint}) API \texttt{/next} dipanggil. Kode \ref{alg:data_logging} mengilustrasikan logika perekaman data tersebut, yang menyimpan status kemahiran sebelum dan sesudah pengerjaan beserta status deteksi stagnasi.
 
 \input{algorithms/trajectory-logging.tex}
 

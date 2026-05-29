@@ -50,7 +50,7 @@ Mengingat asesmen dilakukan secara terintegrasi, skor \textit{pre-test} dan prok
     \item \textbf{Empiris:} Menggunakan nilai \textit{Elo rating} tertinggi yang secara empiris dicapai oleh peserta selama pengujian sebagai batas maksimum.
 \end{enumerate}
 
-Tabel \ref{tbl:perbandingan_skor} menyajikan rekapitulasi skor rata-rata berdasarkan skala \textit{Elo rating} tersebut, beserta nilai NLG teoretis dan empirisnya.
+Tabel \ref{tbl:perbandingan_skor} menyajikan rekapitulasi skor rata-rata berdasarkan skala \textit{Elo rating} tersebut, beserta nilai NLG teoretis dan empirisnya. Rincian data mentah performa belajar untuk setiap individu partisipan dapat dilihat pada Tabel \ref{tbl:nlg_individu} pada Lampiran \ref{sec:lampiran_data_mentah}.
 
 \input{tables/tabel_6_performa_grup.tex}
 
@@ -62,7 +62,7 @@ Untuk menguji signifikansi perbedaan metrik tersebut, dilakukan analisis statist
 \section{Hasil dan Analisis Efektivitas Mitigasi \textit{Overpersonalization}}
 \label{sec:hasil_mitigasi}
 
-Analisis ini berfokus pada kemampuan sistem dalam mendeteksi stagnasi dan mengembalikan momentum pertumbuhan kemahiran pelajar melalui intervensi kolaboratif.
+Analisis ini berfokus pada kemampuan sistem dalam mendeteksi stagnasi dan mengembalikan gradien pertumbuhan kemahiran pelajar melalui intervensi kolaboratif.
 
 \subsection{Analisis Perubahan Kemahiran (\textit{Slope} \texorpdfstring{$\Delta\theta$}{Delta Theta})}
 Evaluasi dilakukan dengan membandingkan gradien (\textit{slope}) perubahan skor \textit{Elo rating} sebelum dan sesudah intervensi pada titik stagnasi terdeteksi.
@@ -70,13 +70,15 @@ Evaluasi dilakukan dengan membandingkan gradien (\textit{slope}) perubahan skor 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\textwidth]{images/group_trajectories_with_trendline.png}
-    \caption{Visualisasi Perubahan Momentum Belajar Sebelum dan Sesudah Rata-rata Pemicu Stagnasi}
+    \caption{Visualisasi Perubahan Gradien Belajar Kedua Grup}
     \label{fig:slope_comparison}
 \end{figure}
 
-Gambar \ref{fig:slope_comparison} menyajikan perbandingan tren perubahan kemahiran rata-rata kelompok berdampingan dengan sebaran lintasan belajar individu yang digambarkan secara samar (\textit{fade out}) berwarna abu-abu muda di latar belakang. Kurva tebal berwarna tegas (biru untuk Grup A dan jingga untuk Grup B) menunjukkan kurva rata-rata lintasan kemahiran kelompok. Garis vertikal merah putus-putus melambangkan rata-rata pemicu stagnasi kelompok. Garis putus-putus merah muda menunjukkan \textit{trendline} setelah pemicu stagnasi (\textit{post-stagnation trend}).
+\input{tables/tabel_6_slope_agregat.tex}
 
-Melalui visualisasi ini, terlihat jelas adanya kontras perubahan tren pergerakan kemahiran (\textit{trajectory}) antara fase sebelum (\textit{pre}) dan sesudah (\textit{post}) pemicu stagnasi. Temuan ini dikonfirmasi oleh rata-rata gradien tren kemahiran (\textit{slope post-intervention}) pengguna Grup A secara konsisten kembali naik dengan rata-rata perbedaan gradien positif sebesar $+0,67$ setelah titik stagnasi. Di sisi lain, meskipun secara matematis Grup B memiliki rata-rata perbedaan gradien akhir yang juga positif ($+1,01$), nilai tersebut bersifat semu karena memiliki simpangan baku yang sangat besar ($SD = 2,47$). Teknik \textit{fade out} pada grafik ini memperlihatkan bahwa rata-rata Grup B terdistorsi oleh satu lintasan individu pencilan (\textit{outlier}) yang melonjak sendiri di latar belakang (terlihat dari garis abu-abu tunggal yang mengalami kenaikan), sedangkan mayoritas lintasan abu-abu individu Grup B lainnya terlihat mendatar bahkan ada yang menurun. Distribusi peningkatan Grup A yang jauh lebih merata ($SD = 0,68$) menunjukkan indikasi kuat terkait efektivitas intervensi kolaboratif dalam mengembalikan momentum belajar secara konsisten dan merata bagi seluruh populasi kelompok yang sebelumnya mengalami stagnansi.
+Gambar \ref{fig:slope_comparison} dan Tabel \ref{tbl:slope_agregat} menyajikan perbandingan tren perubahan kemahiran rata-rata kelompok berdampingan dengan sebaran lintasan belajar individu yang digambarkan secara samar (\textit{fade out}) berwarna abu-abu muda di latar belakang. Kurva tebal berwarna tegas (biru untuk Grup A dan jingga untuk Grup B) menunjukkan kurva rata-rata lintasan kemahiran kelompok. Garis vertikal merah putus-putus melambangkan rata-rata pemicu stagnasi kelompok. Garis putus-putus merah muda menunjukkan \textit{trendline} setelah pemicu stagnasi (\textit{post-stagnation trend}).
+
+Melalui visualisasi ini, terlihat jelas adanya kontras perubahan tren pergerakan kemahiran (\textit{trajectory}) antara fase sebelum (\textit{pre}) dan sesudah (\textit{post}) pemicu stagnasi. Temuan ini dikonfirmasi oleh rata-rata gradien tren kemahiran (\textit{slope post-intervention}) pengguna Grup A secara konsisten kembali naik dengan rata-rata perbedaan gradien positif sebesar $+0,67$ setelah titik stagnasi. Di sisi lain, meskipun secara matematis Grup B memiliki rata-rata perbedaan gradien akhir yang juga positif ($+1,01$), nilai tersebut bersifat semu karena memiliki simpangan baku yang sangat besar ($SD = 2,47$). Teknik \textit{fade out} pada grafik ini memperlihatkan bahwa rata-rata Grup B terdistorsi oleh satu lintasan individu pencilan (\textit{outlier}) yang melonjak sendiri di latar belakang (terlihat dari garis abu-abu tunggal yang mengalami kenaikan), sedangkan mayoritas lintasan abu-abu individu Grup B lainnya terlihat mendatar bahkan ada yang menurun. Distribusi peningkatan Grup A yang jauh lebih merata ($SD = 0,68$) menunjukkan indikasi kuat terkait efektivitas intervensi kolaboratif dalam mengembalikan gradien kemahiran (\textit{elo rating}) secara konsisten dan merata bagi seluruh populasi kelompok yang sebelumnya mengalami stagnansi. Rincian data mentah gradien kemahiran individu dan jumlah pemicuan stagnasi untuk setiap partisipan dapat dilihat pada Tabel \ref{tbl:slope_individu} pada Lampiran \ref{sec:lampiran_data_slope}.
 
 \subsection{Validitas Pemicuan Stagnasi (\textit{Trigger Rate})}
 Mekanisme deteksi stagnasi yang menggunakan ambang batas variansi $\epsilon = 165$ pada awalnya dirancang untuk mendeteksi pola \textit{learning plateau}. Berdasarkan data log pengujian, tingkat keberhasilan pemicuan mencapai 100\%, artinya seluruh pengguna di Grup A berhasil memicu mekanisme kolaboratif ini (dengan rata-rata 15 kejadian stagnasi per pengguna). Hal ini secara nominal melampaui target awal pelaksanaan pengujian yang mengharapkan setidaknya 50\% pengguna mendapatkan kesempatan intervensi. Namun, tingginya angka pemicuan ini mengekspos sebuah kelemahan desain sistem yaitu, parameter variansi yang ditetapkan ternyata terlalu sensitif (\textit{hypersensitive}). Sebagai gambaran ekstrem, rata-rata 30 kejadian stagnasi (seperti yang dicatat oleh data internal sistem untuk pengguna Grup B) dalam rentang pengujian yang hanya berisi sekitar 60 aktivitas pengerjaan soal mengimplikasikan bahwa sistem mendeteksi stagnasi belajar hampir di setiap dua soal. Secara pedagogis, frekuensi interupsi seketat ini kurang masuk akal karena fluktuasi kognitif minor atau jeda berpikir normal pengguna rentan tertafsirkan sebagai stagnasi akut.
