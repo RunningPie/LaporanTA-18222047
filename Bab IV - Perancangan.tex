@@ -108,6 +108,38 @@ Alur pertukaran pesan pada Gambar \ref{fig:communication_diagram} dirancang untu
     Pesan ini secara dinamis mengubah mode tampilan antarmuka dari mode pengerjaan soal menjadi mode penilaian sejawat. Perubahan konteks yang diinisiasi sistem ini memaksa pemelajar untuk terlibat dalam aktivitas sosial tanpa perlu menavigasi menu secara manual, menjamin terjadinya eksposur terhadap perspektif baru.
 \end{enumerate}
 
+\section{Model Interaksi Detail (\textit{Sequence Diagram})}
+\label{sec:sequence_diagram}
+
+Berbeda dengan \textit{Communication Diagram} pada subbab sebelumnya yang berfokus pada peran logis objek secara konseptual, \textit{Sequence Diagram} memodelkan interaksi antarkomponen secara lebih detail dan spesifik dari segi arsitektur teknis. Diagram ini memetakan alur pertukaran pesan mulai dari antarmuka pengguna (\textit{Frontend}), layanan penyedia data (\textit{API Service}), berbagai mesin komputasi algoritma (\textit{Engines}), hingga ke basis data (\textit{Database}).
+
+Gambar \ref{fig:sequence_diagram} mengilustrasikan keseluruhan siklus interaksi asesmen pemelajar, mulai dari pengerjaan soal hingga terjadinya intervensi kolaboratif apabila stagnasi terdeteksi. 
+
+\begin{figure}[!ht]
+    \centering
+    % Silakan ganti dengan nama file gambar sequence diagram Anda
+    \includegraphics[width=0.9\textwidth]{images/sequence_diagram.png}
+    \caption{\textit{Sequence Diagram} - Alur Interaksi Detail Sistem Asesmen}
+    \label{fig:sequence_diagram}
+\end{figure}
+
+Alur interaksi teknis pada diagram di atas dapat diuraikan sebagai berikut:
+\begin{enumerate}
+    \item \textbf{Evaluasi Pengerjaan Soal:}
+    Pemelajar (\textit{User}) mengirimkan jawaban melalui \texttt{Frontend}, yang kemudian diteruskan sebagai \texttt{POST Session Submit} ke \texttt{API Service}. Lapis layanan ini memanggil \texttt{Sandbox Engine} untuk memvalidasi kueri SQL yang dikirimkan. Setelah dievaluasi, log hasil pengerjaan dicatat ke dalam \texttt{Database}, dan hasil akhir dikembalikan secara berjenjang hingga \textit{User} menerima umpan balik jawaban (\textit{Answer Feedback}).
+    
+    \item \textbf{Pembaruan Kemahiran dan Deteksi Stagnasi:}
+    Ketika pemelajar melanjutkan ke tahap berikutnya (\texttt{Click Next}), \texttt{API Service} memicu pembaruan (\texttt{Update Ratings}) ke \texttt{Elo Engine}. Algoritma ini akan memperbarui tingkat kemahiran pemelajar (\textit{User Theta}) dan tingkat kesulitan soal (\textit{Question Diff.}) di dalam \texttt{Database}. Setelah skor diperbarui, \texttt{API Service} memicu evaluasi stagnasi (\texttt{Detect Stagnation}). Jika \texttt{Elo Engine} mendeteksi stagnasi, status \textit{Stagnation Detected} dikembalikan, lalu kejadian ini dicatat (\texttt{Log Stagnation}) ke dalam \texttt{Database}.
+    
+    \item \textbf{Blok Opsional: Intervensi Sosial (\textit{opt [stagnation detected]}):}
+    Jika kondisi stagnasi terpenuhi, alur eksekusi akan masuk ke dalam blok opsional yang memicu intervensi kolaboratif:
+    \begin{enumerate}
+        \item \textbf{Pencarian Rekan (\textit{Peer Matching}):} \texttt{API Service} memerintahkan \texttt{Social Engine} untuk mencari rekan (\texttt{Find Peer}). \texttt{Social Engine} menarik data kandidat dari \texttt{Database} (\texttt{Query Peers}) untuk mencari pasangan yang heterogen. Setelah rekan terpilih (\texttt{Selected Peer}) dikembalikan, sesi penilaian sejawat dibuat di \texttt{Database} (\texttt{Create Peer Session}). Notifikasi keterlibatan sesi kemudian disebarkan kepada \textit{User} yang bersangkutan dan \textit{Peer} yang terpilih.
+        \item \textbf{Penilaian Sejawat (\textit{Peer Assessment}):} Aktor \textit{Peer} memberikan ulasan/umpan balik melalui \texttt{Frontend} (\texttt{Submit Feedback}). Data ini diteruskan ke \texttt{API Service}, yang kemudian memanggil \texttt{Social Engine} untuk mengevaluasi kualitas reviu secara otomatis (\texttt{Calculate System Score}) dan menyimpannya di \texttt{Database} (\texttt{Update Peer Session}).
+        \item \textbf{Resolusi dan Evaluasi Umpan Balik:} Aktor \textit{User} membaca ulasan dari rekannya dan memberikan penilaian manfaat (\texttt{Rate Feedback}). Penilaian ini diproses oleh \texttt{API Service} dengan meminta \texttt{Social Engine} untuk mengalkulasi skor akhir (\texttt{Calculate Final Score}). Siklus ini ditutup dengan pembaruan tingkat kemahiran sosial (\texttt{Update Social Theta}) ke dalam \texttt{Database}.
+    \end{enumerate}
+\end{enumerate}
+
 \section{Perbandingan dengan Sistem Saat Ini}
 \label{sec:perbandingan}
 
