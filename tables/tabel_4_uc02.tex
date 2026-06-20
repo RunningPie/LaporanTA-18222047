@@ -7,22 +7,22 @@
         \hline
         \textbf{Nama \textit{Use Case}} & \textbf{Mengerjakan Latihan Adaptif} \\
         \hline
-        \textbf{Aktor} & pelajar \\
+        \textbf{Aktor} & pemelajar \\
         \hline
         \textbf{FR Terkait} & FR-02, FR-08 \\
         \hline
-        \textbf{Deskripsi} & pelajar mengerjakan soal latihan yang dipilihkan secara dinamis oleh sistem berdasarkan estimasi kemampuan saat ini untuk meningkatkan kompetensi. \\
+        \textbf{Deskripsi} & pemelajar mengerjakan soal latihan yang dipilihkan secara dinamis oleh sistem berdasarkan estimasi kemampuan saat ini untuk meningkatkan kompetensi. \\
         \hline
-        \textbf{Kondisi sebelum} & pelajar telah login; Nilai parameter Elo rating ($\theta$) pelajar tersedia. \\
+        \textbf{Kondisi sebelum} & pemelajar telah login; Nilai parameter Elo rating ($\theta$) pemelajar tersedia. \\
         \hline
-        \textbf{Kondisi sesudah} & Skor Elo pelajar diperbarui; Sistem mengevaluasi tren variabilitas skor (deteksi stagnasi). \\
+        \textbf{Kondisi sesudah} & Skor Elo pemelajar diperbarui; Sistem mengevaluasi tren variabilitas skor (deteksi stagnasi). \\
         \hline
         \textbf{Main Flow} & \begin{enumerate}[noitemsep,topsep=0pt,leftmargin=*]
             \item Sistem memilih latihan soal dengan tingkat kesulitan setara ($D_j \approx R_i$).
-            \item Sistem menampilkan soal kepada pelajar.
-            \item pelajar menginputkan jawaban.
+            \item Sistem menampilkan soal kepada pemelajar.
+            \item pemelajar menginputkan jawaban.
             \item Sistem memvalidasi jawaban dan menghitung skor aktual.
-            \item Sistem memperbarui profil kompetensi pelajar.
+            \item Sistem memperbarui profil kompetensi pemelajar.
         \end{enumerate} \\
         \hline
     \end{tabular}

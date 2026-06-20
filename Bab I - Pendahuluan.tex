@@ -7,14 +7,14 @@
 
 Pergeseran paradigma pendidikan tinggi global saat ini bergerak dari
 pendekatan pedagogis yang berpusat pada pengajar menuju pendekatan yang berpusat
-pada pelajar melalui \textit{Personalized Learning} \autocite{Ryoo2021}. Transformasi
+pada pemelajar melalui \textit{Personalized Learning} \autocite{Ryoo2021}. Transformasi
 ini didorong oleh sistem \textit{Adaptive Assessment} (AA) berbasis kecerdasan
-artifisial yang memiliki kemampuan untuk secara dinamis menyesuaikan tingkat kesulitan konten berdasarkan kemampuan peserta didik secara hampir \textit{real-time} \autocite{Halkiopoulos2024}. Sejalan dengan visi tersebut, pemerintah Indonesia melalui Strategi Nasional Kecerdasan
+artifisial yang memiliki kemampuan untuk secara dinamis menyesuaikan tingkat kesulitan konten berdasarkan kemampuan pemelajar secara hampir \textit{real-time} \autocite{Halkiopoulos2024}. Sejalan dengan visi tersebut, pemerintah Indonesia melalui Strategi Nasional Kecerdasan
 Artifisial (Stranas KA) 2020--2045 mendorong pengembangan sistem
 penilaian cerdas yang adaptif \autocite{BPPT2020}. Secara teknis, berbagai algoritma
 mulai dari \textit{Bayesian Knowledge Tracing} (BKT), \textit{Deep Knowledge Tracing}
 (DKT), hingga sistem \textit{Elo rating} telah dikembangkan untuk mengestimasi
-kemampuan pelajar \autocite{Minn2022, Vesin2022}. Implementasi teknik-teknik ini krusial untuk meninggalkan pendekatan kaku \textit{one size fits all}
+kemampuan pemelajar \autocite{Minn2022, Vesin2022}. Implementasi teknik-teknik ini krusial untuk meninggalkan pendekatan kaku \textit{one size fits all}
 dan menuju pengoptimalan pembelajaran individu di era digital.
 
 Meskipun teknik-teknik yang disebutkan sebelumnya unggul dalam mengoptimalkan jalur
@@ -27,23 +27,23 @@ pengguna dari keragaman informasi dan perspektif dengan hanya menyajikan konten
 yang selaras dengan riwayat mereka \autocite{Wang2022}. Dalam konteks pendidikan,
 risiko ini menghasilkan fenomena \textit{overpersonalization} (personalisasi
 berlebih), yang menyebabkan sistem terlalu agresif dalam menyesuaikan konten dengan
-kenyamanan individu. Hal ini justru mengasingkan pelajar dari manfaat pembelajaran komunitas
+kenyamanan individu. Hal ini justru mengasingkan pemelajar dari manfaat pembelajaran komunitas
 \autocite{Halkiopoulos2024}. Algoritma yang bekerja semata-mata berdasarkan
 prinsip homofili (kemiripan) cenderung menciptakan \textit{echo chambers} \autocite{Tommasel2021}, menghalangi keberagaman perspektif yang penting bagi
-pengembangan keterampilan pelajar secara keseluruhan.
+pengembangan keterampilan pemelajar secara keseluruhan.
 
 Tinjauan literatur terkini mengonfirmasi bahwa ketergantungan eksklusif pada
 algoritma personalisasi yang hanya mengoptimalkan parameter individu tanpa ruang
-eksplorasi membawa dampak kognitif yang merugikan bagi pelajar. Bukti
+eksplorasi membawa dampak kognitif yang merugikan bagi pemelajar. Bukti
 eksperimental menunjukkan bahwa lingkungan yang terpersonalisasi secara agresif
 memicu pengambilan sampel informasi yang sangat selektif sehingga membentuk
 representasi kognitif yang terdistorsi \autocite{Bahg2025}. Masalah ini semakin
-kritis karena pelajar sering menunjukkan rasa percaya diri berlebih pada generalisasi
+kritis karena pemelajar sering menunjukkan rasa percaya diri berlebih pada generalisasi
 pengetahuan yang keliru dan rentan terjebak dalam \textit{learning plateau}
 \autocite{Bahg2025, Halkiopoulos2024}. Dalam konteks nasional, jika implementasi Stranas KA hanya mengadopsi teknologi adaptif konvensional, ancaman \textit{filter
-bubbles} akademik ini berisiko melahirkan generasi pelajar yang terlalu percaya diri dengan representasi kognitif yang keliru.
+bubbles} akademik ini berisiko melahirkan generasi pemelajar yang terlalu percaya diri dengan representasi kognitif yang keliru.
 Oleh karena itu, risiko \textit{overpersonalization} ini harus dipahami dan dicari alternatif
-intervensi teknologi adaptif yang tidak mengasingkan pelajar dari manfaat esensial
+intervensi teknologi adaptif yang tidak mengasingkan pemelajar dari manfaat esensial
 keberagaman perspektif.
 
 % --- Rumusan Masalah ---
@@ -56,34 +56,19 @@ penelitian yang menguji apakah integrasi fitur kolaboratif dalam sistem asesmen
 adaptif dapat meminimalkan efek \textit{overpersonalization} melalui penyisipan keberagaman perspektif.
 Maka dari itu, permasalahan utama yang ingin diselesaikan adalah sebagai berikut.
 \begin{enumerate}
-  \item Bagaimana merancang arsitektur sistem asesmen adaptif yang mampu
-  mengintegrasikan parameter kemahiran individual dengan dimensi kontribusi
-  sosial secara terpadu?
-  \item Bagaimana mengembangkan mekanisme mitigasi \textit{overpersonalization}?
-  \item Bagaimana mengimplementasikan rancangan arsitektur dan mekanisme tersebut
-  menjadi purwarupa sistem asesmen adaptif kolaboratif yang fungsional?
+  \item Apakah arsitektur sistem asesmen adaptif dapat dirancang sedemikian rupa sehingga mampu mengintegrasikan dimensi kemahiran individual dengan dimensi sosial?
+  \item Apakah efek overpersonalization pada sistem asesmen adaptif dapat dimitigasi melalui penerapan mekanisme tertentu?
+  \item Apakah rancangan arsitektur dan mekanisme mitigasi tersebut dapat diimplementasikan menjadi purwarupa sistem asesmen adaptif kolaboratif yang fungsional?
 \end{enumerate}
 
 % --- Tujuan ---
 \section{Tujuan}
 \label{sec:tujuan}
-Sebagai upaya untuk menjawab permasalahan yang disebutkan sebelumnya, penelitian ini bertujuan untuk \textbf{mengembangkan purwarupa sistem asesmen adaptif kolaboratif yang mengintegrasikan
-mekanisme intervensi proaktif}, yang harapannya dapat berkontribusi pada alternatif solusi
-penggabungan metrik kemahiran individual dengan dimensi kontribusi sosial ke
-dalam sebuah arsitektur asesmen yang terpadu. Selain itu, dalam penelitian ini juga diimplementasikan pengembangan metode mitigasi
-\textit{overpersonalization} melalui deteksi stagnasi pembelajaran secara otomatis,
-yang diharapkan dapat menjaga dinamika pertumbuhan pengetahuan pelajar dalam
-lingkungan yang terpersonalisasi.
-
-Secara spesifik, tujuan penelitian ini adalah sebagai berikut.
+Sebagai upaya untuk menjawab permasalahan yang disebutkan sebelumnya, tujuan penelitian ini adalah sebagai berikut.
 \begin{enumerate}
-  \item Merancang arsitektur sistem asesmen adaptif yang mampu mengintegrasikan
-  parameter kemahiran individual (\textit{Elo rating}) dengan dimensi kontribusi
-  sosial secara holistik.
-  \item Mengembangkan mekanisme mitigasi \textit{overpersonalization}.
-  \item Mengimplementasikan rancangan arsitektur dan mekanisme tersebut menjadi
-  purwarupa sistem asesmen adaptif kolaboratif yang fungsional sebagai pembuktian
-  konsep (\textit{proof-of-concept}).
+  \item Merancang arsitektur sistem asesmen adaptif yang mampu mengintegrasikan dimensi kemahiran individual dengan dimensi sosial.
+  \item Mengembangkan mekanisme tertentu yang dapat diterapkan untuk memitigasi efek \textit{overpersonalization} pada sistem asesmen adaptif.
+  \item Mengimplementasikan rancangan arsitektur beserta mekanisme mitigasi tersebut menjadi purwarupa sistem asesmen adaptif kolaboratif yang fungsional sebagai pembuktian konsep (\textit{proof-of-concept}).
 \end{enumerate}
 
 
@@ -92,24 +77,28 @@ Secara spesifik, tujuan penelitian ini adalah sebagai berikut.
 \label{sec:batasan_masalah}
 Untuk memastikan penelitian ini tetap fokus dan dapat diselesaikan dalam jangka waktu yang ditentukan, ditetapkan batasan-batasan sebagai berikut.
 \begin{enumerate}
-  \item Permasalahan asesmen adaptif yang
-  dikaji difokuskan pada konteks yang selaras dengan visi Strategi Nasional
-  Kecerdasan Artifisial (Stranas KA) Indonesia. Ini berarti penelitian berfokus
-  pada pengembangan sistem yang mendukung ekosistem kolaboratif, yang disesuaikan
-  dengan kebutuhan dan potensi implementasi di lingkungan pendidikan tinggi di
-  Indonesia.
+  % \item Permasalahan asesmen adaptif yang
+  % dikaji difokuskan pada konteks yang selaras dengan visi Strategi Nasional
+  % Kecerdasan Artifisial (Stranas KA) Indonesia. Ini berarti penelitian berfokus
+  % pada pengembangan sistem yang mendukung ekosistem kolaboratif, yang disesuaikan
+  % dengan kebutuhan dan potensi implementasi di lingkungan pendidikan tinggi di
+  % Indonesia.
   \item Fokus utama penelitian ini adalah pada kesenjangan integrasi
   algoritmik antara asesmen adaptif individual dan fitur kolaboratif. Penelitian
   tidak menginvestigasi masalah lain dalam asesmen adaptif (seperti deteksi
   gaya belajar atau deteksi kecurangan dalam asesmen), melainkan terbatas pada
   perancangan model yang menggabungkan asesmen adaptif individual dengan fitur
   kolaboratif.
-  \item Permasalahan yang dikaji terbatas pada penilaian luaran kognitif
+  \item Permasalahan yang dikaji berpusat pada penilaian luaran kognitif
   (\textit{cognitive outcomes}), yaitu pelacakan keterampilan dan pengetahuan
-  pelajar. Penelitian ini tidak mencakup perancangan model untuk menilai luaran
-  afektif (seperti motivasi atau kepuasan) atau luaran perilaku (seperti durasi
-  belajar) sebagai ukuran utama kemahiran.
-  \item Fokus penelitian ini adalah pada integrasi asesmen adaptif dengan fitur kolaboratif untuk diversifikasi perspektif, sehingga akan diutamakan pengembangan dengan teknik dan alat yang efektif dan efisien secara sumber daya (baik sumber daya komputasi, waktu, uang, manusia, maupun data) yang utamanya untuk dapat membuktikan keberhasilan integrasi tersebut.
+  pemelajar. Meskipun metrik perilaku (seperti durasi pengerjaan) dapat dipertimbangkan
+  sebagai faktor penyesuaian, penelitian ini
+  tidak merancang model untuk menilai luaran afektif (seperti motivasi atau kepuasan)
+  maupun luaran perilaku tersebut sebagai ukuran utama.
+  \item Pelacakan keterampilan pada sistem difokuskan pada estimasi tingkat kemahiran relatif pemelajar berdasarkan performa pengerjaan soal. Purwarupa sistem ini belum mempertimbangkan pemetaan butir soal terhadap Capaian Pembelajaran Mata Kuliah (CPMK) secara spesifik, sehingga tidak digunakan untuk mengevaluasi ketercapaian tujuan pembelajaran secara formal.
+  \item Implementasi purwarupa dan instrumen asesmen dibatasi secara spesifik pada
+  domain pembelajaran basis data. Batasan materi ini dilakukan untuk memastikan pengembangan tidak terlalu kompleks sehingga mengaburkan fokus utama dalam integrasi dan mekanisme mitigasi.
+  \item Fokus penelitian ini adalah pada integrasi asesmen adaptif dengan fitur kolaboratif untuk diversifikasi perspektif, sehingga akan diutamakan pengembangan dengan teknik dan alat yang efektif dan efisien secara sumber daya (seperti sumber daya komputasi, waktu, data, dan lainnya) yang utamanya untuk dapat membuktikan keberhasilan integrasi tersebut.
   \item Implementasi purwarupa sistem diujicobakan pada populasi sampel terbatas.
   Merujuk pada konteks pendidikan tinggi di Indonesia dan ketersediaan sumber daya,
   uji coba purwarupa difokuskan pada mahasiswa angkatan 2023 dari Program Studi Sistem dan Teknologi Informasi ITB.
@@ -118,7 +107,7 @@ Untuk memastikan penelitian ini tetap fokus dan dapat diselesaikan dalam jangka 
 % --- Metodologi Pengerjaan TA ---
 \section{Metodologi}
 
-Pelaksanaan tugas akhir ini mengadopsi dan mengadaptasi metodologi yang digunakan oleh \textcite{Vesin2022} dalam penelitian mereka mengenai asesmen adaptif dan rekomendasi konten. Metodologi ini terdiri atas beberapa tahapan utama yang sistematis, dimulai dari studi pendahuluan hingga analisis data.
+Pelaksanaan tugas akhir ini mengadopsi dan mengadaptasi metodologi yang digunakan oleh \textcite{Vesin2022} dalam penelitian mereka mengenai asesmen adaptif dan rekomendasi konten pembelajaran. Metodologi ini terdiri atas beberapa tahapan utama yang sistematis, dimulai dari studi pendahuluan hingga analisis data.
 
 \begin{enumerate}
     \item \textbf{Studi Literatur:} Melakukan tinjauan sistematis terhadap penelitian terkait asesmen adaptif, pembelajaran kolaboratif, dan implementasi sistem serupa.

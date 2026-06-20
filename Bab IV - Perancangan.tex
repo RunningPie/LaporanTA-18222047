@@ -26,7 +26,7 @@ luar, tercermin pada gambar \ref{fig:usecase_model} di bawah ini.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{images/usecase_diagram.png}
-    \caption{Use Case Diagram - Interaksi pelajar dengan Sistem Asesmen Adaptif Kolaboratif}
+    \caption{\textit{Use Case Diagram} - Interaksi pemelajar dengan Sistem}
     \label{fig:usecase_model}
 \end{figure}
 
@@ -43,12 +43,11 @@ pada tabel-tabel berikut ini.
 Berdasarkan pemodelan \textit{use case} yang telah dijelaskan di atas, karakteristik interaksi sistem yang
 diusulkan menunjukkan pergeseran dari paradigma sistem yang pasif menjadi sistem dengan intervensi aktif.
 Perbedaan utamanya terletak pada mekanisme intervensi yang diinisiasi dari sistem, khususnya pada UC-03.
-Berbeda dengan sistem yang sudah ada seperti UCRS dan OSSM yang mengandalkan motivasi atau kesadaran pelajar untuk
-melakukan kolaborasi, sistem yang diusulkan ini akan secara proaktif memantau kondisi model kompetensi pelajar
+Berbeda dengan sistem yang sudah ada seperti UCRS dan OSSM yang mengandalkan motivasi atau kesadaran pemelajar untuk
+melakukan kolaborasi, sistem yang diusulkan ini akan secara proaktif memantau kondisi model kompetensi pemelajar
 melalui hasil algoritma \textit{Elo rating}. Ketika terjadi stagnasi dalam perubahan skor, maka sistem akan mendorong
 aktivitas kolaboratif sebagai respons otomatis. Hal ini memperluas cakupan sistem dari sekadar penyaji konten
-pembelajaran adaptif menjadi fasilitator pembelajaran otonom yang menjamin terjadinya eksposur sosial
-terhadap keberagaman kompetensi.
+pembelajaran adaptif menjadi fasilitator pembelajaran otonom yang menjamin terjadinya eksposur terhadap keberagaman kompetensi.
 
 \section{Model Struktur dan Perilaku (Communication Diagram)}
 \label{sec:structure_behavior_model}
@@ -58,7 +57,7 @@ Untuk memodelkan bagaimana komponen internal berkolaborasi dalam menjalankan log
 Pemilihan pola analisis BCE didasarkan pada kesesuaiannya dalam menjembatani spesifikasi \textit{Use Case} (fungsionalitas) menuju perancangan komponen logis, dengan karakteristik sebagai berikut:
 \begin{enumerate}
     \item \textbf{Abstraksi Konseptual:} Berbeda dengan pola arsitektur implementasi seperti MVC (\textit{Model-View-Controller}) yang terikat pada kerangka kerja teknis, BCE berfokus pada peran semantik objek dalam menyelesaikan skenario bisnis tanpa bias teknologi.
-    \item \textbf{Pemisahan Logika Intervensi:} Pola ini secara eksplisit memisahkan objek \textit{Control} (pengendali alur logika) dari \textit{Entity} (data persisten). Hal ini krusial untuk menggambarkan letak algoritma \textit{Re-ranking} dan \textit{Elo rating} yang bertindak sebagai otak sistem, terpisah dari data profil pelajar.
+    \item \textbf{Pemisahan Logika Intervensi:} Pola ini secara eksplisit memisahkan objek \textit{Control} (pengendali alur logika) dari \textit{Entity} (data persisten). Hal ini krusial untuk menggambarkan letak algoritma \textit{Re-ranking} dan \textit{Elo rating} yang bertindak sebagai otak sistem, terpisah dari data profil pemelajar.
 \end{enumerate}
 
 Gambar \ref{fig:communication_diagram} memvisualisasikan kolaborasi objek menggunakan pola ini.
@@ -66,16 +65,16 @@ Gambar \ref{fig:communication_diagram} memvisualisasikan kolaborasi objek menggu
 \begin{figure}[!ht]
     \centering
     % Placeholder gambar Communication Diagram
-    \includegraphics[width=0.8\textwidth]{images/communication_diagram.png}
-    \caption{\textit{Communication Diagram} - Alur Interaksi pada Sistem}
+    \includegraphics[width=1\textwidth]{images/communication_diagram.png}
+    \caption{\textit{Communication Diagram} - Interaksi Komponen pada Sistem}
     \label{fig:communication_diagram}
 \end{figure}
 
-Diagram di atas menunjukkan interaksi yang diawali oleh Aktor \textbf{pelajar} dan melibatkan kolaborasi tiga jenis objek analisis:
+Diagram di atas menunjukkan interaksi yang diawali oleh Aktor \textbf{pemelajar} dan melibatkan kolaborasi tiga jenis objek analisis:
 
 \begin{enumerate}
     \item \textbf{Boundary Object (\texttt{:LearningInterface}):} 
-    Objek yang membatasi sistem dengan aktor luar. Bertanggung jawab menangkap pemicu kejadian (\textit{event}) berupa jawaban pelajar dan menyajikan umpan balik visual.
+    Objek yang membatasi sistem dengan aktor luar. Bertanggung jawab menangkap pemicu kejadian (\textit{event}) berupa jawaban pemelajar dan menyajikan umpan balik visual.
     
     \item \textbf{Control Objects (\texttt{:AssessmentController} \& \texttt{:ReRankingService}):} 
     Objek pengendali yang merepresentasikan logika bisnis dinamis. 
@@ -85,7 +84,7 @@ Diagram di atas menunjukkan interaksi yang diawali oleh Aktor \textbf{pelajar} d
     \end{enumerate}
     
     \item \textbf{Entity Objects (\texttt{currentTask} \& \texttt{currentUser}):} 
-    Objek yang merepresentasikan konsep data persisten yang berumur panjang. Objek ini menyimpan \textit{state} penting seperti parameter tingkat kesulitan soal ($D_j$) serta skor kemahiran pelajar yang mencakup dimensi kemampuan individu dan kontribusi sosialnya dalam sistem. Data ini menjadi basis perhitungan utama bagi objek \textit{Control}.
+    Objek yang merepresentasikan konsep data persisten yang berumur panjang. Objek ini menyimpan \textit{state} penting seperti parameter tingkat kesulitan soal ($D_j$) serta skor kemahiran pemelajar yang mencakup dimensi kemampuan individu dan kontribusi sosialnya dalam sistem. Data ini menjadi basis perhitungan utama bagi objek \textit{Control}.
 \end{enumerate}
 
 Alur pesan (\textit{Message Flow}) pada diagram menunjukkan bahwa interaksi tidak hanya terjadi antarmodul, melainkan melibatkan manipulasi langsung terhadap objek data (\textit{Entities}). Misalnya pesan \texttt{updateElo()} dikirimkan ke objek \texttt{currentUser}, dan pesan \texttt{getDifficulty()} diambil dari objek \texttt{currentTask}.
@@ -98,7 +97,7 @@ Alur pertukaran pesan pada Gambar \ref{fig:communication_diagram} dirancang untu
     
     \item \textbf{Deteksi Stagnasi (Pesan 5):}
     Segera setelah pembaruan skor, kontroler mengirim pesan \texttt{checkStagnation()} ke objek \texttt{currentUser}. 
-    Langkah ini dirancang untuk mendeteksi fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}, yaitu kondisi stagnasi pembelajaran akibat personalisasi berlebih. Deteksi dilakukan secara algoritmik dengan menghitung nilai variansi dari perubahan skor kemahiran $\theta$ (\textit{variance of} $\Delta\theta$) pada beberapa aktivitas terakhir. Jika nilai variansi berada di bawah ambang batas ($\epsilon$) tertentu, hal tersebut diinterpretasikan sebagai konvergensi prematur, yaitu kondisi yang mengindikasikan tantangan sistem sudah terlalu selaras dengan kemampuan pelajar saat ini sehingga tidak lagi mendorong pertumbuhan kognitif.
+    Langkah ini dirancang untuk mendeteksi fenomena \textit{learning plateau} \autocite{Halkiopoulos2024}, yaitu kondisi stagnasi pembelajaran akibat personalisasi berlebih. Deteksi dilakukan secara algoritmik dengan menghitung nilai variansi dari perubahan skor kemahiran $\theta$ (\textit{variance of} $\Delta\theta$) pada beberapa aktivitas terakhir. Jika nilai variansi berada di bawah ambang batas ($\epsilon$) tertentu, hal tersebut diinterpretasikan sebagai konvergensi prematur, yaitu kondisi yang mengindikasikan tantangan sistem sudah terlalu selaras dengan kemampuan pemelajar saat ini sehingga tidak lagi mendorong pertumbuhan kognitif.
     
     \item \textbf{Delegasi Mitigasi (Pesan 6):}
     Jika status stagnasi bernilai \textit{true}, kontroler tidak menangani pencarian rekan sendiri, melainkan mendelegasikannya ke objek \texttt{:ReRankingService} melalui pesan \texttt{findHeterogeneousPeer()}.
@@ -106,7 +105,7 @@ Alur pertukaran pesan pada Gambar \ref{fig:communication_diagram} dirancang untu
     
     \item \textbf{Eksekusi Intervensi (Pesan 7):}
     Setelah mendapatkan umpan balik yang valid, \texttt{:AssessmentController} akan mengirimkan pesan \texttt{showPeerTask()} ke \texttt{:LearningInterface}.
-    Pesan ini secara dinamis mengubah mode tampilan antarmuka dari "mode pengerjaan soal" menjadi "mode penilaian sejawat" beserta rubriknya. Perubahan konteks yang diinisiasi sistem ini memaksa pelajar untuk terlibat dalam aktivitas sosial tanpa perlu menavigasi menu secara manual, menjamin terjadinya eksposur terhadap perspektif baru.
+    Pesan ini secara dinamis mengubah mode tampilan antarmuka dari mode pengerjaan soal menjadi mode penilaian sejawat. Perubahan konteks yang diinisiasi sistem ini memaksa pemelajar untuk terlibat dalam aktivitas sosial tanpa perlu menavigasi menu secara manual, menjamin terjadinya eksposur terhadap perspektif baru.
 \end{enumerate}
 
 \section{Perbandingan dengan Sistem Saat Ini}

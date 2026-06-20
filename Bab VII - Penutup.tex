@@ -14,11 +14,11 @@ Berdasarkan hasil pelaksanaan tugas akhir yang mencakup proses perancangan, real
 mekanisme, dan implementasi sistem asesmen adaptif kolaboratif Equilibria, dapat
 ditarik beberapa kesimpulan sebagai berikut:
 \begin{enumerate}
-    \item Perancangan arsitektur sistem asesmen adaptif dilakukan dengan mengintegrasikan parameter kemahiran individual berbasis algoritma \textit{Elo rating} dengan dimensi kontribusi sosial secara holistik. Pendekatan ini memungkinkan sistem untuk memodelkan profil pelajar yang mencakup kemampuan teknis pengerjaan soal secara mandiri sekaligus tingkat keterlibatan aktif dalam aktivitas kolaboratif.
+    \item Arsitektur sistem asesmen adaptif terbukti dapat dirancang sedemikian rupa sehingga mampu mengintegrasikan dimensi kemahiran individual (berbasis algoritma \textit{Elo rating}) dengan dimensi sosial secara terpadu. Pendekatan ini secara efektif memodelkan profil pemelajar yang mencakup kemampuan teknis pengerjaan soal secara mandiri sekaligus tingkat keterlibatan aktif dalam aktivitas kolaboratif.
 
-    \item Mekanisme mitigasi \textit{overpersonalization} bekerja secara proaktif melalui deteksi stagnasi pembelajaran yang didasarkan pada variansi perubahan skor $\Delta\theta$ dan pemilihan rekan kolaborasi yang heterogen menggunakan algoritma \textit{Constraint-based Re-ranking}. Implementasi ini terbukti mampu memicu intervensi sosial secara otomatis untuk memecah stagnasi pembelajaran (\textit{learning plateau}) yang dialami oleh pelajar.
+    \item Efek \textit{overpersonalization} pada sistem asesmen adaptif berhasil dimitigasi melalui penerapan mekanisme intervensi proaktif. Mekanisme tersebut bekerja secara presisi melalui deteksi stagnasi pembelajaran yang didasarkan pada variansi perubahan skor $\Delta\theta$, serta disempurnakan dengan pemilihan rekan kolaborasi yang heterogen menggunakan algoritma \textit{Constraint-based Re-ranking} guna memecah stagnasi (\textit{learning plateau}).
 
-    \item Realisasi purwarupa sistem Equilibria pada domain pembelajaran kueri SQL mewujudkan siklus belajar adaptif melalui integrasi lingkungan eksekusi \textit{query} (\textit{sandbox}) yang aman, mekanisme pembaruan \textit{rating} secara \textit{real-time}, dan penyediaan antarmuka reaktif yang mendukung transparansi interaksi sejawat.
+    \item Rancangan arsitektur dan mekanisme mitigasi tersebut berhasil diimplementasikan menjadi purwarupa sistem asesmen adaptif kolaboratif yang fungsional (sistem Equilibria). Purwarupa ini mewujudkan siklus belajar adaptif pada domain pembelajaran kueri SQL melalui integrasi lingkungan eksekusi \textit{query} (\textit{sandbox}) yang aman, pembaruan \textit{rating} secara \textit{real-time}, dan penyediaan antarmuka reaktif.
 \end{enumerate}
 
 \section{Saran}
@@ -27,8 +27,8 @@ ditarik beberapa kesimpulan sebagai berikut:
 Berdasarkan pengalaman selama proses pengerjaan dan temuan pada tahap evaluasi, terdapat beberapa saran yang dapat dipertimbangkan oleh pengguna atau pengelola sistem:
 
 \begin{enumerate}
-    \item Disarankan bagi instruktur atau pengajar untuk tidak membiarkan pelajar menggunakan sistem adaptif individual dalam durasi yang terlalu lama tanpa adanya sesi interaksi antarrekan, guna mencegah terjadinya stagnasi pembelajaran (\textit{learning plateau}) akibat materi yang terlalu terpersonalisasi.
-    \item Bagi pelajar, umpan balik dari rekan sejawat sebaiknya ditinjau secara kritis sebagai bahan refleksi diri, karena proses memberikan dan menerima ulasan terbukti secara statistik membantu mempercepat penguasaan konsep yang sulit dibandingkan belajar secara mandiri.
+    \item Disarankan bagi instruktur atau pengajar untuk tidak membiarkan pemelajar menggunakan sistem adaptif individual dalam durasi yang terlalu lama tanpa adanya sesi interaksi antarrekan, guna mencegah terjadinya stagnasi pembelajaran (\textit{learning plateau}) akibat materi yang terlalu terpersonalisasi.
+    \item Bagi pemelajar, umpan balik dari rekan sejawat sebaiknya ditinjau secara kritis sebagai bahan refleksi diri, karena proses memberikan dan menerima ulasan terbukti secara statistik membantu mempercepat penguasaan konsep yang sulit dibandingkan belajar secara mandiri.
 \end{enumerate}
 
 \section{Saran Pengembangan Selanjutnya}
@@ -38,8 +38,10 @@ Penelitian ini masih memiliki keterbatasan yang dapat diperbaiki pada pengembang
 
 \begin{enumerate}
     \item Ambang batas variansi ($\epsilon = 165$) yang digunakan saat ini terdeteksi terlalu sensitif (\textit{hypersensitive}). Pengembangan selanjutnya perlu mencari nilai ambang batas yang lebih optimal atau menggunakan jendela aktivitas (\textit{sliding window}) yang lebih lebar agar tidak setiap fluktuasi kecil memicu intervensi.
-    \item Komponen \textit{Social Elo rating} dapat diperkuat dengan menggunakan model bahasa alami yang dilatih secara spesifik pada istilah teknis komputasi dalam bahasa Indonesia, guna meningkatkan akurasi penilaian kualitas umpan balik secara otomatis.
-    \item Penggunaan \textit{Large Language Model} dapat dipertimbangkan untuk membantu memberikan \textit{scaffolding} awal kepada pelajar saat melakukan \textit{peer review}, misalnya dengan memberikan saran poin-poin kesalahan yang perlu dikomentari pada kueri rekan.
-    \item Melakukan pengujian pada populasi pelajar yang lebih besar dan durasi yang lebih lama (satu semester penuh) untuk melihat stabilitas konvergensi skor \textit{Social Elo rating} serta dampak jangka panjang terhadap retensi pengetahuan pelajar.
+    \item Untuk kebutuhan evaluasi sistem, komponen \textit{Social Elo rating} dapat diperkuat dengan menggunakan model representasi bahasa alami yang dilatih secara spesifik pada istilah teknis komputasi dalam bahasa Indonesia, guna meningkatkan akurasi penilaian kualitas umpan balik secara otomatis.
+    \item Untuk kebutuhan bimbingan pemelajar, penggunaan \textit{Large Language Model} dapat dipertimbangkan untuk membantu memberikan \textit{scaffolding} awal kepada pemelajar saat melakukan \textit{peer review}, misalnya dengan memberikan saran poin-poin kesalahan yang perlu dikomentari pada kueri rekan.
+    \item Melakukan pengujian pada populasi pemelajar yang lebih besar dan durasi yang lebih lama (satu semester penuh) untuk melihat stabilitas konvergensi skor \textit{Social Elo rating} serta dampak jangka panjang terhadap retensi pengetahuan pemelajar.
     \item Melakukan penelitian untuk metrik pendeteksi \textit{overpersonalization} yang spesifik untuk domain pendidikan. Mengingat metrik yang digunakan dalam tugas akhir ini masih berupa proksi yang diadaptasi dari literatur rekomendasi konten dan literatur fenomena pembelajaran secara umum.
+    \item Mengembangkan fitur pemetaan skor kemahiran (\textit{Elo rating}) pemelajar terhadap Capaian Pembelajaran Mata Kuliah (CPMK) secara spesifik, sehingga sistem dapat bertransformasi menjadi instrumen evaluasi ketercapaian tujuan pembelajaran yang komprehensif.
+    \item Memperluas penerapan purwarupa ke luar domain pembelajaran basis data (kueri SQL). Ekspansi ke disiplin ilmu lain akan menuntut perancangan strategi evaluasi algoritmik baru yang secara komputasional mampu menilai bobot jawaban parsial secara aman tanpa bergantung pada infrastruktur \textit{sandbox} SQL.
 \end{enumerate}
