@@ -63,6 +63,26 @@ Penilaian pada aktivitas kolaboratif (\textit{Social Elo rating}) diimplementasi
 \label{sec:backend_implementation}
 
 Bagian ini membahas detail implementasi sisi peladen yang bertanggung jawab atas seluruh logika adaptivitas dan keamanan sistem.
+\subsection{Skema Relasional Basis Data}
+\label{ssec:skema_basis_data}
+
+Hal pertama yang perlu dilakukan dalam implementasi \textit{backend} adalah pembuatan penyimpanan data operasional yang terstruktur. Sistem mengimplementasikan delapan entitas tabel operasional di dalam PostgreSQL menggunakan abstraksi \textit{Object-Relational Mapper} (ORM) dari SQLAlchemy. Gambar \ref{fig:relational_schema} memperlihatkan skema relasional dari basis data yang telah dibangun dalam notasi skema relasional \textit{Crow's Foot} untuk menyederhanakan visualisasi.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/relational_schema.png}
+    \caption{Skema Relasional Basis Data Sistem Equilibria}
+    \label{fig:relational_schema}
+\end{figure}
+
+Pusat dari skema data ini adalah tabel \texttt{Users} yang bertugas menyimpan profil pemelajar beserta status dan skor kemahirannya (baik nilai \texttt{theta\_individu} maupun \texttt{theta\_social}). Tabel utama ini memiliki relasi penting ke beberapa tabel lainnya dalam sistem, di antaranya:
+\begin{enumerate}
+    \item \texttt{AssessmentLogs} dan \texttt{AssessmentSessions}: Menyimpan log mengenai upaya pengerjaan, waktu eksekusi, serta riwayat pergerakan \textit{theta} pemelajar pada setiap butir soal.
+    \item \texttt{PeerSessions}: Menyimpan riwayat sesi penilaian sejawat (\textit{peer assessment}), yang mencakup data pengguna yang terlibat (\textit{requester} dan \textit{reviewer}), teks ulasan, serta skor umpan balik yang akan berkontribusi pada penilaian dimensi sosial pemelajar.
+    \item \texttt{Questions} dan \texttt{Modules}: Menyimpan struktur hierarki dari materi pembelajaran adaptif beserta metrik tingkat kesulitan soal yang diperbarui secara dinamis.
+\end{enumerate}
+
+Selain tabel-tabel utama di atas, terdapat pula tabel pendukung seperti \texttt{PretestSessions} untuk merekam pengerjaan tahap kalibrasi awal atau \textit{pre-test} dan \texttt{UserModuleProgress} untuk mencatat status kelulusan tiap modul per pengguna. Karena tabel-tabel pendukung ini memiliki fungsi yang sifatnya administratif dan melengkapi fitur utama sistem, penjelasan hanya difokuskan pada tabel utama. Keseluruhan rancangan skema ini memastikan relasi dan integritas data tetap terjaga selama terjadinya interaksi pemelajar dengan sistem.
 
 \subsection{Arsitektur API dan Standardisasi}
 Implementasi \textit{backend} dibangun menggunakan \textit{framework} \textbf{FastAPI} yang mendukung operasi \textit{asynchronous} I/O secara \textit{non-blocking}, yang krusial untuk menangani permintaan eksekusi \textit{query} SQL dan kalkulasi \textit{Elo rating} secara simultan. Arsitektur ini mengadopsi beberapa standard industri:
